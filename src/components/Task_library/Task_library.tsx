@@ -10,9 +10,9 @@ const Task_library = () => {
   return (
     <section className='container my-12 w-screen'>
       <div className='bg-blue-100 w-screen flex flex-wrap content-center justify-center my-12 mx-auto px-2 py-5 md:px-6'>
-        <Link to='navbar'>
+        <Link to='task01'>
           <Tilt>
-            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-64 m-4'>
+            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-72 m-4'>
               <a className='' href='#'>
                 <img alt='Placeholder' className='h-48 w-full' src={Workspace}></img>
               </a>
@@ -48,7 +48,7 @@ const Task_library = () => {
 
         <Link to='about'>
           <Tilt>
-            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-64 m-4'>
+            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-72 m-4'>
               <a className='' href='#'>
                 <img alt='Placeholder' className='h-48 w-full' src={Laptop}></img>
               </a>
@@ -84,7 +84,7 @@ const Task_library = () => {
 
         <Link to='about'>
           <Tilt>
-            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-64 m-4'>
+            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-72 m-4'>
               <a className='' href='#'>
                 <img alt='Placeholder' className='h-48 w-full' src={Worktable}></img>
               </a>
@@ -120,12 +120,12 @@ const Task_library = () => {
 
         <Link to='about'>
           <Tilt>
-            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-64 m-4'>
+            <article className='bg-white overflow-hidden rounded-lg shadow-lg w-72 m-4'>
               <a className='' href='#'>
                 <img alt='Placeholder' className='h-48 w-full' src={Startup}></img>
               </a>
 
-              <div className='rounded-lg z-50 bg-white relative -mt-2 p-4'>
+              <div className='rounded-2xl z-50 bg-white relative -mt-2 p-4'>
                 <header className='leading-tight mb-2'>
                   <h1 className='text-lg font-bold'>
                     <a className='no-underline hover:underline text-black' href='#'>

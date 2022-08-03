@@ -17,7 +17,11 @@ const Nav_bar = () => {
           <div className='flex -mx-4 items-center justify-between relative mt-10'>
             <div className='px-4 w-60 chat-notification-logo'>
               <a href='javascript:void(0)' className='w-full block py-5'>
-                <img src={JS_logo} alt='logo' className='chat-notification-logo w-6 h-6' />
+                <img
+                  src={JS_logo}
+                  alt='logo'
+                  className='chat-notification-logo w-6 h-10 scale-85'
+                />
               </a>
             </div>
             <div className='flex px-4 justify-between items-center w-full'>
