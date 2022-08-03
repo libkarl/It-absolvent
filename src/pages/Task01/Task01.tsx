@@ -1,3 +1,4 @@
+import Footer from '../../components/JS_history/footer/Footer'
 import Home from '../../components/JS_history/home/Home'
 import Nav_bar from '../../components/JS_history/header/Nav_bar'
 import Possibilities from '../../components/JS_history/possibilities/Possibilities'
@@ -13,6 +14,7 @@ const Task01 = () => {
       <Timeline />
       <Possibilities />
       <Trend />
+      <Footer />
     </div>
   )
 }
