@@ -26,19 +26,23 @@ const Task_library = () => {
                   </h1>
                 </header>
 
-                <p className='leading-tight pb-2 md:pb-4'>
-                  Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
-                  en un mundo donde somos la minoria.
+                <p className='leading-tight pb-2 md:pb-4 text-center'>
+                  This card contains the implementation of the first three tasks with simple react
+                  application to present JavaScript history, current trends are also included along
+                  with the possibilities of using this language.
                 </p>
                 <div className='py-4 flex justify-around flex-wrap'>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
-                    #bestfriend
+                    #create react app
                   </span>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
-                    #buddy
+                    #CSS + HTML
                   </span>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
-                    #amigo
+                    #React router
+                  </span>
+                  <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
+                    #Styled components
                   </span>
                 </div>
               </div>
@@ -57,14 +61,16 @@ const Task_library = () => {
                 <header className='leading-tight mb-2'>
                   <h1 className='text-lg font-bold'>
                     <a className='no-underline hover:underline text-black' href='#'>
-                      Task_04
+                      Task_04-empty
                     </a>
                   </h1>
                 </header>
 
-                <p className='leading-tight pb-2 md:pb-4'>
+                <p className='leading-tight pb-2 md:pb-4 text-center'>
                   Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
-                  en un mundo donde somos la minoria.
+                  en un mundo donde somos la minoria. Hablamos sobre las dificultades en el gremio y
+                  en un mundo donde somos la minoria. Hablamos sobre las dificultades en el gremio
+                  la minoria.
                 </p>
                 <div className='py-4 flex justify-around flex-wrap'>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
@@ -75,6 +81,9 @@ const Task_library = () => {
                   </span>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
                     #amigo
+                  </span>
+                  <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
+                    #family
                   </span>
                 </div>
               </div>
@@ -93,13 +102,14 @@ const Task_library = () => {
                 <header className='leading-tight mb-2'>
                   <h1 className='text-lg font-bold'>
                     <a className='no-underline hover:underline text-black' href='#'>
-                      Task_5
+                      Task_5-empty
                     </a>
                   </h1>
                 </header>
 
-                <p className='leading-tight pb-2 md:pb-4'>
+                <p className='leading-tight pb-2 md:pb-4 text-center'>
                   Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
+                  en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
                   en un mundo donde somos la minoria.
                 </p>
                 <div className='py-4 flex justify-around flex-wrap'>
@@ -111,6 +121,9 @@ const Task_library = () => {
                   </span>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
                     #amigo
+                  </span>
+                  <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
+                    #family
                   </span>
                 </div>
               </div>
@@ -129,13 +142,14 @@ const Task_library = () => {
                 <header className='leading-tight mb-2'>
                   <h1 className='text-lg font-bold'>
                     <a className='no-underline hover:underline text-black' href='#'>
-                      Task_06
+                      Task_06-empty
                     </a>
                   </h1>
                 </header>
 
-                <p className='leading-tight pb-2 md:pb-4'>
+                <p className='leading-tight pb-2 md:pb-4 text-center'>
                   Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
+                  en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
                   en un mundo donde somos la minoria.
                 </p>
                 <div className='py-4 flex justify-around flex-wrap'>
@@ -147,6 +161,9 @@ const Task_library = () => {
                   </span>
                   <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
                     #amigo
+                  </span>
+                  <span className='inline-block bg-gray-300 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mb-1'>
+                    #family
                   </span>
                 </div>
               </div>
