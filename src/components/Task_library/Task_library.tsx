@@ -8,8 +8,8 @@ import Worktable from '../../assets/worktable.jpg'
 
 const Task_library = () => {
   return (
-    <section className='container my-12 w-screen'>
-      <div className='bg-blue-100 w-screen flex flex-wrap content-center justify-center my-12 mx-auto px-2 py-5 md:px-6'>
+    <section className='container w-screen mt-10'>
+      <div className='bg-white w-screen flex flex-wrap content-center justify-center mx-auto px-2 py-5 md:px-6 gap-6'>
         <Link to='task01'>
           <Tilt>
             <article className='bg-white overflow-hidden rounded-lg shadow-lg w-72 m-4'>
