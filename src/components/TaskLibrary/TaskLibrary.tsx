@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Task01 } from '../../helpers/urls'
 import Laptop from '../../assets/laptop.jpg'
 import React from 'react'
 import Startup from '../../assets/startup.jpg'
@@ -39,7 +40,7 @@ const Img_TaskLibrary = tw.img`
   w-full
 `
 
-const A_TaskName = tw.a`
+const Div_TaskName = tw.div`
   no-underline 
   hover:underline 
   text-black
@@ -87,14 +88,14 @@ const Task_library = () => {
   return (
     <Section_TaskLibrary>
       <Div_TaskLibrary>
-        <Link to='task01'>
+        <Link to={Task01}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={Workspace}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <A_TaskName href='#'>Task_01-03</A_TaskName>
+                    <Div_TaskName>Task_01-03</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -114,14 +115,14 @@ const Task_library = () => {
           </Tilt>
         </Link>
 
-        <Link to='about'>
+        <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={Laptop}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <A_TaskName href='#'>Task_04-empty</A_TaskName>
+                    <Div_TaskName>Task_04-empty</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -142,14 +143,14 @@ const Task_library = () => {
           </Tilt>
         </Link>
 
-        <Link to='about'>
+        <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={Worktable}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <A_TaskName href='#'>Task_5-empty</A_TaskName>
+                    <Div_TaskName>Task_5-empty</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -169,7 +170,7 @@ const Task_library = () => {
           </Tilt>
         </Link>
 
-        <Link to='about'>
+        <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={Startup}></Img_TaskLibrary>
@@ -177,7 +178,7 @@ const Task_library = () => {
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <A_TaskName href='#'>Task_06-empty</A_TaskName>
+                    <Div_TaskName>Task_06-empty</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 

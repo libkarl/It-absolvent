@@ -1,14 +1,13 @@
-import {
-  DotPicture,
-  FacebookLogo,
-  LinkedLogo,
-  PhoneIcon,
-  TwitterLogo,
-  YoutubeLogo,
-} from './Pictures'
+import { AiFillYoutube } from 'react-icons/ai'
+import { BsTelephone } from 'react-icons/bs'
+import { BsTwitter } from 'react-icons/bs'
+import { FaFacebookF } from 'react-icons/fa'
+import { FaLinkedin } from 'react-icons/fa'
 import { FacebookURL, Linked, Twitter, Youtube } from '../../../helpers/urls'
 import JsLogo from '../../../assets/JScriptLogo.png'
+import Point from '../../../assets/point.svg'
 import React from 'react'
+import styled, { keyframes } from 'styled-components'
 import tw from 'tailwind-styled-components'
 
 const Div_CoreFooter = tw.div`
@@ -111,6 +110,10 @@ const SPAN_Folow = tw.span`
   mb-6
 `
 
+const Img_gradient = styled.img`
+  filter: opacity(0.05) drop-shadow(0 0 0 violet);
+`
+
 const Footer = () => {
   return (
     <Div_CoreFooter>
@@ -124,7 +127,7 @@ const Footer = () => {
 
               <P_FooterContact>
                 <Span_PhoneIcon>
-                  <PhoneIcon />
+                  <BsTelephone size={20} />
                 </Span_PhoneIcon>
                 <span>+420 519 220 422</span>
               </P_FooterContact>
@@ -135,24 +138,17 @@ const Footer = () => {
             <Div_FolowSize>
               <H4_Folow>Follow Us On</H4_Folow>
               <DIV_SocilFlex>
-                <a
-                  href={FacebookURL}
-                  className='
-                        
-                        '
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  <FacebookLogo />
-                </a>
+                <A_FooterSocialMedia href={FacebookURL} target='_blank' rel='noreferrer'>
+                  <FaFacebookF />
+                </A_FooterSocialMedia>
                 <A_FooterSocialMedia href={Twitter} target='_blank' rel='noreferrer'>
-                  <LinkedLogo />
+                  <FaLinkedin />
                 </A_FooterSocialMedia>
                 <A_FooterSocialMedia href={Youtube} target='_blank' rel='noreferrer'>
-                  <TwitterLogo />
+                  <BsTwitter />
                 </A_FooterSocialMedia>
                 <A_FooterSocialMedia href={Linked} target='_blank' rel='noreferrer'>
-                  <YoutubeLogo />
+                  <AiFillYoutube />
                 </A_FooterSocialMedia>
               </DIV_SocilFlex>
               <P_FolowContent>&copy; 2022 WebDevEducation</P_FolowContent>
@@ -162,7 +158,7 @@ const Footer = () => {
       </Div_Footer_Container>
       <div>
         <SPAN_Folow>
-          <DotPicture />
+          <Img_gradient src={Point} alt='uideck' />
         </SPAN_Folow>
         <SPAN_Folow></SPAN_Folow>
       </div>

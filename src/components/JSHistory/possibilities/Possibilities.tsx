@@ -7,6 +7,7 @@ import { SiKasasmart } from 'react-icons/si'
 import { SiProbot } from 'react-icons/si'
 import { TbWorld } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
+import { theme } from '../../../helpers/theme'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -103,7 +104,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <TbWorld size={28} />
                     </div>
@@ -120,7 +121,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <FaMobileAlt size={28} />
                     </div>
@@ -139,7 +140,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <BiServer size={28} />
                     </div>
@@ -157,7 +158,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <BiDesktop size={28} />
                     </div>
@@ -175,7 +176,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <CgGames size={28} />
                     </div>
@@ -193,7 +194,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <SiProbot size={28} />
                     </div>
@@ -211,7 +212,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <VscGraph size={28} />
                     </div>
@@ -230,7 +231,7 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconContext.Provider value={{ color: 'white' }}>
+                  <IconContext.Provider value={{ color: theme.colors.white }}>
                     <div>
                       <SiKasasmart size={28} />
                     </div>

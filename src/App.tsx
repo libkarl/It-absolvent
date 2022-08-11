@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { MainPage, Task01 } from './helpers/urls'
+import JsHistory from './pages/Task01'
 import Main from './pages/Main'
 import React from 'react'
-import Task01 from './pages/Task01'
 import tw from 'tailwind-styled-components'
 
 const DivCoreApp = tw.div`
@@ -13,8 +14,8 @@ const App = () => {
     <DivCoreApp>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='task01' element={<Task01 />} />
+          <Route path={MainPage} element={<Main />} />
+          <Route path={Task01} element={<JsHistory />} />
         </Routes>
       </BrowserRouter>
     </DivCoreApp>
