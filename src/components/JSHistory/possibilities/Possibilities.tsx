@@ -1,13 +1,12 @@
-import {
-  IconAI,
-  IconData,
-  IconDesktop,
-  IconGame,
-  IconIOT,
-  IconMobile,
-  IconServer,
-  IconWorld,
-} from './SvgPossibilities'
+import { BiDesktop } from 'react-icons/bi'
+import { BiServer } from 'react-icons/bi'
+import { CgGames } from 'react-icons/cg'
+import { FaMobileAlt } from 'react-icons/fa'
+import { IconContext } from 'react-icons'
+import { SiKasasmart } from 'react-icons/si'
+import { SiProbot } from 'react-icons/si'
+import { TbWorld } from 'react-icons/tb'
+import { VscGraph } from 'react-icons/vsc'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -18,6 +17,7 @@ const Div_Possibilities = tw.div`
 `
 
 const Div_IconPossibilities = tw.div`
+  text-white
   absolute 
   flex 
   items-center 
@@ -103,7 +103,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconWorld />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <TbWorld size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Adding interactive behavior to web pages</P_PossibilitiesItem>
               </dt>
@@ -116,7 +120,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconMobile />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <FaMobileAlt size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Creating mobile apps</P_PossibilitiesItem>
               </dt>
@@ -131,7 +139,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconServer />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <BiServer size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Back-end Web Development</P_PossibilitiesItem>
               </dt>
@@ -145,7 +157,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconDesktop />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <BiDesktop size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Desktop Applications</P_PossibilitiesItem>
               </dt>
@@ -159,7 +175,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconGame />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <CgGames size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Game Development</P_PossibilitiesItem>
               </dt>
@@ -173,7 +193,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconAI />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <SiProbot size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Artificial Intelligence</P_PossibilitiesItem>
               </dt>
@@ -187,7 +211,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconData />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <VscGraph size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Data Visualization</P_PossibilitiesItem>
               </dt>
@@ -202,7 +230,11 @@ const Possibilities = () => {
             <Div_PossibilitiesItem>
               <dt>
                 <Div_IconPossibilities>
-                  <IconIOT />
+                  <IconContext.Provider value={{ color: 'white' }}>
+                    <div>
+                      <SiKasasmart size={28} />
+                    </div>
+                  </IconContext.Provider>
                 </Div_IconPossibilities>
                 <P_PossibilitiesItem>Embedded Device Development and IoT</P_PossibilitiesItem>
               </dt>

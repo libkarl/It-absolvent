@@ -1,7 +1,7 @@
-import { HomeIcon } from './SvgHome'
 import Angular from '../../../assets/angular.png'
 import JSLogo from '../../../assets/JScriptLogo.png'
 import Node from '../../../assets/node.png'
+import Points from '../../../assets/points.svg'
 import React from 'react'
 import ReactIcon from '../../../assets/react.png'
 import Vue from '../../../assets/vue.png'
@@ -151,7 +151,7 @@ const Home = () => {
               <Div_HomeIcon>
                 <Img_Home_JsLogo src={JSLogo} alt='hero' />
                 <Span_Home_JsLogo>
-                  <HomeIcon />
+                  <img src={Points} alt='uideck' />
                 </Span_Home_JsLogo>
               </Div_HomeIcon>
             </Div_LogoPosition>
