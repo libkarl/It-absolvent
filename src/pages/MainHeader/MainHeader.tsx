@@ -1,6 +1,6 @@
 import { theme } from '../../helpers/theme'
 import React from 'react'
-import TypeWriter from '../Animations/Typewritter'
+import TypeWriter from '../../components/Animations/Typewritter'
 import styled, { keyframes } from 'styled-components'
 import tw from 'tailwind-styled-components'
 

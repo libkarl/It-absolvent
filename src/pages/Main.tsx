@@ -1,6 +1,6 @@
-import Main_header from '../components/MainHeader/MainHeader'
+import Main_header from './MainHeader/MainHeader'
 import React from 'react'
-import Task_library from '../components/TaskLibrary/TaskLibrary'
+import Task_library from './TaskLibrary/TaskLibrary'
 
 const Main = () => {
   return (
