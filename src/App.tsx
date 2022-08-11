@@ -1,17 +1,23 @@
-import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Main from './pages/Main_page/Main'
+import Main from './pages/Main'
 import React from 'react'
-import Task01 from './pages/Task01/Task01'
+import Task01 from './pages/Task01'
+import tw from 'tailwind-styled-components'
 
-function App() {
+const DivCoreApp = tw.div`
+  text-align: center;
+`
+
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='task01' element={<Task01 />} />
-      </Routes>
-    </BrowserRouter>
+    <DivCoreApp>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='task01' element={<Task01 />} />
+        </Routes>
+      </BrowserRouter>
+    </DivCoreApp>
   )
 }
 

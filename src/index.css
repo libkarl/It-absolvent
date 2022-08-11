@@ -2,18 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.chat-notification-logo {
-  height: 9rem;
-  width: 35vh;
-}
-
-.margin{
-  margin-left: 32rem;
-}
-
-.center {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    margin: 0;
-}
