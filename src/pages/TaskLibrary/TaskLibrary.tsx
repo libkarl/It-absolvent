@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Task01 } from '../../helpers/urls'
+import { task01 } from '../../helpers/urls'
 import Laptop from '../../assets/laptop.jpg'
 import React from 'react'
 import Startup from '../../assets/startup.jpg'
@@ -88,7 +88,7 @@ const Task_library = () => {
   return (
     <Section_TaskLibrary>
       <Div_TaskLibrary>
-        <Link to={Task01}>
+        <Link to={task01}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={Workspace}></Img_TaskLibrary>

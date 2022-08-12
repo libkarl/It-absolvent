@@ -1,8 +1,8 @@
 import {
-  JsHistoryHome,
-  JsHistoryPossibilities,
-  JsHistoryTimeline,
-  JsHistoryTrend,
+  jsHistoryHome,
+  jsHistoryPossibilities,
+  jsHistoryTimeline,
+  jsHistoryTrend,
 } from '../../helpers/urls'
 import JSLogoHistory from '../../assets/JSLogo.png'
 import React from 'react'
@@ -151,16 +151,16 @@ const Nav_bar = () => {
                 <Nav>
                   <Ul_header>
                     <li>
-                      <A_header href={JsHistoryHome}>Home</A_header>
+                      <A_header href={jsHistoryHome}>Home</A_header>
                     </li>
                     <li>
-                      <A_header href={JsHistoryTimeline}>Timeline</A_header>
+                      <A_header href={jsHistoryTimeline}>Timeline</A_header>
                     </li>
                     <li>
-                      <A_header href={JsHistoryPossibilities}>Possibilities</A_header>
+                      <A_header href={jsHistoryPossibilities}>Possibilities</A_header>
                     </li>
                     <li>
-                      <A_header href={JsHistoryTrend}>Trend</A_header>
+                      <A_header href={jsHistoryTrend}>Trend</A_header>
                     </li>
                   </Ul_header>
                 </Nav>
