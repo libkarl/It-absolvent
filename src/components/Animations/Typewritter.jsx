@@ -22,19 +22,19 @@ const Container = styled.p`
   margin: 0;
 `
 
-function TypeWriter({ value }) {
+export const TypeWriter = ({ value }) => {
   const [text, setText] = useState('')
 
-  const typeWriter = (text, i = 0) => {
-    if (i < value.length) {
-      setText(text.slice(0, i + 1))
-      setTimeout(() => {
-        typeWriter(text, i + 1)
-      }, 100)
-    }
-  }
-
   useEffect(() => {
+    const typeWriter = (text, i = 0, l = text.length) => {
+      if (l >= value.length) {
+        setText(text.slice(0, i + 1))
+        setTimeout(() => {
+          typeWriter(text, i + 1)
+        }, 100)
+      }
+    }
+
     typeWriter(value)
   }, [])
 
@@ -49,5 +49,3 @@ function TypeWriter({ value }) {
 TypeWriter.propTypes = {
   value: PropTypes.string.isRequired,
 }
-
-export default TypeWriter

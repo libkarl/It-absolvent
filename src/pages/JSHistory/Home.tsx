@@ -1,10 +1,10 @@
-import Angular from '../../../assets/angular.png'
-import JSLogo from '../../../assets/JScriptLogo.png'
-import Node from '../../../assets/node.png'
-import Points from '../../../assets/points.svg'
+import Angular from '../../assets/angular.png'
+import JSLogo from '../../assets/JScriptLogo.png'
+import Node from '../../assets/node.png'
+import Points from '../../assets/points.svg'
 import React from 'react'
-import ReactIcon from '../../../assets/react.png'
-import Vue from '../../../assets/vue.png'
+import ReactIcon from '../../assets/react.png'
+import Vue from '../../assets/vue.png'
 import tw from 'tailwind-styled-components'
 
 const Div_Home = tw.div`

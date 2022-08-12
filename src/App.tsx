@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { JsHistory } from './pages/JsHistory'
 import { MainPage, Task01 } from './helpers/urls'
-import JsHistory from './pages/Task01'
 import Main from './pages/Main'
 import React from 'react'
 import tw from 'tailwind-styled-components'

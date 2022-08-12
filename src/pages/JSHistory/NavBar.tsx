@@ -3,8 +3,8 @@ import {
   JsHistoryPossibilities,
   JsHistoryTimeline,
   JsHistoryTrend,
-} from '../../../helpers/urls'
-import JSLogoHistory from '../../../assets/JSLogo.png'
+} from '../../helpers/urls'
+import JSLogoHistory from '../../assets/JSLogo.png'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 

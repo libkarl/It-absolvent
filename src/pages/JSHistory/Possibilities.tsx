@@ -7,7 +7,7 @@ import { SiKasasmart } from 'react-icons/si'
 import { SiProbot } from 'react-icons/si'
 import { TbWorld } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
-import { theme } from '../../../helpers/theme'
+import { theme } from '../../helpers/theme'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 

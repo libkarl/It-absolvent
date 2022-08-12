@@ -1,5 +1,5 @@
 import React from 'react'
-import Webdev from '../../../assets/web_dev.jpg'
+import WebDev from '../../assets/web_dev.jpg'
 import tw from 'tailwind-styled-components'
 
 const Div_Trend = tw.div`
@@ -106,7 +106,7 @@ const Trend = () => {
               </Div_TrendItems>
 
               <div>
-                <Img_Trend src={Webdev} alt='' />
+                <Img_Trend src={WebDev} alt='' />
               </div>
             </Div_TrendGrid>
           </Div_TrendContainer>
