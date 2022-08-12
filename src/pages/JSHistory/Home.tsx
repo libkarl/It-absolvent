@@ -1,6 +1,6 @@
 import React from 'react'
 import angular from '../../assets/angular.png'
-import jSLogo from '../../assets/JScriptLogo.png'
+import jSLogo from '../../assets/jScriptLogo.png'
 import node from '../../assets/node.png'
 import points from '../../assets/points.svg'
 import reactIcon from '../../assets/react.png'

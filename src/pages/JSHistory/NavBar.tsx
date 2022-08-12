@@ -1,5 +1,5 @@
 import { urls } from '../../helpers/urls'
-import JSLogoHistory from '../../assets/JSLogo.png'
+import JSLogoHistory from '../../assets/jSLogo.png'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
