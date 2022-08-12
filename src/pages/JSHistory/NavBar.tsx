@@ -1,9 +1,4 @@
-import {
-  jsHistoryHome,
-  jsHistoryPossibilities,
-  jsHistoryTimeline,
-  jsHistoryTrend,
-} from '../../helpers/urls'
+import { urls } from '../../helpers/urls'
 import JSLogoHistory from '../../assets/JSLogo.png'
 import React from 'react'
 import tw from 'tailwind-styled-components'
@@ -151,16 +146,16 @@ const Nav_bar = () => {
                 <Nav>
                   <Ul_header>
                     <li>
-                      <A_header href={jsHistoryHome}>Home</A_header>
+                      <A_header href={urls.jsHistoryHome}>Home</A_header>
                     </li>
                     <li>
-                      <A_header href={jsHistoryTimeline}>Timeline</A_header>
+                      <A_header href={urls.jsHistoryTimeline}>Timeline</A_header>
                     </li>
                     <li>
-                      <A_header href={jsHistoryPossibilities}>Possibilities</A_header>
+                      <A_header href={urls.jsHistoryPossibilities}>Possibilities</A_header>
                     </li>
                     <li>
-                      <A_header href={jsHistoryTrend}>Trend</A_header>
+                      <A_header href={urls.jsHistoryTrend}>Trend</A_header>
                     </li>
                   </Ul_header>
                 </Nav>

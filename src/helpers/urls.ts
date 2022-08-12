@@ -1,12 +1,14 @@
 import React from 'react'
 
-export const facebookURL = 'https://facebook.com'
-export const youtube = 'https://youtube.com'
-export const twitter = 'https://twitter.com'
-export const linked = 'https://linked.com'
-export const jsHistoryHome = '#home'
-export const jsHistoryTimeline = '#timeline'
-export const jsHistoryPossibilities = '#possibilities'
-export const jsHistoryTrend = '#trend'
-export const task01 = 'task01'
-export const mainPage = '/'
+export const urls = {
+  facebookURL: 'https://facebook.com',
+  youtube: 'https://youtube.com',
+  twitter: 'https://twitter.com',
+  linked: 'https://linked.com',
+  jsHistoryHome: '#home',
+  jsHistoryTimeline: '#timeline',
+  jsHistoryPossibilities: '#possibilities',
+  jsHistoryTrend: '#trend',
+  jsHistoryPage: 'task01',
+  mainPage: '/',
+}

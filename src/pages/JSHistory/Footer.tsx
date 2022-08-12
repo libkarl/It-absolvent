@@ -3,7 +3,7 @@ import { BsTelephone } from 'react-icons/bs'
 import { BsTwitter } from 'react-icons/bs'
 import { FaFacebookF } from 'react-icons/fa'
 import { FaLinkedin } from 'react-icons/fa'
-import { facebookURL, linked, twitter, youtube } from '../../helpers/urls'
+import { urls } from '../../helpers/urls'
 import JsLogo from '../../assets/JScriptLogo.png'
 import Point from '../../assets/point.svg'
 import React from 'react'
@@ -138,16 +138,16 @@ const Footer = () => {
             <Div_FolowSize>
               <H4_Folow>Follow Us On</H4_Folow>
               <DIV_SocilFlex>
-                <A_FooterSocialMedia href={facebookURL} target='_blank' rel='noreferrer'>
+                <A_FooterSocialMedia href={urls.facebookURL} target='_blank' rel='noreferrer'>
                   <FaFacebookF />
                 </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={twitter} target='_blank' rel='noreferrer'>
+                <A_FooterSocialMedia href={urls.twitter} target='_blank' rel='noreferrer'>
                   <FaLinkedin />
                 </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={youtube} target='_blank' rel='noreferrer'>
+                <A_FooterSocialMedia href={urls.youtube} target='_blank' rel='noreferrer'>
                   <BsTwitter />
                 </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={linked} target='_blank' rel='noreferrer'>
+                <A_FooterSocialMedia href={urls.linked} target='_blank' rel='noreferrer'>
                   <AiFillYoutube />
                 </A_FooterSocialMedia>
               </DIV_SocilFlex>
