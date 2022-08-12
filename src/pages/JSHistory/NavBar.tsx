@@ -127,7 +127,7 @@ export const Nav_bar = () => {
           navbarOpen: false,
         }
       '
-        id='home'
+        id={urls.jsHistoryHome}
       >
         <Div_header_container>
           <Div_child_container>
@@ -146,16 +146,16 @@ export const Nav_bar = () => {
                 <Nav>
                   <Ul_header>
                     <li>
-                      <A_header href={urls.jsHistoryHome}>Home</A_header>
+                      <A_header href={'#' + urls.jsHistoryHome}>Home</A_header>
                     </li>
                     <li>
-                      <A_header href={urls.jsHistoryTimeline}>Timeline</A_header>
+                      <A_header href={'#' + urls.jsHistoryTimeline}>Timeline</A_header>
                     </li>
                     <li>
-                      <A_header href={urls.jsHistoryPossibilities}>Possibilities</A_header>
+                      <A_header href={'#' + urls.jsHistoryPossibilities}>Possibilities</A_header>
                     </li>
                     <li>
-                      <A_header href={urls.jsHistoryTrend}>Trend</A_header>
+                      <A_header href={'#' + urls.jsHistoryTrend}>Trend</A_header>
                     </li>
                   </Ul_header>
                 </Nav>

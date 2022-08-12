@@ -83,6 +83,11 @@ const H1_Card = tw.h1`
   text-lg 
   font-bold
 `
+const H1_TaskTopic = tw.h1`
+  text-left 
+  text-md
+  font-bold
+`
 
 export const TaskLibrary = () => {
   return (
@@ -91,7 +96,7 @@ export const TaskLibrary = () => {
         <Link to={urls.jsHistoryPage}>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={workspace}></Img_TaskLibrary>
+              <Img_TaskLibrary src={workspace}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -104,11 +109,12 @@ export const TaskLibrary = () => {
                   application to present JavaScript history, current trends are also included along
                   with the possibilities of using this language.
                 </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
-                  <Span_TaskPart>#create react app</Span_TaskPart>
-                  <Span_TaskPart>#CSS + HTML</Span_TaskPart>
-                  <Span_TaskPart>#React router</Span_TaskPart>
-                  <Span_TaskPart>#Styled components</Span_TaskPart>
+                  <Span_TaskPart>create react app</Span_TaskPart>
+                  <Span_TaskPart>CSS + HTML</Span_TaskPart>
+                  <Span_TaskPart>React router</Span_TaskPart>
+                  <Span_TaskPart>Styled components</Span_TaskPart>
                 </Div_TaskParts>
               </Div_Card>
             </Article_TaskLibrary>
@@ -118,7 +124,7 @@ export const TaskLibrary = () => {
         <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={laptop}></Img_TaskLibrary>
+              <Img_TaskLibrary src={laptop}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -132,11 +138,12 @@ export const TaskLibrary = () => {
                   en un mundo donde somos la minoria. Hablamos sobre las dificultades en el gremio
                   la minoria.
                 </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
-                  <Span_TaskPart>#bestfriend</Span_TaskPart>
-                  <Span_TaskPart>#buddy</Span_TaskPart>
-                  <Span_TaskPart>#amigo</Span_TaskPart>
-                  <Span_TaskPart>#family</Span_TaskPart>
+                  <Span_TaskPart>bestfriend</Span_TaskPart>
+                  <Span_TaskPart>buddy</Span_TaskPart>
+                  <Span_TaskPart>amigo</Span_TaskPart>
+                  <Span_TaskPart>family</Span_TaskPart>
                 </Div_TaskParts>
               </Div_Card>
             </Article_TaskLibrary>
@@ -146,7 +153,7 @@ export const TaskLibrary = () => {
         <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={worktable}></Img_TaskLibrary>
+              <Img_TaskLibrary src={worktable}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -159,11 +166,12 @@ export const TaskLibrary = () => {
                   en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
                   en un mundo donde somos la minoria.
                 </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
-                  <Span_TaskPart>#bestfriend</Span_TaskPart>
-                  <Span_TaskPart>#buddy</Span_TaskPart>
-                  <Span_TaskPart>#amigo</Span_TaskPart>
-                  <Span_TaskPart>#family</Span_TaskPart>
+                  <Span_TaskPart>bestfriend</Span_TaskPart>
+                  <Span_TaskPart>buddy</Span_TaskPart>
+                  <Span_TaskPart>amigo</Span_TaskPart>
+                  <Span_TaskPart>family</Span_TaskPart>
                 </Div_TaskParts>
               </Div_Card>
             </Article_TaskLibrary>
@@ -187,6 +195,7 @@ export const TaskLibrary = () => {
                   en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
                   en un mundo donde somos la minoria.
                 </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
                   <Span_TaskPart>#bestfriend</Span_TaskPart>
                   <Span_TaskPart>#buddy</Span_TaskPart>

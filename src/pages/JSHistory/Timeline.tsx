@@ -1,3 +1,4 @@
+import { urls } from '../../helpers/urls'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -103,7 +104,7 @@ const Div_BlackLine_Center = tw.div`
 export const Timeline = () => {
   return (
     <>
-      <H5_Timeline id='timeline'>Java Script- Timeline</H5_Timeline>
+      <H5_Timeline id={urls.jsHistoryTimeline}>Java Script- Timeline</H5_Timeline>
       <Div_Timeline_Core>
         <Div_TimelineContainer>
           <Div_TimelinePosition>

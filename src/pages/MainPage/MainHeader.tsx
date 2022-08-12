@@ -33,36 +33,6 @@ const H1_TypewritterAnimation = tw.h1`
   2xl:block 
 `
 
-const Anim1 = keyframes`
-from {
-  transform: rotateZ(120deg) rotateX(66deg) rotateZ(0);
-}
-to {
-  transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
-
-}
-`
-
-const Anim2 = keyframes`
-from {
-  transform: rotateZ(240deg) rotateX(66deg) rotateZ(0);
-}
-to {
-  transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
-  
-}
-`
-
-const Anim3 = keyframes`
-from {
-  transform: rotateZ(360deg) rotateX(66deg) rotateZ(0);
-}
-to {
-  transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
-  
-}
-`
-
 const Div_Circle1 = styled.div`
   position: absolute;
   width: 100%;
@@ -71,7 +41,15 @@ const Div_Circle1 = styled.div`
   border-right: 5.12307px solid;
   border-top: 13.32px solid transparent;
   border-radius: 100%;
-  animation: ${Anim1} 0.7s steps(44) infinite normal;
+  animation: anim1 0.7s steps(44) infinite normal;
+  @keyframes anim1 {
+    from {
+      transform: rotateZ(120deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+      transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
+    }
+  }
 `
 const Div_Circle2 = styled.div`
   position: absolute;
@@ -81,7 +59,15 @@ const Div_Circle2 = styled.div`
   border-right: 5.12307px solid;
   border-top: 13.32px solid transparent;
   border-radius: 100%;
-  animation: ${Anim2} 0.7s steps(44) infinite normal;
+  animation: anim2 0.7s steps(44) infinite normal;
+  @keyframes anim2 {
+    from {
+      transform: rotateZ(240deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+      transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
+    }
+  }
 `
 const Div_Circle3 = styled.div`
   position: absolute;
@@ -91,7 +77,15 @@ const Div_Circle3 = styled.div`
   border-right: 5.12307px solid;
   border-top: 13.32px solid transparent;
   border-radius: 100%;
-  animation: ${Anim3} 0.7s steps(44) infinite normal;
+  animation: anim3 0.7s steps(44) infinite normal;
+  @keyframes anim3 {
+    from {
+      transform: rotateZ(360deg) rotateX(66deg) rotateZ(0);
+    }
+    to {
+      transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
+    }
+  }
 `
 
 const Span_Circles = styled.span`

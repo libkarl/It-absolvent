@@ -1,3 +1,4 @@
+import { urls } from '../../helpers/urls'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 import webDev from '../../assets/web_dev.jpg'
@@ -68,7 +69,7 @@ const Img_Trend = tw.img`
 export const Trend = () => {
   return (
     <>
-      <Div_Trend id='trend'>
+      <Div_Trend id={urls.jsHistoryTrend}>
         <Section_Trend>
           <Div_TrendContainer>
             <Div_TrendGrid>

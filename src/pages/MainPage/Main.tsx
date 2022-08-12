@@ -1,5 +1,5 @@
-import { MainHeader } from './MainHeader/MainHeader'
-import { TaskLibrary } from './TaskLibrary/TaskLibrary'
+import { MainHeader } from './MainHeader'
+import { TaskLibrary } from './TaskLibrary'
 import React from 'react'
 
 export const Main = () => {

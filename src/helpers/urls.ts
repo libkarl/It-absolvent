@@ -1,14 +1,15 @@
 import React from 'react'
 
+export const facebookURL = 'https://facebook.com'
+export const youtube = 'https://youtube.com'
+export const twitter = 'https://twitter.com'
+export const linked = 'https://linked.com'
+
 export const urls = {
-  facebookURL: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  twitter: 'https://twitter.com',
-  linked: 'https://linked.com',
-  jsHistoryHome: '#home',
-  jsHistoryTimeline: '#timeline',
-  jsHistoryPossibilities: '#possibilities',
-  jsHistoryTrend: '#trend',
+  jsHistoryHome: 'home',
+  jsHistoryTimeline: 'timeline',
+  jsHistoryPossibilities: 'possibilities',
+  jsHistoryTrend: 'trend',
   jsHistoryPage: 'task01',
   mainPage: '/',
 }

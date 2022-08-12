@@ -8,6 +8,7 @@ import { SiProbot } from 'react-icons/si'
 import { TbWorld } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -87,7 +88,7 @@ const P_PossibilitiesHeader = tw.p`
 
 export const Possibilities = () => {
   return (
-    <Div_Possibilities id='possibilities'>
+    <Div_Possibilities id={urls.jsHistoryPossibilities}>
       <Div_PossibilitiesSize>
         <Div_PossibilitiesHeader>
           <H2_PossibilitiesHeader>What is JavaScript used for?</H2_PossibilitiesHeader>
