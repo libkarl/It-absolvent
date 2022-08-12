@@ -1,6 +1,6 @@
 import React from 'react'
-import WebDev from '../../assets/web_dev.jpg'
 import tw from 'tailwind-styled-components'
+import webDev from '../../assets/web_dev.jpg'
 
 const Div_Trend = tw.div`
   container 
@@ -65,7 +65,7 @@ const Img_Trend = tw.img`
   shadow-lg
 `
 
-const Trend = () => {
+export const Trend = () => {
   return (
     <>
       <Div_Trend id='trend'>
@@ -106,7 +106,7 @@ const Trend = () => {
               </Div_TrendItems>
 
               <div>
-                <Img_Trend src={WebDev} alt='' />
+                <Img_Trend src={webDev} alt='' />
               </div>
             </Div_TrendGrid>
           </Div_TrendContainer>
@@ -115,5 +115,3 @@ const Trend = () => {
     </>
   )
 }
-
-export default Trend

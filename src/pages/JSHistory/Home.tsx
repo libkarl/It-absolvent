@@ -1,11 +1,11 @@
-import Angular from '../../assets/angular.png'
-import JSLogo from '../../assets/JScriptLogo.png'
-import Node from '../../assets/node.png'
-import Points from '../../assets/points.svg'
 import React from 'react'
-import ReactIcon from '../../assets/react.png'
-import Vue from '../../assets/vue.png'
+import angular from '../../assets/angular.png'
+import jSLogo from '../../assets/JScriptLogo.png'
+import node from '../../assets/node.png'
+import points from '../../assets/points.svg'
+import reactIcon from '../../assets/react.png'
 import tw from 'tailwind-styled-components'
+import vue from '../../assets/vue.png'
 
 const Div_Home = tw.div`
   relative 
@@ -105,7 +105,7 @@ const Span_Home_JsLogo = tw.span`
   z-[-1]
 `
 
-const Home = () => {
+export const Home = () => {
   return (
     <Div_Home>
       <Div_HomeContainer>
@@ -132,16 +132,16 @@ const Home = () => {
               </H6_Technology>
               <Div_FlexTechnology_Icons>
                 <Div_Technology_Icons_Size>
-                  <img src={ReactIcon} alt='ayroui' />
+                  <img src={reactIcon} alt='ayroui' />
                 </Div_Technology_Icons_Size>
                 <Div_Technology_Icons_Size>
-                  <img src={Angular} alt='graygrids' />
+                  <img src={angular} alt='graygrids' />
                 </Div_Technology_Icons_Size>
                 <Div_Technology_Icons_Size>
-                  <img src={Vue} alt='uideck' />
+                  <img src={vue} alt='uideck' />
                 </Div_Technology_Icons_Size>
                 <Div_Technology_Icons_Size>
-                  <img src={Node} alt='uideck' />
+                  <img src={node} alt='uideck' />
                 </Div_Technology_Icons_Size>
               </Div_FlexTechnology_Icons>
             </Div_Technology>
@@ -149,9 +149,9 @@ const Home = () => {
           <Div_LogoSize>
             <Div_LogoPosition>
               <Div_HomeIcon>
-                <Img_Home_JsLogo src={JSLogo} alt='hero' />
+                <Img_Home_JsLogo src={jSLogo} alt='hero' />
                 <Span_Home_JsLogo>
-                  <img src={Points} alt='uideck' />
+                  <img src={points} alt='uideck' />
                 </Span_Home_JsLogo>
               </Div_HomeIcon>
             </Div_LogoPosition>
@@ -161,5 +161,3 @@ const Home = () => {
     </Div_Home>
   )
 }
-
-export default Home

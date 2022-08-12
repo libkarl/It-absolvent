@@ -4,9 +4,9 @@ import { BsTwitter } from 'react-icons/bs'
 import { FaFacebookF } from 'react-icons/fa'
 import { FaLinkedin } from 'react-icons/fa'
 import { urls } from '../../helpers/urls'
-import JsLogo from '../../assets/JScriptLogo.png'
-import Point from '../../assets/point.svg'
 import React from 'react'
+import jsLogo from '../../assets/JScriptLogo.png'
+import point from '../../assets/point.svg'
 import styled, { keyframes } from 'styled-components'
 import tw from 'tailwind-styled-components'
 
@@ -114,7 +114,7 @@ const Img_gradient = styled.img`
   filter: opacity(0.05) drop-shadow(0 0 0 violet);
 `
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <Div_CoreFooter>
       <Div_Footer_Container>
@@ -122,7 +122,7 @@ const Footer = () => {
           <Div_JSLogo>
             <Div_LogoSize>
               <A_LogoImage>
-                <img src={JsLogo}></img>
+                <img src={jsLogo}></img>
               </A_LogoImage>
 
               <P_FooterContact>
@@ -158,12 +158,10 @@ const Footer = () => {
       </Div_Footer_Container>
       <div>
         <SPAN_Folow>
-          <Img_gradient src={Point} alt='uideck' />
+          <Img_gradient src={point} alt='uideck' />
         </SPAN_Folow>
         <SPAN_Folow></SPAN_Folow>
       </div>
     </Div_CoreFooter>
   )
 }
-
-export default Footer

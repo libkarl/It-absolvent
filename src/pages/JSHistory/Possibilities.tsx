@@ -85,7 +85,7 @@ const P_PossibilitiesHeader = tw.p`
   lg:mx-auto
 `
 
-const Possibilities = () => {
+export const Possibilities = () => {
   return (
     <Div_Possibilities id='possibilities'>
       <Div_PossibilitiesSize>
@@ -251,5 +251,3 @@ const Possibilities = () => {
     </Div_Possibilities>
   )
 }
-
-export default Possibilities

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { JsHistory } from './pages/JsHistory'
+import { Main } from './pages/Main'
 import { urls } from './helpers/urls'
-import Main from './pages/Main'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -9,7 +9,7 @@ const DivCoreApp = tw.div`
   text-align: center;
 `
 
-const App = () => {
+export const App = () => {
   return (
     <DivCoreApp>
       <BrowserRouter>
@@ -21,5 +21,3 @@ const App = () => {
     </DivCoreApp>
   )
 }
-
-export default App

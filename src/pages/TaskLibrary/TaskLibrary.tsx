@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { urls } from '../../helpers/urls'
-import Laptop from '../../assets/laptop.jpg'
 import React from 'react'
-import Startup from '../../assets/startup.jpg'
 import Tilt from 'react-parallax-tilt'
-import Workspace from '../../assets/workspace.jpg'
-import Worktable from '../../assets/worktable.jpg'
+import laptop from '../../assets/laptop.jpg'
+import startup from '../../assets/startup.jpg'
 import tw from 'tailwind-styled-components'
+import workspace from '../../assets/workspace.jpg'
+import worktable from '../../assets/worktable.jpg'
 
 const Section_TaskLibrary = tw.section`
   container 
@@ -84,14 +84,14 @@ const H1_Card = tw.h1`
   font-bold
 `
 
-const Task_library = () => {
+export const TaskLibrary = () => {
   return (
     <Section_TaskLibrary>
       <Div_TaskLibrary>
         <Link to={urls.jsHistoryPage}>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={Workspace}></Img_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={workspace}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -118,7 +118,7 @@ const Task_library = () => {
         <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={Laptop}></Img_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={laptop}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -146,7 +146,7 @@ const Task_library = () => {
         <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={Worktable}></Img_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={worktable}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
@@ -173,7 +173,7 @@ const Task_library = () => {
         <Link to=''>
           <Tilt>
             <Article_TaskLibrary>
-              <Img_TaskLibrary alt='Placeholder' src={Startup}></Img_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={startup}></Img_TaskLibrary>
 
               <Div_Card>
                 <Header_Card>
@@ -201,5 +201,3 @@ const Task_library = () => {
     </Section_TaskLibrary>
   )
 }
-
-export default Task_library

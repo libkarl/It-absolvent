@@ -8,13 +8,13 @@ const blinkTextCursor = keyframes`
   to {border-right-color: transparent}
 `
 
-const TextCursor = styled.span`
+const Span_TextCursor = styled.span`
   border-right: 2px solid rgba(0, 0, 0, 0.75);
   display: inline;
   animation: ${blinkTextCursor} 0.7s steps(44) infinite normal;
 `
 
-const Container = styled.p`
+const P_Container = styled.p`
   text-black;
   font-weight: 400;
   font-size: ${theme.fonts.small};
@@ -39,10 +39,10 @@ export const TypeWriter = ({ value }) => {
   }, [])
 
   return (
-    <Container>
+    <P_Container>
       {text}
-      <TextCursor />
-    </Container>
+      <Span_TextCursor />
+    </P_Container>
   )
 }
 

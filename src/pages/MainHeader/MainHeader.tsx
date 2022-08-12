@@ -114,7 +114,7 @@ const Div_ReactAnimation = styled.div`
   flex-none 
 `
 
-const Main_header = () => {
+export const MainHeader = () => {
   return (
     <Div_LibraryHeader>
       <Div_ReactAnimation>
@@ -134,5 +134,3 @@ const Main_header = () => {
     </Div_LibraryHeader>
   )
 }
-
-export default Main_header

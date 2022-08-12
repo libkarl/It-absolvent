@@ -100,7 +100,7 @@ const Div_BlackLine_Center = tw.div`
   justify-center
 `
 
-const Timeline = () => {
+export const Timeline = () => {
   return (
     <>
       <H5_Timeline id='timeline'>Java Script- Timeline</H5_Timeline>
@@ -225,5 +225,3 @@ const Timeline = () => {
     </>
   )
 }
-
-export default Timeline

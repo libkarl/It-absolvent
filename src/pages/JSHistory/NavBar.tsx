@@ -118,7 +118,7 @@ const Div_child_container = tw.div`
   relative mt-10
 `
 
-const Nav_bar = () => {
+export const Nav_bar = () => {
   return (
     <div>
       <Div_Header
@@ -167,5 +167,3 @@ const Nav_bar = () => {
     </div>
   )
 }
-
-export default Nav_bar

@@ -1,14 +1,12 @@
-import Main_header from './MainHeader/MainHeader'
+import { MainHeader } from './MainHeader/MainHeader'
+import { TaskLibrary } from './TaskLibrary/TaskLibrary'
 import React from 'react'
-import Task_library from './TaskLibrary/TaskLibrary'
 
-const Main = () => {
+export const Main = () => {
   return (
     <div className='height-screen'>
-      <Main_header />
-      <Task_library />
+      <MainHeader />
+      <TaskLibrary />
     </div>
   )
 }
-
-export default Main
