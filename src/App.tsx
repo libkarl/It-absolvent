@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HackerWritter } from './pages/HackerWritter/HackerWritter'
 import { JsHistory } from './pages/JSHistory/JsHistory'
 import { Main } from './pages/MainPage/Main'
 import { urls } from './helpers/urls'
@@ -16,6 +17,7 @@ export const App = () => {
         <Routes>
           <Route path={urls.mainPage} element={<Main />} />
           <Route path={urls.jsHistoryPage} element={<JsHistory />} />
+          <Route path={urls.hackerWritter} element={<HackerWritter />} />
         </Routes>
       </BrowserRouter>
     </DivCoreApp>
