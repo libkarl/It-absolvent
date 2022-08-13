@@ -12,5 +12,6 @@ export const urls = {
   jsHistoryTrend: 'trend',
   jsHistoryPage: 'task01',
   hackerWritter: 'hackerwritter',
+  toDoApp: 'todoapp',
   mainPage: '/',
 }
