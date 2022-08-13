@@ -150,14 +150,14 @@ export const TaskLibrary = () => {
           </Tilt>
         </Link>
 
-        <Link to=''>
+        <Link to={urls.counter}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary src={worktable}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Task_5-empty</Div_TaskName>
+                    <Div_TaskName>Counter App</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 

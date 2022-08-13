@@ -13,5 +13,6 @@ export const urls = {
   jsHistoryPage: 'task01',
   hackerWritter: 'hackerwritter',
   toDoApp: 'todoapp',
+  counter: 'counter',
   mainPage: '/',
 }
