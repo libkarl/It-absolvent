@@ -97,6 +97,10 @@ export const HackerWritter = () => {
     i = 0
   }
 
+  const removeCode = () => {
+    setCurrentIndex(0)
+  }
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Shift') {
       i++
@@ -108,7 +112,11 @@ export const HackerWritter = () => {
       if (i === 3) {
         showSuccess()
       }
-    } else if (event.key !== 'Shift' || 'Control') {
+    } else if (event.key === 'Escape') {
+      {
+        removeCode()
+      }
+    } else if (event.key !== 'Shift' || 'Control' || 'Escape') {
       runScript()
     }
   }
@@ -130,7 +138,7 @@ export const HackerWritter = () => {
         <Div_HackerSource>{content}</Div_HackerSource>
         <Div_HackerHelp>
           How to get access granted in hacker typer? Hit Control 3 times. How to get access denied
-          in hacker typer hit SHIFT 3 times.
+          in hacker typer hit SHIFT 3 times. How can I clear output? Hit Escape + random key.
         </Div_HackerHelp>
       </Div_HackerContainer>
       <Message message={messageType} />
