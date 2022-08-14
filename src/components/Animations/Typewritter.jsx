@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { theme } from '../../helpers/theme'
 import React, { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
@@ -27,12 +26,15 @@ const P_Container = styled.p`
 type Args = {
   text: string,
   i: number,
+}
+
+type Props = {
   value: string,
 }
 
 // TODO: clearTimeout
 
-export const TypeWriter = ({ value }) => {
+export const TypeWriter = ({ value }: Props) => {
   const [text, setText] = useState('')
 
   useEffect(() => {

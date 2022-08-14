@@ -1,8 +1,9 @@
+import { theme } from '../../helpers/theme'
 import react from 'react'
 import styled from 'styled-components'
 
 const Div_HackerContainerDenied = styled.div`
-  color: red;
+  color: ${theme.colors.red};
   display: block;
   animation: accessAnimation 0.5s 2 0s linear;
   font-size: 3rem;
@@ -17,7 +18,7 @@ const Div_HackerContainerDenied = styled.div`
 `
 
 const Div_HackerContainerGranted = styled.div`
-  color: #10ff00;
+  color: ${theme.colors.green};
   display: block;
   animation: accessAnimation 0.5s 2 0s linear;
   font-size: 3rem;
@@ -30,16 +31,15 @@ const Div_HackerContainerGranted = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `
-
-type HackerMessage = {
+interface messageProps {
   message: string
 }
 
-// eslint-disable-next-line react/prop-types
-export const Message = ({ message }) => {
-  if (message === 'denied') {
+export const Message = (props: messageProps): JSX.Element | null => {
+  if (props.message === 'denied') {
     return <Div_HackerContainerDenied>Access Denied</Div_HackerContainerDenied>
-  } else if (message === 'success') {
+  } else if (props.message === 'success') {
     return <Div_HackerContainerGranted>Access Granted</Div_HackerContainerGranted>
   }
+  return null
 }

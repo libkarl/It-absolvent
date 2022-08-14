@@ -145,45 +145,61 @@ const Span_Button = tw.span`
 
 `
 
-type InsideValue = {
-  count: number
+type Click = {
+  onclick?: () => void
 }
 
-export const Counter = () => {
-  const [count, setCount] = useState(0)
-  const inceraseCount = () => {
-    setCount(count + 1)
-  }
-  const decreaseCount = () => {
-    setCount(count - 1)
-  }
-  return (
-    <Div_CounterContainer>
-      <Div_CounterShape>
-        <Div_CounterSize>
-          <Div_AboutCounter>
-            <H1_CounterTitle>Counter App</H1_CounterTitle>
-            <P_CounterTitle>
-              A simple counting app with a clean and uncluttered user interface. Counts can easily
-              be incremented and decremented
-            </P_CounterTitle>
-          </Div_AboutCounter>
-
-          <Div_ContentCounter>
-            <H1_CounterLablel>Counter:</H1_CounterLablel>
-            <Div_Count>
-              <H1_CountedNumber>{count}</H1_CountedNumber>
-            </Div_Count>
-
-            <Button_CountIncerase onClick={inceraseCount}>
-              <Span_Button>+</Span_Button>
-            </Button_CountIncerase>
-            <Button_CountDecrease onClick={decreaseCount}>
-              <Span_Button>-</Span_Button>
-            </Button_CountDecrease>
-          </Div_ContentCounter>
-        </Div_CounterSize>
-      </Div_CounterShape>
-    </Div_CounterContainer>
-  )
+type Actualnumber = {
+  countednumber: number
 }
+
+class Counter extends React.Component<Click, Actualnumber> {
+  constructor(props: Click) {
+    super(props)
+    this.state = {
+      countednumber: 0,
+    }
+  }
+
+  render() {
+    return (
+      <Div_CounterContainer>
+        <Div_CounterShape>
+          <Div_CounterSize>
+            <Div_AboutCounter>
+              <H1_CounterTitle>Counter App</H1_CounterTitle>
+              <P_CounterTitle>
+                A simple counting app with a clean and uncluttered user interface. Counts can easily
+                be incremented and decremented
+              </P_CounterTitle>
+            </Div_AboutCounter>
+
+            <Div_ContentCounter>
+              <H1_CounterLablel>Counter:</H1_CounterLablel>
+              <Div_Count>
+                <H1_CountedNumber>{this.state.countednumber}</H1_CountedNumber>
+              </Div_Count>
+
+              <Button_CountIncerase
+                onClick={() => {
+                  this.setState({ countednumber: this.state.countednumber + 1 })
+                }}
+              >
+                <Span_Button>+</Span_Button>
+              </Button_CountIncerase>
+              <Button_CountDecrease
+                onClick={() => {
+                  this.setState({ countednumber: this.state.countednumber - 1 })
+                }}
+              >
+                <Span_Button>-</Span_Button>
+              </Button_CountDecrease>
+            </Div_ContentCounter>
+          </Div_CounterSize>
+        </Div_CounterShape>
+      </Div_CounterContainer>
+    )
+  }
+}
+
+export { Counter }

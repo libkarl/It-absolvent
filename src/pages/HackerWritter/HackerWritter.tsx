@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { Message } from './Messages'
+import { theme } from '../../helpers/theme'
 import { useEffect, useRef, useState } from 'react'
 import React from 'react'
 import styled from 'styled-components'
@@ -20,7 +21,7 @@ const Div_HackerContainer = styled.div`
 `
 
 const Div_HackerSource = styled.div`
-  color: #2ad400;
+  color: ${theme.colors.green};
   font-size: 16px;
   white-space: pre-wrap;
   margin: auto;
@@ -53,71 +54,57 @@ const Div_HackerHelp = styled.footer`
   padding-bottom: 10px;
 `
 
-type ArgsHackerWritter = {
-  text: string
-  content: string
-  i: number
-}
-
 const CHARS_PER_STROKES = 5
-let i = 0
 
 export const HackerWritter = () => {
-  const [sourceCoder, setSourceCoder] = useState('')
-  const [content, setContent] = useState('')
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [messageType, setMessageType] = useState('')
-  const [isLocked, setIsLocked] = useState(false)
-
-  const containerRef = useRef(null)
+  const [sourceCoder, setSourceCoder] = React.useState<string>('')
+  const [content, setContent] = React.useState<string>('')
+  const [currentIndex, setCurrentIndex] = React.useState<number>(0)
+  const [messageType, setMessageType] = React.useState<string>('')
+  let i = 0
+  const containerRef = useRef<any>(null)
   useEffect(() => {
-    containerRef.current.focus()
-    fetch('code.txt')
-      .then(res => res.text())
-      .then(text => setSourceCoder(text))
+    containerRef?.current?.focus()
+    async function loadCode() {
+      let response = await fetch('code.txt')
+      let text = await response.text()
+      return setSourceCoder(text)
+    }
+    loadCode()
   }, [])
-  const runScript = () => {
-    setCurrentIndex(currentIndex + CHARS_PER_STROKES)
-    setContent(sourceCoder.substring(0, currentIndex))
-  }
 
   const showDenied = () => {
     setMessageType('denied')
-    setTimeout(() => {
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    ;(async () => {
+      await delay(3000)
       setMessageType('')
-    }, 3000)
+    })()
     i = 0
   }
 
   const showSuccess = () => {
     setMessageType('success')
-    setTimeout(() => {
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    ;(async () => {
+      await delay(3000)
       setMessageType('')
-    }, 3000)
+    })()
     i = 0
-  }
-
-  const removeCode = () => {
-    setCurrentIndex(0)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Shift') {
       i++
-      if (i === 3) {
-        showDenied()
-      }
+      if (i === 3) showDenied()
     } else if (event.key === 'Control') {
       i++
-      if (i === 3) {
-        showSuccess()
-      }
+      if (i === 3) showSuccess()
     } else if (event.key === 'Escape') {
-      {
-        removeCode()
-      }
-    } else if (event.key !== 'Shift' || 'Control' || 'Escape') {
-      runScript()
+      setCurrentIndex(0)
+    } else if (event.key !== 'Shift' && event.key !== 'Control' && event.key !== 'Escape') {
+      setCurrentIndex(currentIndex + CHARS_PER_STROKES)
+      setContent(sourceCoder.substring(0, currentIndex))
     }
   }
 
@@ -128,10 +115,10 @@ export const HackerWritter = () => {
           <style>
             {`
             body {
-              background-color: black;
+              background-color: ${theme.colors.black};
               height: 100vh;
               margin: 0;
-              font-family: monospace;
+              font-family: monospace;}
             `}
           </style>
         </Helmet>
