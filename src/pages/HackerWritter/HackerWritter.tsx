@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { Message } from './Messages'
+import { delayDefinition } from '../../helpers/functions'
 import { theme } from '../../helpers/theme'
 import { useEffect, useRef, useState } from 'react'
 import React from 'react'
@@ -57,49 +58,44 @@ const Div_HackerHelp = styled.footer`
 const CHARS_PER_STROKES = 5
 
 export const HackerWritter = () => {
-  const [sourceCoder, setSourceCoder] = React.useState<string>('')
-  const [content, setContent] = React.useState<string>('')
-  const [currentIndex, setCurrentIndex] = React.useState<number>(0)
-  const [messageType, setMessageType] = React.useState<string>('')
-  let i = 0
+  const [sourceCoder, setSourceCoder] = React.useState('')
+  const [content, setContent] = React.useState('')
+  const [currentIndex, setCurrentIndex] = React.useState(0)
+  const [messageType, setMessageType] = React.useState('')
+  const [i, setI] = React.useState(0)
+
   const containerRef = useRef<any>(null)
   useEffect(() => {
     containerRef?.current?.focus()
-    async function loadCode() {
+    const loadCode = async () => {
       let response = await fetch('code.txt')
       let text = await response.text()
-      return setSourceCoder(text)
+      setSourceCoder(text)
     }
     loadCode()
   }, [])
 
-  const showDenied = () => {
+  const showDenied = async () => {
     setMessageType('denied')
-    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-    ;(async () => {
-      await delay(3000)
-      setMessageType('')
-    })()
-    i = 0
+    await delayDefinition(3000)
+    setMessageType('')
+    setI(0)
   }
 
-  const showSuccess = () => {
+  const showSuccess = async () => {
     setMessageType('success')
-    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-    ;(async () => {
-      await delay(3000)
-      setMessageType('')
-    })()
-    i = 0
+    await delayDefinition(3000)
+    setMessageType('')
+    setI(0)
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Shift') {
-      i++
-      if (i === 3) showDenied()
+      setI(i + 1)
+      if (i === 2) showDenied()
     } else if (event.key === 'Control') {
-      i++
-      if (i === 3) showSuccess()
+      setI(i + 1)
+      if (i === 2) showSuccess()
     } else if (event.key === 'Escape') {
       setCurrentIndex(0)
     } else if (event.key !== 'Shift' && event.key !== 'Control' && event.key !== 'Escape') {

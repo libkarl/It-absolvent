@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet'
 import { theme } from '../../helpers/theme'
-import { useEffect, useRef, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import React from 'react'
@@ -79,7 +78,7 @@ const H1_CountedNumber = tw.h1`
     focus:border-blue-500 
     focus:ring-blue-500 
     shadow-sm 
-    text-white 
+    text-black 
     text-center
 
 `
@@ -153,7 +152,7 @@ type Actualnumber = {
   countednumber: number
 }
 
-class Counter extends React.Component<Click, Actualnumber> {
+export class Counter extends React.Component<Click, Actualnumber> {
   constructor(props: Click) {
     super(props)
     this.state = {
@@ -201,5 +200,3 @@ class Counter extends React.Component<Click, Actualnumber> {
     )
   }
 }
-
-export { Counter }

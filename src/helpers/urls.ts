@@ -10,9 +10,9 @@ export const urls = {
   jsHistoryTimeline: 'timeline',
   jsHistoryPossibilities: 'possibilities',
   jsHistoryTrend: 'trend',
-  jsHistoryPage: 'jshistory',
+  jsHistoryPage: 'js-history',
   hackerWritter: 'hackertyper',
-  toDoApp: 'todoapp',
+  toDoApp: 'todo-app',
   counter: 'counter',
   mainPage: '/',
 }
