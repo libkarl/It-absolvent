@@ -100,7 +100,7 @@ export const TaskLibrary = () => {
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Task_01-03</Div_TaskName>
+                    <Div_TaskName>JavaScript History</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -121,14 +121,14 @@ export const TaskLibrary = () => {
           </Tilt>
         </Link>
 
-        <Link to=''>
+        <Link to={urls.hackerWritter}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary src={laptop}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Task_04-empty</Div_TaskName>
+                    <Div_TaskName>Hacker Typer</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -140,24 +140,24 @@ export const TaskLibrary = () => {
                 </P_CardContent>
                 <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
-                  <Span_TaskPart>bestfriend</Span_TaskPart>
-                  <Span_TaskPart>buddy</Span_TaskPart>
-                  <Span_TaskPart>amigo</Span_TaskPart>
-                  <Span_TaskPart>family</Span_TaskPart>
+                  <Span_TaskPart>UseState</Span_TaskPart>
+                  <Span_TaskPart>Keyevents</Span_TaskPart>
+                  <Span_TaskPart>Reacthelmet</Span_TaskPart>
+                  <Span_TaskPart>Deploy App into Internet</Span_TaskPart>
                 </Div_TaskParts>
               </Div_Card>
             </Article_TaskLibrary>
           </Tilt>
         </Link>
 
-        <Link to=''>
+        <Link to={urls.counter}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary src={worktable}></Img_TaskLibrary>
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Task_5-empty</Div_TaskName>
+                    <Div_TaskName>Counter App</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
