@@ -18,9 +18,9 @@ const Div_HackerContainerDenied = styled.div`
 `
 
 const Div_HackerContainerGranted = styled.div`
- color: ${theme.colors.green};
- display: block;
- animation: accessAnimation 0.5s 2 0s linear;
+  color: ${theme.colors.green};
+  display: block;
+  animation: accessAnimation 0.5s 2 0s linear;
   font-size: 3rem;
   text-align: center;
   border: 2px solid;

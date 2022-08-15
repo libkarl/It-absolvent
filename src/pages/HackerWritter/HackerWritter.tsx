@@ -56,14 +56,13 @@ const Div_HackerHelp = styled.footer`
 `
 
 const CHARS_PER_STROKES = 5
+var content: string = ''
 
 export const HackerWritter = () => {
   const [sourceCoder, setSourceCoder] = React.useState('')
-  const [content, setContent] = React.useState('')
   const [currentIndex, setCurrentIndex] = React.useState(0)
   const [messageType, setMessageType] = React.useState('')
   const [i, setI] = React.useState(0)
-
   const containerRef = useRef<any>(null)
   useEffect(() => {
     containerRef?.current?.focus()
@@ -100,7 +99,7 @@ export const HackerWritter = () => {
       setCurrentIndex(0)
     } else if (event.key !== 'Shift' && event.key !== 'Control' && event.key !== 'Escape') {
       setCurrentIndex(currentIndex + CHARS_PER_STROKES)
-      setContent(sourceCoder.substring(0, currentIndex))
+      content = sourceCoder.substring(0, currentIndex)
     }
   }
 
