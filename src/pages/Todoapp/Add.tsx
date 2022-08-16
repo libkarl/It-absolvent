@@ -1,14 +1,35 @@
 import { IoMdAddCircle } from 'react-icons/io'
 import React from 'react'
+import tw from 'tailwind-styled-components'
+
+const Button_Add = tw.button`
+ flex 
+ justify-center 
+ items-center 
+ focus:ring-gray-400 
+ focus:ring-offset-gray-200 
+ text-white transition ease-in 
+ duration-200 
+ text-center 
+ text-base 
+ font-semibold 
+ focus:outline-none 
+ focus:ring-2 
+ focus:ring-offset-2  
+ w-8 
+ h-8 
+ rounded-2xl 
+ bg-yellow-400 
+ ml-1
+`
 
 type AddProps = {
   onClick(): void
 }
 
-const Add: React.FunctionComponent<AddProps> = ({ onClick }) => (
-  <button
+export const Add: React.FunctionComponent<AddProps> = ({ onClick }) => (
+  <Button_Add
     type='button'
-    className='flex justify-center items-center focus:ring-gray-400 focus:ring-offset-gray-200 text-white transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  w-8 h-8 rounded-2xl bg-yellow-400 ml-1'
     onClick={() =>
       setTimeout(() => {
         onClick()
@@ -21,7 +42,5 @@ const Add: React.FunctionComponent<AddProps> = ({ onClick }) => (
     }
   >
     <IoMdAddCircle size={50} />
-  </button>
+  </Button_Add>
 )
-
-export default Add
