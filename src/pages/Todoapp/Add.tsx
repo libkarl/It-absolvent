@@ -1,4 +1,5 @@
 import { IoMdAddCircle } from 'react-icons/io'
+import { delayDefinition } from '../../helpers/functions'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -30,16 +31,15 @@ type AddProps = {
 export const Add: React.FunctionComponent<AddProps> = ({ onClick }) => (
   <Button_Add
     type='button'
-    onClick={() =>
-      setTimeout(() => {
-        onClick()
-        let activeEl = document.activeElement
-        if (activeEl === null || !(activeEl instanceof HTMLElement)) {
-          return
-        }
-        activeEl.blur()
-      }, 300)
-    }
+    onClick={async () => {
+      await delayDefinition(300)
+      onClick()
+      let activeEl = document.activeElement
+      if (activeEl === null || !(activeEl instanceof HTMLElement)) {
+        return
+      }
+      activeEl.blur()
+    }}
   >
     <IoMdAddCircle size={50} />
   </Button_Add>

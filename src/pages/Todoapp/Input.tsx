@@ -9,7 +9,7 @@ const Form_Input = tw.form`
   gap-x-1
 `
 
-const Input_style = tw.form`
+const Input_style = tw.input`
   rounded-lg 
   border-transparent 
   flex-1 

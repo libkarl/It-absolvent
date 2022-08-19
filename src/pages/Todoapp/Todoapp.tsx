@@ -3,7 +3,11 @@ import { Delete } from './Delete'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { Edit } from './Edit'
 import { Input } from './Input'
-import React, { useState } from 'react'
+import { delayDefinition } from '../../helpers/functions'
+import { v1 } from 'uuid'
+import Button from '@mui/material/Button'
+import React, { useEffect, useState } from 'react'
+import Stack from '@mui/material/Stack'
 import tw from 'tailwind-styled-components'
 
 const Div_ToDoApp = tw.div`
@@ -70,56 +74,110 @@ const Label_Checkbox = tw.label`
   space-x-3 
   overflow-auto
 `
+const H1_ToDoApp = tw.h1`
+  text-xl 
+  text-center 
+  p-2 
+  font-serif
+`
+
 export const Todo = () => {
-  const [items, setItems] = useState<[boolean, string, string][]>([
-    [true, 'Welcome in my to do App!', '1'],
-    [false, 'Welcome in my to do App!', '2'],
-  ])
+  const getLocalStorage = (): [boolean, string, string][] => {
+    localStorage.setItem('inicialization', JSON.stringify('inicializace localStorage'))
+    if (localStorage.length === 1) {
+      localStorage.setItem('items', JSON.stringify([[true, 'Welcome in my to do App!', '1']]))
+      var parse = JSON.parse(localStorage.getItem('items') as string)
+      return Array.from(parse)
+    } else {
+      var parse = JSON.parse(localStorage.getItem('items') as string)
+      return Array.from(parse)
+    }
+  }
+  const [items, setItems] = useState<[boolean, string, string][]>(() => getLocalStorage())
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null)
-  const [counter, setCounter] = useState(4)
+  const [counter, setCounter] = useState(2)
 
-  function deleteItem(i: number) {
+  const deleteItem = (i: number) => {
     setItems(items => {
-      const newItems = [...items]
+      const newItems = getLocalStorage()
       newItems.splice(i, 1)
+      setTimeout(() => {
+        localStorage.setItem('items', JSON.stringify(newItems))
+      }, 20)
       return newItems
     })
   }
-  function addItem(item: string) {
+  const addItem = (item: string) => {
     setItems(items => {
-      const newItems = [...items]
-      newItems.push([false, item, String(counter)])
-      setCounter(counter => counter + 1)
+      const newItems = getLocalStorage()
+      newItems.push([false, item, v1()])
+      setTimeout(() => {
+        localStorage.setItem('items', JSON.stringify(newItems))
+      }, 20)
       return newItems
     })
   }
-  function editItem(i: number, item: string) {
+  const editItem = (i: number, item: string) => {
     setItems(items => {
-      const newItems = [...items]
+      const newItems = getLocalStorage()
       newItems[i][1] = item
+      setTimeout(() => {
+        localStorage.setItem('items', JSON.stringify(newItems))
+      }, 20)
       return newItems
     })
+  }
+
+  const setFilter = (a: string) => {
+    if (a === 'active') {
+      const newItems = getLocalStorage()
+      const state = newItems.filter(obj => {
+        return obj[0] === false
+      })
+      setItems(state)
+    } else if (a === 'done') {
+      const newItems = getLocalStorage()
+      const state = newItems.filter(obj => {
+        return obj[0] === true
+      })
+      setItems(state)
+    } else {
+      const newItems = getLocalStorage()
+      setItems(newItems)
+    }
   }
 
   const handleCheck = (i: number) => () => {
-    setItems(items => {
-      const newItems = [...items]
-
-      newItems[i][0] = false
-      setTimeout(() => {
+    const newItems = [...items]
+    const taskState: boolean = newItems[i][0]
+    if (taskState === true) {
+      setItems(items => {
+        newItems[i][0] = false
+        setTimeout(() => {
+          localStorage.setItem('items', JSON.stringify(newItems))
+        }, 20)
+        return newItems
+      })
+    } else {
+      setItems(items => {
         newItems[i][0] = true
-      }, 2000)
-      return newItems
-    })
+        setTimeout(() => {
+          localStorage.setItem('items', JSON.stringify(newItems))
+        }, 20)
+        return newItems
+      })
+    }
   }
 
-  function handleOnDragEnd(result: DropResult) {
+  const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
     const myitems = Array.from(items)
     const [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
-
+    setTimeout(() => {
+      localStorage.setItem('items', JSON.stringify(myitems))
+    }, 20)
     setItems(myitems)
   }
 
@@ -128,6 +186,20 @@ export const Todo = () => {
       <Droppable droppableId='characters'>
         {provided => (
           <Div_ToDoApp {...provided.droppableProps} ref={provided.innerRef}>
+            <H1_ToDoApp>To-Do App</H1_ToDoApp>
+            <Stack direction='row'>
+              <div className='flex gap-3 mx-auto'>
+                <Button variant='contained' onClick={() => setFilter('done')}>
+                  Done
+                </Button>
+                <Button variant='contained' onClick={() => setFilter('all')}>
+                  All
+                </Button>
+                <Button variant='contained' onClick={() => setFilter('active')}>
+                  Active
+                </Button>
+              </div>
+            </Stack>
             {items.map(([checked, desc, id], index: any) => (
               <Draggable key={id} draggableId={id} index={index}>
                 {provided => (

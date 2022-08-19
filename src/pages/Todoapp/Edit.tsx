@@ -1,4 +1,5 @@
 import { AiOutlineEdit } from 'react-icons/ai'
+import { delayDefinition } from '../../helpers/functions'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
@@ -30,16 +31,15 @@ type EditProps = {
 export const Edit: React.FunctionComponent<EditProps> = ({ onClick }) => (
   <Button_Edit
     type='button'
-    onClick={() =>
-      setTimeout(() => {
-        onClick()
-        let activeEl = document.activeElement
-        if (activeEl === null || !(activeEl instanceof HTMLElement)) {
-          return
-        }
-        activeEl.blur()
-      }, 300)
-    }
+    onClick={async () => {
+      await delayDefinition(300)
+      onClick()
+      let activeEl = document.activeElement
+      if (activeEl === null || !(activeEl instanceof HTMLElement)) {
+        return
+      }
+      activeEl.blur()
+    }}
   >
     <AiOutlineEdit size={40} />
   </Button_Edit>
