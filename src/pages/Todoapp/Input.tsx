@@ -54,9 +54,9 @@ interface InputProps {
   defaultAction: string
 }
 
-export const Input = (props: InputProps) => {
-  const myInput = React.useRef<HTMLInputElement>(null)
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+export const InputTask = (props: InputProps) => {
+  const myInput = React.useRef(null as null | HTMLInputElement)
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (props.addReminder && myInput.current) {
       props.addReminder(myInput.current?.value)
     }

@@ -2,8 +2,8 @@ import { Add } from './Add'
 import { Delete } from './Delete'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { Edit } from './Edit'
-import { Input } from './Input'
-import { delayDefinition } from '../../helpers/functions'
+import { InputTask } from './Input'
+import { delayDefinition, getLocalStorage, saveItems } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
 import React, { useEffect, useState } from 'react'
@@ -82,18 +82,7 @@ const H1_ToDoApp = tw.h1`
 `
 
 export const Todo = () => {
-  const getLocalStorage = (): [boolean, string, string][] => {
-    localStorage.setItem('inicialization', JSON.stringify('inicializace localStorage'))
-    if (localStorage.length === 1) {
-      localStorage.setItem('items', JSON.stringify([[true, 'Welcome in my to do App!', '1']]))
-      var parse = JSON.parse(localStorage.getItem('items') as string)
-      return Array.from(parse)
-    } else {
-      var parse = JSON.parse(localStorage.getItem('items') as string)
-      return Array.from(parse)
-    }
-  }
-  const [items, setItems] = useState<[boolean, string, string][]>(() => getLocalStorage())
+  const [items, setItems] = useState(() => getLocalStorage())
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null)
   const [counter, setCounter] = useState(2)
@@ -102,9 +91,7 @@ export const Todo = () => {
     setItems(items => {
       const newItems = getLocalStorage()
       newItems.splice(i, 1)
-      setTimeout(() => {
-        localStorage.setItem('items', JSON.stringify(newItems))
-      }, 20)
+      saveItems(newItems)
       return newItems
     })
   }
@@ -112,9 +99,7 @@ export const Todo = () => {
     setItems(items => {
       const newItems = getLocalStorage()
       newItems.push([false, item, v1()])
-      setTimeout(() => {
-        localStorage.setItem('items', JSON.stringify(newItems))
-      }, 20)
+      saveItems(newItems)
       return newItems
     })
   }
@@ -122,9 +107,7 @@ export const Todo = () => {
     setItems(items => {
       const newItems = getLocalStorage()
       newItems[i][1] = item
-      setTimeout(() => {
-        localStorage.setItem('items', JSON.stringify(newItems))
-      }, 20)
+      saveItems(newItems)
       return newItems
     })
   }
@@ -150,21 +133,16 @@ export const Todo = () => {
 
   const handleCheck = (i: number) => () => {
     const newItems = [...items]
-    const taskState: boolean = newItems[i][0]
-    if (taskState === true) {
+    if (newItems[i][0] === true) {
       setItems(items => {
         newItems[i][0] = false
-        setTimeout(() => {
-          localStorage.setItem('items', JSON.stringify(newItems))
-        }, 20)
+        saveItems(newItems)
         return newItems
       })
     } else {
       setItems(items => {
         newItems[i][0] = true
-        setTimeout(() => {
-          localStorage.setItem('items', JSON.stringify(newItems))
-        }, 20)
+        saveItems(newItems)
         return newItems
       })
     }
@@ -175,9 +153,7 @@ export const Todo = () => {
     const myitems = Array.from(items)
     const [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
-    setTimeout(() => {
-      localStorage.setItem('items', JSON.stringify(myitems))
-    }, 20)
+    saveItems(myitems)
     setItems(myitems)
   }
 
@@ -210,7 +186,7 @@ export const Todo = () => {
                     style={provided.draggableProps.style}
                   >
                     {index === itemToEdit ? (
-                      <Input
+                      <InputTask
                         addReminder={(reminder: string) => {
                           setItemToEdit(null)
                           editItem(index, reminder)
@@ -241,7 +217,7 @@ export const Todo = () => {
             ))}
             {provided.placeholder}
             {inputOpen ? (
-              <Input
+              <InputTask
                 addReminder={(reminder: string) => {
                   setInputOpen(false)
                   addItem(reminder)
