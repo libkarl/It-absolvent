@@ -3,7 +3,7 @@ import { Delete } from './Delete'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { Edit } from './Edit'
 import { InputTask } from './Input'
-import { delayDefinition, getLocalStorage, saveItems } from '../../helpers/functions'
+import { delayDefinition, useLocalStorage } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
 import React, { useEffect, useState } from 'react'
@@ -82,52 +82,54 @@ const H1_ToDoApp = tw.h1`
 `
 
 export const Todo = () => {
-  const [items, setItems] = useState(() => getLocalStorage())
+  const [items, setItems] = useLocalStorage()
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null)
   const [counter, setCounter] = useState(2)
+  const [filter, setFilter] = useState<[boolean, string, string][]>(items)
 
   const deleteItem = (i: number) => {
     setItems(items => {
-      const newItems = getLocalStorage()
+      const newItems = [...items]
       newItems.splice(i, 1)
-      saveItems(newItems)
+      setFilter(newItems)
       return newItems
     })
   }
   const addItem = (item: string) => {
     setItems(items => {
-      const newItems = getLocalStorage()
+      const newItems = [...items]
       newItems.push([false, item, v1()])
-      saveItems(newItems)
+      setFilter(newItems)
       return newItems
     })
   }
   const editItem = (i: number, item: string) => {
     setItems(items => {
-      const newItems = getLocalStorage()
+      const newItems = [...items]
       newItems[i][1] = item
-      saveItems(newItems)
+      setFilter(newItems)
       return newItems
     })
   }
 
-  const setFilter = (a: string) => {
+  const newFilter = (a: string): void => {
     if (a === 'active') {
-      const newItems = getLocalStorage()
+      const newItems = [...items]
       const state = newItems.filter(obj => {
         return obj[0] === false
       })
-      setItems(state)
+      setFilter(state)
     } else if (a === 'done') {
-      const newItems = getLocalStorage()
+      const newItems = [...items]
+
       const state = newItems.filter(obj => {
         return obj[0] === true
       })
-      setItems(state)
+      setFilter(state)
     } else {
-      const newItems = getLocalStorage()
-      setItems(newItems)
+      const newItems = [...items]
+      return setFilter(newItems)
     }
   }
 
@@ -136,13 +138,13 @@ export const Todo = () => {
     if (newItems[i][0] === true) {
       setItems(items => {
         newItems[i][0] = false
-        saveItems(newItems)
+        setFilter(newItems)
         return newItems
       })
     } else {
       setItems(items => {
         newItems[i][0] = true
-        saveItems(newItems)
+        setFilter(newItems)
         return newItems
       })
     }
@@ -153,8 +155,8 @@ export const Todo = () => {
     const myitems = Array.from(items)
     const [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
-    saveItems(myitems)
     setItems(myitems)
+    setFilter(myitems)
   }
 
   return (
@@ -165,18 +167,18 @@ export const Todo = () => {
             <H1_ToDoApp>To-Do App</H1_ToDoApp>
             <Stack direction='row'>
               <div className='flex gap-3 mx-auto'>
-                <Button variant='contained' onClick={() => setFilter('done')}>
+                <Button variant='contained' onClick={() => newFilter('done')}>
                   Done
                 </Button>
-                <Button variant='contained' onClick={() => setFilter('all')}>
+                <Button variant='contained' onClick={() => newFilter('all')}>
                   All
                 </Button>
-                <Button variant='contained' onClick={() => setFilter('active')}>
+                <Button variant='contained' onClick={() => newFilter('active')}>
                   Active
                 </Button>
               </div>
             </Stack>
-            {items.map(([checked, desc, id], index: any) => (
+            {filter.map(([checked, desc, id], index: any) => (
               <Draggable key={id} draggableId={id} index={index}>
                 {provided => (
                   <div

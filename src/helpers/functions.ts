@@ -1,3 +1,4 @@
+import { v1 } from 'uuid'
 import React, { useEffect, useState } from 'react'
 
 type ActiveDocProps = {
@@ -14,19 +15,23 @@ export const activeDoc = (props: ActiveDocProps) => async () => {
   }
   activeEl.blur()
 }
-export const saveItems = async (newItems: Array<[boolean, string, string]>) => {
-  await delayDefinition(20)
-  localStorage.setItem('items', JSON.stringify(newItems))
-}
 
-export const getLocalStorage = (): [boolean, string, string][] => {
-  localStorage.setItem('inicialization', JSON.stringify('inicializace localStorage'))
-  if (localStorage.length === 1) {
-    localStorage.setItem('items', JSON.stringify([[true, 'Welcome in my to do App!', '1']]))
-    var parse = JSON.parse(localStorage.getItem('items') as string)
-    return Array.from(parse)
-  } else {
-    var parse = JSON.parse(localStorage.getItem('items') as string)
-    return Array.from(parse)
-  }
+export const useLocalStorage = () => {
+  const [items, setItems] = useState((): [boolean, string, string][] => {
+    let currentValue: [boolean, string, string][] = []
+    try {
+      currentValue = Array.from(JSON.parse(localStorage.getItem('items') as string))
+      return currentValue
+    } catch (error) {
+      console.log(error)
+      currentValue[0] = [true, 'Welcome in my to do App!', v1()]
+      return currentValue
+    }
+  })
+
+  useEffect(() => {
+    localStorage.setItem('items', JSON.stringify(items))
+  }, [items])
+
+  return [items, setItems] as const
 }

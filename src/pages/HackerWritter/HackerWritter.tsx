@@ -119,8 +119,8 @@ export const HackerWritter = () => {
         </Helmet>
         <Div_HackerSource>{content}</Div_HackerSource>
         <Div_HackerHelp>
-          How to get access granted in hacker typer? Hit Control 3 times. How to get access denied
-          in hacker typer hit SHIFT 3 times. How can I clear output? Hit Escape + random key.
+          How to get access granted in hacker app? Hit Control 3 times. How to get access denied in
+          hacker app hit SHIFT 3 times. How can I clear output? Hit Escape + random key.
         </Div_HackerHelp>
       </Div_HackerContainer>
       <Message message={messageType} />
