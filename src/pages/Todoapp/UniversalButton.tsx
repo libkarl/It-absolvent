@@ -1,10 +1,9 @@
-import { AiOutlineDelete } from 'react-icons/ai'
+import { IconType } from 'react-icons'
 import { activeDoc } from '../../helpers/functions'
-import { delayDefinition } from '../../helpers/functions'
 import React from 'react'
 import tw from 'tailwind-styled-components'
 
-const Button_Delete = tw.button`
+const Button = tw.button`
   flex 
   justify-center 
   items-center 
@@ -20,17 +19,19 @@ const Button_Delete = tw.button`
   focus:outline-none 
   focus:ring-2 
   focus:ring-offset-2  
-  w-6 
-  h-6 
+  w-8 
+  h-8 
   rounded-xl 
 `
 
-type DeleteProps = {
+type ButtonProps = {
   onClick(): void
+  icon: IconType
+  size: number
 }
 
-export const Delete = (props: DeleteProps) => (
-  <Button_Delete type='button' onClick={activeDoc(props)}>
-    <AiOutlineDelete size={40} />
-  </Button_Delete>
+export const UniversalButton = (props: ButtonProps) => (
+  <Button type='button' onClick={activeDoc(props)}>
+    <props.icon size={props.size} />
+  </Button>
 )

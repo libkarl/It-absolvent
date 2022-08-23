@@ -1,12 +1,13 @@
-import { Add } from './Add'
-import { Delete } from './Delete'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineEdit } from 'react-icons/ai'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
-import { Edit } from './Edit'
 import { InputTask } from './Input'
+import { IoMdAddCircle } from 'react-icons/io'
+import { UniversalButton } from './UniversalButton'
 import { delayDefinition, useLocalStorage } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
-import React, { useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import Stack from '@mui/material/Stack'
 import tw from 'tailwind-styled-components'
 
@@ -82,29 +83,35 @@ const H1_ToDoApp = tw.h1`
 `
 
 export const Todo = () => {
-  const [items, setItems] = useLocalStorage()
+  const [items, setItems] = useLocalStorage<[boolean, string, string][]>('tasks', [
+    [true, 'Welcome in my to do App!', v1()],
+  ])
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null)
   const [counter, setCounter] = useState(2)
   const [filter, setFilter] = useState<[boolean, string, string][]>(items)
 
   const deleteItem = (i: string) => {
-    var newItems = [...items]
-    newItems = newItems.filter(el => {
+    const newItems = [...items]
+    var filtredItems = newItems.filter(el => {
       return el[2] !== i
     })
-    setFilter(newItems)
-    setItems(newItems)
+    setFilter(filtredItems)
+    setItems(filtredItems)
   }
   const addItem = (item: string) => {
-    var newItems: [boolean, string, string][] = [...items, [false, item, v1()]]
+    const newItems: [boolean, string, string][] = [...items, [false, item, v1()]]
     setFilter(newItems)
     setItems(newItems)
   }
   const editItem = (i: string, item: string) => {
-    var newItems = [...items]
+    const newItems = [...items]
     let foundIndex = newItems.findIndex(element => element[2] === i)
-    newItems[foundIndex][1] = item
+    newItems.map((currElement, index) => {
+      if (index === foundIndex) {
+        currElement[1] = item
+      }
+    })
     setFilter(newItems)
     setItems(newItems)
   }
@@ -127,14 +134,22 @@ export const Todo = () => {
   }
 
   const handleCheck = (i: string) => () => {
-    var newItems = [...items]
+    const newItems = [...items]
     let foundIndex = newItems.findIndex(element => element[2] === i)
     if (newItems[foundIndex][0] === true) {
-      newItems[foundIndex][0] = false
+      newItems.map((currElement, index) => {
+        if (index === foundIndex) {
+          currElement[0] = false
+        }
+      })
       setFilter(newItems)
       setItems(newItems)
     } else {
-      newItems[foundIndex][0] = true
+      newItems.map((currElement, index) => {
+        if (index === foundIndex) {
+          currElement[0] = true
+        }
+      })
       setFilter(newItems)
       setItems(newItems)
     }
@@ -142,8 +157,8 @@ export const Todo = () => {
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
-    var myitems = Array.from(items)
-    var [reorderedItem] = myitems.splice(result.source.index, 1)
+    const myitems = Array.from(items)
+    const [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
     setItems(myitems)
     setFilter(myitems)
@@ -168,8 +183,8 @@ export const Todo = () => {
                 </Button>
               </div>
             </Stack>
-            {filter.map(([checked, desc, id], index: any) => (
-              <Draggable key={id} draggableId={id} index={index}>
+            {filter.map(([checked, desc, id], index: SetStateAction<null> | number) => (
+              <Draggable key={id} draggableId={id} index={index as number}>
                 {provided => (
                   <div
                     ref={provided.innerRef}
@@ -198,8 +213,16 @@ export const Todo = () => {
                         </Label_Checkbox>
                         <Span_TaskLine>{desc}</Span_TaskLine>
                         <Span_TaskEdit>
-                          <Edit onClick={() => setItemToEdit(index)} />
-                          <Delete onClick={() => deleteItem(id)} />
+                          <UniversalButton
+                            onClick={() => setItemToEdit(index as SetStateAction<null>)}
+                            icon={AiOutlineEdit}
+                            size={40}
+                          ></UniversalButton>
+                          <UniversalButton
+                            onClick={() => deleteItem(id)}
+                            icon={AiOutlineDelete}
+                            size={40}
+                          ></UniversalButton>
                         </Span_TaskEdit>
                       </Div_TodoItem>
                     )}
@@ -218,7 +241,11 @@ export const Todo = () => {
                 defaultAction={'Add'}
               />
             ) : (
-              <Add onClick={() => setInputOpen(true)} />
+              <UniversalButton
+                onClick={() => setInputOpen(true)}
+                icon={IoMdAddCircle}
+                size={50}
+              ></UniversalButton>
             )}
           </Div_ToDoApp>
         )}

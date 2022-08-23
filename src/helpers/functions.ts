@@ -1,11 +1,13 @@
 import { v1 } from 'uuid'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 type ActiveDocProps = {
   onClick(): void
 }
 
 export const delayDefinition = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+// The activeElement returns the deepest element in the document through which or to which key events are being routed.
+// When i got access to the activeElement i can use blur for him.
 export const activeDoc = (props: ActiveDocProps) => async () => {
   await delayDefinition(300)
   props.onClick()
@@ -16,22 +18,32 @@ export const activeDoc = (props: ActiveDocProps) => async () => {
   activeEl.blur()
 }
 
-export const useLocalStorage = () => {
-  const [items, setItems] = useState((): [boolean, string, string][] => {
-    let currentValue: [boolean, string, string][] = []
+export function useLocalStorage<T>(key: string, initialValue?: T) {
+  const [value, setValue] = useState<T>(() => {
     try {
-      currentValue = Array.from(JSON.parse(localStorage.getItem('items') as string))
-      return currentValue
+      const item = window.localStorage.getItem(key)
+      return item ? JSON.parse(item) : initialValue
     } catch (error) {
       console.log(error)
-      currentValue[0] = [true, 'Welcome in my to do App!', v1()]
-      return currentValue
+      return initialValue
     }
   })
 
-  useEffect(() => {
-    localStorage.setItem('items', JSON.stringify(items))
-  }, [items])
+  const setStoredValue = useCallback(
+    (val: React.SetStateAction<T>) => {
+      try {
+        const valueToStore = val instanceof Function ? val(value) : val
+        window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [value, key]
+  )
 
-  return [items, setItems] as const
+  useEffect(() => {
+    setStoredValue(value)
+  }, [value, setStoredValue])
+
+  return [value, setValue] as const
 }
