@@ -88,10 +88,10 @@ export const Todo = () => {
   const [counter, setCounter] = useState(2)
   const [filter, setFilter] = useState<[boolean, string, string][]>(items)
 
-  const deleteItem = (i: number) => {
+  const deleteItem = (i: string) => {
     var newItems = [...items]
-    newItems = newItems.filter(ele => {
-      return ele !== newItems[i]
+    newItems = newItems.filter(el => {
+      return el[2] !== i
     })
     setFilter(newItems)
     setItems(newItems)
@@ -101,9 +101,10 @@ export const Todo = () => {
     setFilter(newItems)
     setItems(newItems)
   }
-  const editItem = (i: number, item: string) => {
+  const editItem = (i: string, item: string) => {
     var newItems = [...items]
-    newItems[i][1] = item
+    let foundIndex = newItems.findIndex(element => element[2] === i)
+    newItems[foundIndex][1] = item
     setFilter(newItems)
     setItems(newItems)
   }
@@ -125,14 +126,15 @@ export const Todo = () => {
     }
   }
 
-  const handleCheck = (i: number) => () => {
+  const handleCheck = (i: string) => () => {
     var newItems = [...items]
-    if (newItems[i][0] === true) {
-      newItems[i][0] = false
+    let foundIndex = newItems.findIndex(element => element[2] === i)
+    if (newItems[foundIndex][0] === true) {
+      newItems[foundIndex][0] = false
       setFilter(newItems)
       setItems(newItems)
     } else {
-      newItems[i][0] = true
+      newItems[foundIndex][0] = true
       setFilter(newItems)
       setItems(newItems)
     }
@@ -179,7 +181,7 @@ export const Todo = () => {
                       <InputTask
                         addReminder={(reminder: string) => {
                           setItemToEdit(null)
-                          editItem(index, reminder)
+                          editItem(id, reminder)
                         }}
                         defaultAction='Edit'
                         initialValue={desc}
@@ -190,14 +192,14 @@ export const Todo = () => {
                           <Input_Checkbox
                             type='checkbox'
                             name='checked-demo'
-                            onChange={handleCheck(index)}
+                            onChange={handleCheck(id)}
                             checked={checked}
                           />
                         </Label_Checkbox>
                         <Span_TaskLine>{desc}</Span_TaskLine>
                         <Span_TaskEdit>
                           <Edit onClick={() => setItemToEdit(index)} />
-                          <Delete onClick={() => deleteItem(index)} />
+                          <Delete onClick={() => deleteItem(id)} />
                         </Span_TaskEdit>
                       </Div_TodoItem>
                     )}
