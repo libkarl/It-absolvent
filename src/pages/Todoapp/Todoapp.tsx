@@ -6,7 +6,7 @@ import { InputTask } from './Input'
 import { delayDefinition, useLocalStorage } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Stack from '@mui/material/Stack'
 import tw from 'tailwind-styled-components'
 
@@ -89,71 +89,59 @@ export const Todo = () => {
   const [filter, setFilter] = useState<[boolean, string, string][]>(items)
 
   const deleteItem = (i: number) => {
-    setItems(items => {
-      const newItems = [...items]
-      newItems.splice(i, 1)
-      setFilter(newItems)
-      return newItems
+    var newItems = [...items]
+    newItems = newItems.filter(ele => {
+      return ele !== newItems[i]
     })
+    setFilter(newItems)
+    setItems(newItems)
   }
   const addItem = (item: string) => {
-    setItems(items => {
-      const newItems = [...items]
-      newItems.push([false, item, v1()])
-      setFilter(newItems)
-      return newItems
-    })
+    var newItems: [boolean, string, string][] = [...items, [false, item, v1()]]
+    setFilter(newItems)
+    setItems(newItems)
   }
   const editItem = (i: number, item: string) => {
-    setItems(items => {
-      const newItems = [...items]
-      newItems[i][1] = item
-      setFilter(newItems)
-      return newItems
-    })
+    var newItems = [...items]
+    newItems[i][1] = item
+    setFilter(newItems)
+    setItems(newItems)
   }
 
   const newFilter = (a: string): void => {
     if (a === 'active') {
-      const newItems = [...items]
-      const state = newItems.filter(obj => {
+      var state = items.filter(obj => {
         return obj[0] === false
       })
       setFilter(state)
     } else if (a === 'done') {
-      const newItems = [...items]
-
-      const state = newItems.filter(obj => {
+      var state = items.filter(obj => {
         return obj[0] === true
       })
       setFilter(state)
     } else {
-      const newItems = [...items]
+      var newItems = [...items]
       return setFilter(newItems)
     }
   }
 
   const handleCheck = (i: number) => () => {
-    const newItems = [...items]
+    var newItems = [...items]
     if (newItems[i][0] === true) {
-      setItems(items => {
-        newItems[i][0] = false
-        setFilter(newItems)
-        return newItems
-      })
+      newItems[i][0] = false
+      setFilter(newItems)
+      setItems(newItems)
     } else {
-      setItems(items => {
-        newItems[i][0] = true
-        setFilter(newItems)
-        return newItems
-      })
+      newItems[i][0] = true
+      setFilter(newItems)
+      setItems(newItems)
     }
   }
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
-    const myitems = Array.from(items)
-    const [reorderedItem] = myitems.splice(result.source.index, 1)
+    var myitems = Array.from(items)
+    var [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
     setItems(myitems)
     setFilter(myitems)
