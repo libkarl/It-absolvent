@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
@@ -87,12 +88,15 @@ export const Todo = () => {
     [true, 'Welcome in my to do App!', v1()],
   ])
   const [inputOpen, setInputOpen] = useState(false)
-  const [itemToEdit, setItemToEdit] = useState(null)
-  const [counter, setCounter] = useState(2)
-  const [filter, setFilter] = useState<[boolean, string, string][]>(items)
+  const [itemToEdit, setItemToEdit] = useState<number | null>(null)
+  const [filter, setFilter] = useState((): [boolean, string, string][] => {
+    const newItems: [boolean, string, string][] = items.map(i => [...i])
+    return newItems
+  })
 
   const deleteItem = (i: string) => {
-    const newItems = [...items]
+    // map + spread to copy array
+    const newItems: [boolean, string, string][] = items.map(i => [...i])
     var filtredItems = newItems.filter(el => {
       return el[2] !== i
     })
@@ -100,12 +104,11 @@ export const Todo = () => {
     setItems(filtredItems)
   }
   const addItem = (item: string) => {
-    const newItems: [boolean, string, string][] = [...items, [false, item, v1()]]
-    setFilter(newItems)
-    setItems(newItems)
+    setFilter(p => [...p, [false, item, v1()]])
+    setItems(p => [...p, [false, item, v1()]])
   }
   const editItem = (i: string, item: string) => {
-    const newItems = [...items]
+    const newItems: [boolean, string, string][] = items.map(i => [...i])
     let foundIndex = newItems.findIndex(element => element[2] === i)
     newItems.map((currElement, index) => {
       if (index === foundIndex) {
@@ -116,25 +119,25 @@ export const Todo = () => {
     setItems(newItems)
   }
 
-  const newFilter = (a: string): void => {
-    if (a === 'active') {
+  const newFilter = (filterType: string) => {
+    if (filterType === 'active') {
       var state = items.filter(obj => {
         return obj[0] === false
       })
       setFilter(state)
-    } else if (a === 'done') {
+    } else if (filterType === 'done') {
       var state = items.filter(obj => {
         return obj[0] === true
       })
       setFilter(state)
     } else {
-      var newItems = [...items]
+      const newItems: [boolean, string, string][] = items.map(i => [...i])
       return setFilter(newItems)
     }
   }
 
   const handleCheck = (i: string) => () => {
-    const newItems = [...items]
+    const newItems: [boolean, string, string][] = items.map(i => [...i])
     let foundIndex = newItems.findIndex(element => element[2] === i)
     if (newItems[foundIndex][0] === true) {
       newItems.map((currElement, index) => {
@@ -183,8 +186,8 @@ export const Todo = () => {
                 </Button>
               </div>
             </Stack>
-            {filter.map(([checked, desc, id], index: SetStateAction<null> | number) => (
-              <Draggable key={id} draggableId={id} index={index as number}>
+            {filter.map(([checked, desc, id], index: number) => (
+              <Draggable key={id} draggableId={id} index={index}>
                 {provided => (
                   <div
                     ref={provided.innerRef}
@@ -214,7 +217,7 @@ export const Todo = () => {
                         <Span_TaskLine>{desc}</Span_TaskLine>
                         <Span_TaskEdit>
                           <UniversalButton
-                            onClick={() => setItemToEdit(index as SetStateAction<null>)}
+                            onClick={() => setItemToEdit(index)}
                             icon={AiOutlineEdit}
                             size={40}
                           ></UniversalButton>
