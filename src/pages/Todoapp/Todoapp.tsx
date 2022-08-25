@@ -95,28 +95,19 @@ export const Todo = () => {
   })
 
   const deleteItem = (i: string) => {
-    // map + spread to copy array
-    const newItems: [boolean, string, string][] = items.map(i => [...i])
-    var filtredItems = newItems.filter(el => {
-      return el[2] !== i
+    // map + filter foro state
+    setItems(() => {
+      setFilter(items.filter(el => el[2] !== i))
+      return items.filter(el => el[2] !== i)
     })
-    setFilter(filtredItems)
-    setItems(filtredItems)
   }
   const addItem = (item: string) => {
     setFilter(p => [...p, [false, item, v1()]])
     setItems(p => [...p, [false, item, v1()]])
   }
   const editItem = (i: string, item: string) => {
-    const newItems: [boolean, string, string][] = items.map(i => [...i])
-    let foundIndex = newItems.findIndex(element => element[2] === i)
-    newItems.map((currElement, index) => {
-      if (index === foundIndex) {
-        currElement[1] = item
-      }
-    })
-    setFilter(newItems)
-    setItems(newItems)
+    setFilter(items.map(el => (el[2] === i ? [el[0], (el[1] = item), el[2]] : el)))
+    setItems(items.map(el => (el[2] === i ? [el[0], (el[1] = item), el[2]] : el)))
   }
 
   const newFilter = (filterType: string) => {
