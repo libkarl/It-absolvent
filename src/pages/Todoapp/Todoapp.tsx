@@ -88,7 +88,7 @@ export const Todo = () => {
     [true, 'Welcome in my to do App!', v1()],
   ])
   const [inputOpen, setInputOpen] = useState(false)
-  const [itemToEdit, setItemToEdit] = useState<number | null>(null)
+  const [itemToEdit, setItemToEdit] = useState<string | null>(null)
   const [filter, setFilter] = useState((): [boolean, string, string][] => {
     const newItems: [boolean, string, string][] = items.map(i => [...i])
     return newItems
@@ -105,9 +105,17 @@ export const Todo = () => {
     setFilter(p => [...p, [false, item, v1()]])
     setItems(p => [...p, [false, item, v1()]])
   }
-  const editItem = (i: string, item: string) => {
-    setFilter(items.map(el => (el[2] === i ? [el[0], (el[1] = item), el[2]] : el)))
-    setItems(items.map(el => (el[2] === i ? [el[0], (el[1] = item), el[2]] : el)))
+  const editItem = async (i: string, item: string) => {
+    setItems(
+      items.map(el => {
+        if (el[2] === i) {
+          el[1] = item
+          return el
+        }
+        return el
+      })
+    )
+    setFilter(items)
   }
 
   const newFilter = (filterType: string) => {
@@ -122,31 +130,24 @@ export const Todo = () => {
       })
       setFilter(state)
     } else {
-      const newItems: [boolean, string, string][] = items.map(i => [...i])
-      return setFilter(newItems)
+      return setFilter(items.map(i => [...i]))
     }
   }
 
   const handleCheck = (i: string) => () => {
-    const newItems: [boolean, string, string][] = items.map(i => [...i])
-    let foundIndex = newItems.findIndex(element => element[2] === i)
-    if (newItems[foundIndex][0] === true) {
-      newItems.map((currElement, index) => {
-        if (index === foundIndex) {
-          currElement[0] = false
+    setItems(
+      items.map(el => {
+        if (el[2] === i && el[0] === true) {
+          el[0] = false
+          return el
+        } else if (el[2] === i && el[0] === false) {
+          el[0] = true
+          return el
         }
+        return el
       })
-      setFilter(newItems)
-      setItems(newItems)
-    } else {
-      newItems.map((currElement, index) => {
-        if (index === foundIndex) {
-          currElement[0] = true
-        }
-      })
-      setFilter(newItems)
-      setItems(newItems)
-    }
+    )
+    setFilter(items)
   }
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -186,7 +187,7 @@ export const Todo = () => {
                     {...provided.dragHandleProps}
                     style={provided.draggableProps.style}
                   >
-                    {index === itemToEdit ? (
+                    {id === itemToEdit ? (
                       <InputTask
                         addReminder={(reminder: string) => {
                           setItemToEdit(null)
@@ -208,7 +209,7 @@ export const Todo = () => {
                         <Span_TaskLine>{desc}</Span_TaskLine>
                         <Span_TaskEdit>
                           <UniversalButton
-                            onClick={() => setItemToEdit(index)}
+                            onClick={() => setItemToEdit(id)}
                             icon={AiOutlineEdit}
                             size={40}
                           ></UniversalButton>
