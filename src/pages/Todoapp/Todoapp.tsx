@@ -83,71 +83,67 @@ const H1_ToDoApp = tw.h1`
   font-serif
 `
 
+const Div_FilterContainer = tw.h1`
+  flex 
+  gap-3 
+  mx-auto
+`
+
+type Task = {
+  state: boolean
+  text: string
+  id: string
+}
+
+const initialState: Task = {
+  state: true,
+  text: 'Welcome in my to do App!',
+  id: v1(),
+}
+
 export const Todo = () => {
-  const [items, setItems] = useLocalStorage<[boolean, string, string][]>('tasks', [
-    [true, 'Welcome in my to do App!', v1()],
-  ])
+  const [items, setItems] = useLocalStorage<Task[]>('tasks', [initialState])
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState<string | null>(null)
-  const [filter, setFilter] = useState((): [boolean, string, string][] => {
-    const newItems: [boolean, string, string][] = items.map(i => [...i])
-    return newItems
+  const [filter, setFilter] = useState((): Task[] => {
+    return items
   })
 
   const deleteItem = (i: string) => {
     // map + filter foro state
     setItems(() => {
-      setFilter(items.filter(el => el[2] !== i))
-      return items.filter(el => el[2] !== i)
+      setFilter(items.filter(el => el.id !== i))
+      return items.filter(el => el.id !== i)
     })
   }
   const addItem = (item: string) => {
-    setFilter(p => [...p, [false, item, v1()]])
-    setItems(p => [...p, [false, item, v1()]])
+    setFilter([{ state: false, text: item, id: v1() }, ...items])
+    setItems([{ state: false, text: item, id: v1() }, ...items])
   }
   const editItem = async (i: string, item: string) => {
-    setItems(
-      items.map(el => {
-        if (el[2] === i) {
-          el[1] = item
-          return el
-        }
-        return el
-      })
-    )
-    setFilter(items)
+    setItems(items.map(el => (el.id === i ? { ...el, text: item } : el)))
+    setFilter(items.map(el => (el.id === i ? { ...el, text: item } : el)))
   }
 
   const newFilter = (filterType: string) => {
     if (filterType === 'active') {
       var state = items.filter(obj => {
-        return obj[0] === false
+        return obj.state === false
       })
       setFilter(state)
     } else if (filterType === 'done') {
       var state = items.filter(obj => {
-        return obj[0] === true
+        return obj.state === true
       })
       setFilter(state)
     } else {
-      return setFilter(items.map(i => [...i]))
+      return setFilter(items)
     }
   }
 
-  const handleCheck = (i: string) => () => {
-    setItems(
-      items.map(el => {
-        if (el[2] === i && el[0] === true) {
-          el[0] = false
-          return el
-        } else if (el[2] === i && el[0] === false) {
-          el[0] = true
-          return el
-        }
-        return el
-      })
-    )
-    setFilter(items)
+  const handleCheck = (i: string, state: boolean) => () => {
+    setItems(items.map(el => (el.id === i ? { ...el, state: !state } : el)))
+    setFilter(items.map(el => (el.id === i ? { ...el, state: !state } : el)))
   }
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -166,7 +162,7 @@ export const Todo = () => {
           <Div_ToDoApp {...provided.droppableProps} ref={provided.innerRef}>
             <H1_ToDoApp>To-Do App</H1_ToDoApp>
             <Stack direction='row'>
-              <div className='flex gap-3 mx-auto'>
+              <Div_FilterContainer className='flex gap-3 mx-auto'>
                 <Button variant='contained' onClick={() => newFilter('done')}>
                   Done
                 </Button>
@@ -176,9 +172,9 @@ export const Todo = () => {
                 <Button variant='contained' onClick={() => newFilter('active')}>
                   Active
                 </Button>
-              </div>
+              </Div_FilterContainer>
             </Stack>
-            {filter.map(([checked, desc, id], index: number) => (
+            {filter.map(({ state, text, id }, index: number) => (
               <Draggable key={id} draggableId={id} index={index}>
                 {provided => (
                   <div
@@ -194,7 +190,7 @@ export const Todo = () => {
                           editItem(id, reminder)
                         }}
                         defaultAction='Edit'
-                        initialValue={desc}
+                        initialValue={text}
                       />
                     ) : (
                       <Div_TodoItem key={id}>
@@ -202,11 +198,11 @@ export const Todo = () => {
                           <Input_Checkbox
                             type='checkbox'
                             name='checked-demo'
-                            onChange={handleCheck(id)}
-                            checked={checked}
+                            onChange={handleCheck(id, state)}
+                            checked={state}
                           />
                         </Label_Checkbox>
-                        <Span_TaskLine>{desc}</Span_TaskLine>
+                        <Span_TaskLine>{text}</Span_TaskLine>
                         <Span_TaskEdit>
                           <UniversalButton
                             onClick={() => setItemToEdit(id)}
