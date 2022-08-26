@@ -88,62 +88,50 @@ const Div_FilterContainer = tw.h1`
   gap-3 
   mx-auto
 `
+type FilterValuesType = 'all' | 'active' | 'done'
 
 type Task = {
-  state: boolean
+  checked: boolean
   text: string
   id: string
 }
 
-const initialState: Task = {
-  state: true,
+const initialStateItems = {
+  checked: true,
   text: 'Welcome in my to do App!',
   id: v1(),
 }
 
 export const Todo = () => {
-  const [items, setItems] = useLocalStorage<Task[]>('tasks', [initialState])
+  const [items, setItems] = useLocalStorage('tasks', [initialStateItems] as Task[])
   const [inputOpen, setInputOpen] = useState(false)
-  const [itemToEdit, setItemToEdit] = useState<string | null>(null)
-  const [filter, setFilter] = useState((): Task[] => {
-    return items
-  })
+  const [itemToEdit, setItemToEdit] = useState(null as string | null)
+  const [filter, setFilter] = useState('all' as FilterValuesType)
 
-  const deleteItem = (i: string) => {
-    // map + filter foro state
-    setItems(() => {
-      setFilter(items.filter(el => el.id !== i))
-      return items.filter(el => el.id !== i)
-    })
+  var FiltredContent: Task[] = [initialStateItems]
+
+  const deleteItem = (id: string) => {
+    setItems(items.filter(el => el.id !== id))
   }
   const addItem = (item: string) => {
-    setFilter([{ state: false, text: item, id: v1() }, ...items])
-    setItems([{ state: false, text: item, id: v1() }, ...items])
+    setItems([{ checked: false, text: item, id: v1() }, ...items])
   }
-  const editItem = async (i: string, item: string) => {
-    setItems(items.map(el => (el.id === i ? { ...el, text: item } : el)))
-    setFilter(items.map(el => (el.id === i ? { ...el, text: item } : el)))
+  const editItem = async (id: string, item: string) => {
+    setItems(items.map(el => (el.id === id ? { ...el, text: item } : el)))
   }
 
   const newFilter = (filterType: string) => {
-    if (filterType === 'active') {
-      var state = items.filter(obj => {
-        return obj.state === false
-      })
-      setFilter(state)
+    if (filter === 'active') {
+      FiltredContent = items.filter(obj => obj.checked === false)
     } else if (filterType === 'done') {
-      var state = items.filter(obj => {
-        return obj.state === true
-      })
-      setFilter(state)
+      FiltredContent = items.filter(obj => obj.checked === false)
     } else {
-      return setFilter(items)
+      FiltredContent = items
     }
   }
 
-  const handleCheck = (i: string, state: boolean) => () => {
-    setItems(items.map(el => (el.id === i ? { ...el, state: !state } : el)))
-    setFilter(items.map(el => (el.id === i ? { ...el, state: !state } : el)))
+  const handleCheck = (id: string, checked: boolean) => () => {
+    setItems(prevItems => prevItems.map(el => (el.id === id ? { ...el, checked: !checked } : el)))
   }
 
   const handleOnDragEnd = (result: DropResult) => {
@@ -152,7 +140,6 @@ export const Todo = () => {
     const [reorderedItem] = myitems.splice(result.source.index, 1)
     myitems.splice(result.destination.index, 0, reorderedItem)
     setItems(myitems)
-    setFilter(myitems)
   }
 
   return (
@@ -174,7 +161,7 @@ export const Todo = () => {
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {filter.map(({ state, text, id }, index: number) => (
+            {FiltredContent.map(({ checked, text, id }, index: number) => (
               <Draggable key={id} draggableId={id} index={index}>
                 {provided => (
                   <div
@@ -198,8 +185,8 @@ export const Todo = () => {
                           <Input_Checkbox
                             type='checkbox'
                             name='checked-demo'
-                            onChange={handleCheck(id, state)}
-                            checked={state}
+                            onChange={handleCheck(id, checked)}
+                            checked={checked}
                           />
                         </Label_Checkbox>
                         <Span_TaskLine>{text}</Span_TaskLine>
