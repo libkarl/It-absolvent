@@ -5,10 +5,10 @@ import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
 import { UniversalButton } from './UniversalButton'
-import { delayDefinition, useLocalStorage } from '../../helpers/functions'
+import { useLocalStorage } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
-import React, { SetStateAction, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Stack from '@mui/material/Stack'
 import tw from 'tailwind-styled-components'
 
@@ -108,26 +108,15 @@ export const Todo = () => {
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
   const [filter, setFilter] = useState('all' as FilterValuesType)
 
-  var FiltredContent: Task[] = [initialStateItems]
-
   const deleteItem = (id: string) => {
     setItems(items.filter(el => el.id !== id))
   }
   const addItem = (item: string) => {
+    console.log(items)
     setItems([{ checked: false, text: item, id: v1() }, ...items])
   }
-  const editItem = async (id: string, item: string) => {
+  const editItem = (id: string, item: string) => {
     setItems(items.map(el => (el.id === id ? { ...el, text: item } : el)))
-  }
-
-  const newFilter = (filterType: string) => {
-    if (filter === 'active') {
-      FiltredContent = items.filter(obj => obj.checked === false)
-    } else if (filterType === 'done') {
-      FiltredContent = items.filter(obj => obj.checked === false)
-    } else {
-      FiltredContent = items
-    }
   }
 
   const handleCheck = (id: string, checked: boolean) => () => {
@@ -149,65 +138,75 @@ export const Todo = () => {
           <Div_ToDoApp {...provided.droppableProps} ref={provided.innerRef}>
             <H1_ToDoApp>To-Do App</H1_ToDoApp>
             <Stack direction='row'>
-              <Div_FilterContainer className='flex gap-3 mx-auto'>
-                <Button variant='contained' onClick={() => newFilter('done')}>
+              <Div_FilterContainer>
+                <Button variant='contained' onClick={() => setFilter('done')}>
                   Done
                 </Button>
-                <Button variant='contained' onClick={() => newFilter('all')}>
+                <Button variant='contained' onClick={() => setFilter('all')}>
                   All
                 </Button>
-                <Button variant='contained' onClick={() => newFilter('active')}>
+                <Button variant='contained' onClick={() => setFilter('active')}>
                   Active
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {FiltredContent.map(({ checked, text, id }, index: number) => (
-              <Draggable key={id} draggableId={id} index={index}>
-                {provided => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={provided.draggableProps.style}
-                  >
-                    {id === itemToEdit ? (
-                      <InputTask
-                        addReminder={(reminder: string) => {
-                          setItemToEdit(null)
-                          editItem(id, reminder)
-                        }}
-                        defaultAction='Edit'
-                        initialValue={text}
-                      />
-                    ) : (
-                      <Div_TodoItem key={id}>
-                        <Label_Checkbox>
-                          <Input_Checkbox
-                            type='checkbox'
-                            name='checked-demo'
-                            onChange={handleCheck(id, checked)}
-                            checked={checked}
-                          />
-                        </Label_Checkbox>
-                        <Span_TaskLine>{text}</Span_TaskLine>
-                        <Span_TaskEdit>
-                          <UniversalButton
-                            onClick={() => setItemToEdit(id)}
-                            icon={AiOutlineEdit}
-                            size={40}
-                          ></UniversalButton>
-                          <UniversalButton
-                            onClick={() => deleteItem(id)}
-                            icon={AiOutlineDelete}
-                            size={40}
-                          ></UniversalButton>
-                        </Span_TaskEdit>
-                      </Div_TodoItem>
-                    )}
-                  </div>
-                )}
-              </Draggable>
-            ))}
+            {items
+              .filter(el => {
+                return filter === 'all'
+                  ? el
+                  : filter === 'done' && el.checked
+                  ? el
+                  : filter === 'active' && !el.checked
+                  ? el
+                  : null
+              })
+              .map(({ checked, text, id }, index: number) => (
+                <Draggable key={id} draggableId={id} index={index}>
+                  {provided => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={provided.draggableProps.style}
+                    >
+                      {id === itemToEdit ? (
+                        <InputTask
+                          addReminder={(reminder: string) => {
+                            setItemToEdit(null)
+                            editItem(id, reminder)
+                          }}
+                          defaultAction='Edit'
+                          initialValue={text}
+                        />
+                      ) : (
+                        <Div_TodoItem key={id}>
+                          <Label_Checkbox>
+                            <Input_Checkbox
+                              type='checkbox'
+                              name='checked-demo'
+                              onChange={handleCheck(id, checked)}
+                              checked={checked}
+                            />
+                          </Label_Checkbox>
+                          <Span_TaskLine>{text}</Span_TaskLine>
+                          <Span_TaskEdit>
+                            <UniversalButton
+                              onClick={() => setItemToEdit(id)}
+                              icon={AiOutlineEdit}
+                              size={40}
+                            ></UniversalButton>
+                            <UniversalButton
+                              onClick={() => deleteItem(id)}
+                              icon={AiOutlineDelete}
+                              size={40}
+                            ></UniversalButton>
+                          </Span_TaskEdit>
+                        </Div_TodoItem>
+                      )}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
             {provided.placeholder}
             {inputOpen ? (
               <InputTask
