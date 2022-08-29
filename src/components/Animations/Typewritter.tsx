@@ -24,12 +24,12 @@ const P_Container = styled.p`
   margin: 0;
 `
 type Args = {
-  text: string,
-  i: number,
+  text: string
+  i: number
 }
 
 type Props = {
-  value: string,
+  value: string
 }
 
 // TODO: clearTimeout
@@ -38,7 +38,7 @@ export const TypeWriter = ({ value }: Props) => {
   const [text, setText] = useState('')
 
   useEffect(() => {
-    const typeWriter = (text, i = 0) => {
+    const typeWriter = (text: string, i = 0) => {
       if (text.length >= value.length) {
         setText(text.slice(0, i + 1))
         setTimeout(() => {

@@ -3,6 +3,7 @@ import { Counter } from './pages/Counter/Counter'
 import { HackerWritter } from './pages/HackerWritter/HackerWritter'
 import { JsHistory } from './pages/JSHistory/JsHistory'
 import { Main } from './pages/MainPage/Main'
+import { Todo } from './pages/Todoapp/Todoapp'
 import { urls } from './helpers/urls'
 import React from 'react'
 import tw from 'tailwind-styled-components'
@@ -20,6 +21,7 @@ export const App = () => {
           <Route path={urls.jsHistoryPage} element={<JsHistory />} />
           <Route path={urls.hackerWritter} element={<HackerWritter />} />
           <Route path={urls.counter} element={<Counter />} />
+          <Route path={urls.toDoApp} element={<Todo />} />
         </Routes>
       </BrowserRouter>
     </DivCoreApp>

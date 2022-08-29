@@ -178,7 +178,7 @@ export const TaskLibrary = () => {
           </Tilt>
         </Link>
 
-        <Link to=''>
+        <Link to={urls.toDoApp}>
           <Tilt>
             <Article_TaskLibrary>
               <Img_TaskLibrary alt='Placeholder' src={startup}></Img_TaskLibrary>
@@ -186,7 +186,7 @@ export const TaskLibrary = () => {
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Task_06-empty</Div_TaskName>
+                    <Div_TaskName>To-Do App</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
@@ -197,7 +197,7 @@ export const TaskLibrary = () => {
                 </P_CardContent>
                 <H1_TaskTopic>Topic:</H1_TaskTopic>
                 <Div_TaskParts>
-                  <Span_TaskPart>#bestfriend</Span_TaskPart>
+                  <Span_TaskPart>#localstorage</Span_TaskPart>
                   <Span_TaskPart>#buddy</Span_TaskPart>
                   <Span_TaskPart>#amigo</Span_TaskPart>
                   <Span_TaskPart>#family</Span_TaskPart>
