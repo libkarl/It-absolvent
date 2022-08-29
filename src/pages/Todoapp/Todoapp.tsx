@@ -112,7 +112,6 @@ export const Todo = () => {
     setItems(items.filter(el => el.id !== id))
   }
   const addItem = (item: string) => {
-    console.log(items)
     setItems([{ checked: false, text: item, id: v1() }, ...items])
   }
   const editItem = (id: string, item: string) => {
@@ -125,10 +124,10 @@ export const Todo = () => {
 
   const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return
-    const myitems = Array.from(items)
-    const [reorderedItem] = myitems.splice(result.source.index, 1)
-    myitems.splice(result.destination.index, 0, reorderedItem)
-    setItems(myitems)
+    const itemsList = [...items]
+    const [reorderedItem] = itemsList.splice(result.source.index, 1)
+    itemsList.splice(result.destination.index, 0, reorderedItem)
+    setItems(itemsList)
   }
 
   return (
