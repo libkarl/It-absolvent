@@ -1,17 +1,10 @@
+import { Card, createCardsBoard } from '../../helpers/cards'
 import { Helmet } from 'react-helmet'
 import { SingleCard } from './SingleCard'
-import { delayDefinition } from '../../helpers/functions'
+import { delayDefinition, mixCardBoard } from '../../helpers/functions'
 import { useState } from 'react'
 import React, { useEffect } from 'react'
-import ball from '../../assets/8-ball.png'
-import dinosaur from '../../assets/dinosaur.png'
-import guy from '../../assets/that-guy.png'
-import kronos from '../../assets/kronos.png'
-import potato from '../../assets/baked-potato.png'
-import rocket from '../../assets/rocket.png'
 import styled from 'styled-components'
-import unicorn from '../../assets/skinny-unicorn.png'
-import zeppelin from '../../assets/zeppelin.png'
 
 const Div_MemoryContainer = styled.div`
   margin-top: 10px;
@@ -47,37 +40,18 @@ const Button_StartGame = styled.button`
   }
 `
 
-const cardImages = [
-  { src: ball },
-  { src: potato },
-  { src: dinosaur },
-  { src: kronos },
-  { src: rocket },
-  { src: unicorn },
-  { src: guy },
-  { src: zeppelin },
-]
-
-export type Card = {
-  id: number
-  src: string
-  matched: boolean
-}
-
 export const MemoryGame = () => {
   const [cards, setCards] = useState([] as Card[])
   const [turns, setTurns] = useState(0)
-  const [choiceOne, setChoiceOne] = useState(null as Card | null)
-  const [choiceTwo, setChoiceTwo] = useState(null as Card | null)
+  const [choiceOne, setChoiceOne] = useState<Card | null>(null)
+  const [choiceTwo, setChoiceTwo] = useState<Card | null>(null)
   const [closed, setClosed] = useState(false)
 
   // shuffle cards
   const shuffleCards = () => {
     // duplicate card into the shuffledCards array
-    const shuffledCards = [...cardImages, ...cardImages]
-      .sort(() => Math.random() - 0.5)
-      // spred card properties
-      .map(card => ({ ...card, id: Math.random(), matched: false, src: card.src }))
+    const shuffledCards = createCardsBoard()
+    mixCardBoard(shuffledCards)
     setCards(shuffledCards)
     setTurns(0)
   }

@@ -1,4 +1,4 @@
-import { Card } from './MemoryGame'
+import { Card } from '../../helpers/cards'
 import React, { MouseEventHandler } from 'react'
 import back from '../../assets/back.png'
 import styled from 'styled-components'
