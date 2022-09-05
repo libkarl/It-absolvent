@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { InputSlider } from './UniversalInput'
-import { calculationMortgage } from '../../helpers/functions'
+import { calculationMortgage } from './mortgageCalculation'
+import { theme } from '../../helpers/theme'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -57,16 +58,16 @@ const H2_ManualSettings = styled.h2`
   left: 50%;
   font-size: 26px;
   font-family: 'Roboto';
-  text-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  text-shadow: 1px 1px 1px ${theme.colors.black}, 0px 0px 1px ${theme.colors.gray};
 `
 const Label_Text = tw.label`
     text-xl
 `
 export const MortgageCalculator = () => {
-  const [period, setPeriod] = useState(15)
-  const [price, setPrice] = useState(1500000)
-  const [enterPayment, setEnterPayment] = useState(0)
-  const [rate, setRate] = useState(1.5)
+  const [period, setPeriod] = useState(30)
+  const [price, setPrice] = useState(5_000_000)
+  const [downPayment, setDownPayment] = useState(0)
+  const [rate, setRate] = useState(5)
 
   return (
     <React.Fragment>
@@ -88,19 +89,19 @@ export const MortgageCalculator = () => {
                   min={1000000}
                   max={10000000}
                   value={price}
-                  change={(_, v) => setPrice(Number(v))}
+                  onChange={(_, v) => setPrice(Number(v))}
                 />
               </Div_RequiredVaulue>
               <Label_Text>Enter a first payment amount:</Label_Text>
               <Div_RequiredVaulue>
-                <H2_ManualSettings>{enterPayment < price ? enterPayment : price}</H2_ManualSettings>
+                <H2_ManualSettings>{downPayment < price ? downPayment : price}</H2_ManualSettings>
                 <InputSlider
                   defaultValue={1.5}
                   step={50000}
                   min={0}
                   max={price}
-                  value={enterPayment < price ? enterPayment : price}
-                  change={(_, v) => setEnterPayment(Number(v))}
+                  value={downPayment < price ? downPayment : price}
+                  onChange={(_, v) => setDownPayment(Number(v))}
                 />
               </Div_RequiredVaulue>
               <Label_Text>Select a loan term:</Label_Text>
@@ -112,7 +113,7 @@ export const MortgageCalculator = () => {
                   min={5}
                   max={40}
                   value={period}
-                  change={(_, v) => setPeriod(Number(v))}
+                  onChange={(_, v) => setPeriod(Number(v))}
                 />
               </Div_RequiredVaulue>
               <Label_Text>Select a percentage rate:</Label_Text>
@@ -124,16 +125,14 @@ export const MortgageCalculator = () => {
                   min={1}
                   max={20}
                   value={rate}
-                  change={(_, v) => setRate(Number(v))}
+                  onChange={(_, v) => setRate(Number(v))}
                 />
               </Div_RequiredVaulue>
             </form>
             <Div_RequiredVaulue>
               <H2_CalculatorHeader>
                 Your final monthly payment in CZK is{' '}
-                <span>
-                  {Math.round(calculationMortgage({ rate, period, price, enterPayment }))}
-                </span>{' '}
+                <span>{Math.round(calculationMortgage({ rate, period, price, downPayment }))}</span>{' '}
                 for <span>{period}</span> years.
               </H2_CalculatorHeader>
             </Div_RequiredVaulue>

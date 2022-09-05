@@ -14,7 +14,7 @@ type InputProps = {
   min: number
   max: number
   value: number
-  change: ((event: Event, value: number | number[], activeThumb: number) => void) | undefined
+  onChange: ((event: Event, value: number | number[], activeThumb: number) => void) | undefined
 }
 
 export const InputSlider = (props: InputProps) => {
@@ -22,16 +22,7 @@ export const InputSlider = (props: InputProps) => {
     <Box sx={{ width: 200, size: 'large' }}>
       <Stack spacing={2} direction='row' sx={{ mb: 1 }} alignItems='center'>
         <GiMoneyStack size={35} />
-        <Slider
-          aria-label='Currency'
-          defaultValue={props.defaultValue}
-          getAriaValueText={valuetext}
-          step={props.step}
-          min={props.min}
-          max={props.max}
-          onChange={props.change}
-          value={props.value}
-        />
+        <Slider {...props} aria-label='Currency' getAriaValueText={valuetext} />
         <GiMoneyStack size={40} />
       </Stack>
     </Box>

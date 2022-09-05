@@ -46,19 +46,3 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
 
   return [value, setValue] as const
 }
-
-export const calculationMortgage = (arg: {
-  rate: number
-  period: number
-  price: number
-  enterPayment: number
-}) => {
-  const restAmount = arg.price - arg.enterPayment
-  const monthlyRate = arg.rate / 100 / 12
-  const monthTotal = arg.period * 12
-  const monthlyPayment =
-    (restAmount * monthlyRate * Math.pow(1 + monthlyRate, monthTotal)) /
-    (Math.pow(1 + monthlyRate, monthTotal) - 1)
-
-  return monthlyPayment
-}
