@@ -15,4 +15,5 @@ export const urls = {
   toDoApp: 'todo-app',
   counter: 'counter',
   mainPage: '/',
+  memorygame: 'memory-game',
 }

@@ -1,4 +1,3 @@
-import { v1 } from 'uuid'
 import React, { useCallback, useEffect, useState } from 'react'
 
 type ActiveDocProps = {
@@ -45,4 +44,9 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
   }, [value, setStoredValue])
 
   return [value, setValue] as const
+}
+
+export const shuffleArray = <T>(array: T[]) => {
+  const mix = array.sort(() => Math.random() - 0.5)
+  return mix
 }
