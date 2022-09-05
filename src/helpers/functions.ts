@@ -46,7 +46,7 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
   return [value, setValue] as const
 }
 
-export const mixCardBoard = <Card>(array: Card[]) => {
+export const shuffleArray = <T>(array: T[]) => {
   const mix = array.sort(() => Math.random() - 0.5)
   return mix
 }

@@ -1,7 +1,8 @@
 import { Card, createCardsBoard } from '../../helpers/cards'
 import { Helmet } from 'react-helmet'
 import { SingleCard } from './SingleCard'
-import { delayDefinition, mixCardBoard } from '../../helpers/functions'
+import { delayDefinition, shuffleArray } from '../../helpers/functions'
+import { theme } from '../../helpers/theme'
 import { useState } from 'react'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
@@ -35,23 +36,23 @@ const Button_StartGame = styled.button`
   cursor: pointer;
   font-size: 1em;
   &:hover {
-    background: #c23866;
-    color: #fff;
+    background: ${theme.colors.lightRed};
+    color: ${theme.colors.white};
   }
 `
 
 export const MemoryGame = () => {
   const [cards, setCards] = useState([] as Card[])
   const [turns, setTurns] = useState(0)
-  const [choiceOne, setChoiceOne] = useState<Card | null>(null)
-  const [choiceTwo, setChoiceTwo] = useState<Card | null>(null)
+  const [choiceOne, setChoiceOne] = useState(null as Card | null)
+  const [choiceTwo, setChoiceTwo] = useState(null as Card | null)
   const [closed, setClosed] = useState(false)
 
   // shuffle cards
   const shuffleCards = () => {
     // duplicate card into the shuffledCards array
-    const shuffledCards = createCardsBoard()
-    mixCardBoard(shuffledCards)
+    const cardBoard = createCardsBoard()
+    const shuffledCards = shuffleArray(cardBoard.map(i => i))
     setCards(shuffledCards)
     setTurns(0)
   }
@@ -59,7 +60,7 @@ export const MemoryGame = () => {
   const handleChoice = async (card: Card) => {
     if (choiceOne) {
       setChoiceTwo(card)
-    } else if (!choiceOne) {
+    } else {
       setChoiceOne(card)
     }
     if (choiceOne && choiceOne.id !== card.id) {
@@ -99,8 +100,8 @@ export const MemoryGame = () => {
                  sans-serif;
                 font-size: 1.5rem;
                 text-align: center;
-                background: #1b1523;
-                color: #fff;
+                background: ${theme.background.memorygameBG};
+                color: ${theme.colors.white};
             `}
         </style>
       </Helmet>

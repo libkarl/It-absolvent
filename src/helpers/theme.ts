@@ -4,11 +4,13 @@ export const theme = {
     cyan: '#61dafb',
     green: '#2ad400',
     red: '#eb2b05',
+    lightRed: '#c23866',
     black: '#000000',
   },
 
   background: {
     backgroundColor: '#fffff',
+    memorygameBG: '#1b1523',
   },
 
   fonts: {

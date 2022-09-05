@@ -1,3 +1,4 @@
+import { shuffleArray } from './functions'
 import ball from '../assets/8-ball.png'
 import dinosaur from '../assets/dinosaur.png'
 import guy from '../assets/that-guy.png'
@@ -18,19 +19,12 @@ const cardImages = [
   { src: zeppelin },
 ]
 
-export type Card = {
-  id: string
-  src: string
-  matched: boolean
-}
+// This kind of syntax returns type base on the return type of arrow function createCardsBoard
+export type Card = ReturnType<typeof createCardsBoard>[number]
 
-export const createCardsBoard = () => {
-  const cardBorad = [...cardImages, ...cardImages].map(
-    (card, i): Card => ({
-      id: `card${i}`,
-      matched: false,
-      src: card.src,
-    })
-  )
-  return cardBorad
-}
+export const createCardsBoard = () =>
+  [...cardImages, ...cardImages].map((card, i) => ({
+    id: `card${i}`,
+    matched: false,
+    src: card.src,
+  }))
