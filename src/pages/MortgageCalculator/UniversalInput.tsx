@@ -1,12 +1,9 @@
 import * as React from 'react'
 import { GiMoneyStack } from 'react-icons/gi'
+import { valueText } from '../../helpers/functions'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 import Stack from '@mui/material/Stack'
-
-function valuetext(value: number) {
-  return `${value}Kč`
-}
 
 type InputProps = {
   defaultValue: number
@@ -22,7 +19,7 @@ export const InputSlider = (props: InputProps) => {
     <Box sx={{ width: 200, size: 'large' }}>
       <Stack spacing={2} direction='row' sx={{ mb: 1 }} alignItems='center'>
         <GiMoneyStack size={35} />
-        <Slider {...props} aria-label='Currency' getAriaValueText={valuetext} />
+        <Slider {...props} aria-label='Currency' getAriaValueText={valueText} />
         <GiMoneyStack size={40} />
       </Stack>
     </Box>

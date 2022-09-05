@@ -53,7 +53,7 @@ const H2_CalculatorHeader = tw.h2`
     shadow
 `
 const H2_ManualSettings = styled.h2`
-  color: #ffffff;
+  color: ${theme.background.backgroundColor};
   top: 50%;
   left: 50%;
   font-size: 26px;
@@ -84,10 +84,10 @@ export const MortgageCalculator = () => {
               <Div_RequiredVaulue>
                 <H2_ManualSettings>{price}</H2_ManualSettings>
                 <InputSlider
-                  defaultValue={1500000}
-                  step={50000}
-                  min={1000000}
-                  max={10000000}
+                  defaultValue={1_500_000}
+                  step={50_000}
+                  min={1_000_000}
+                  max={10_000_000}
                   value={price}
                   onChange={(_, v) => setPrice(Number(v))}
                 />
@@ -96,8 +96,8 @@ export const MortgageCalculator = () => {
               <Div_RequiredVaulue>
                 <H2_ManualSettings>{downPayment < price ? downPayment : price}</H2_ManualSettings>
                 <InputSlider
-                  defaultValue={1.5}
-                  step={50000}
+                  defaultValue={500_000}
+                  step={50_000}
                   min={0}
                   max={price}
                   value={downPayment < price ? downPayment : price}
