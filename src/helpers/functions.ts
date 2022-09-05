@@ -51,13 +51,14 @@ export const calculationMortgage = (arg: {
   rate: number
   period: number
   price: number
-  firstPayment: number
+  enterPayment: number
 }) => {
-  const restToPay = arg.price - arg.firstPayment
+  const restAmount = arg.price - arg.enterPayment
   const monthlyRate = arg.rate / 100 / 12
   const monthTotal = arg.period * 12
-  const monthlyMortgagePayment =
-    (restToPay * monthlyRate * (1 + monthlyRate) ** monthTotal) /
-    (1 + monthlyRate) ** (monthTotal - 1)
-  return monthlyMortgagePayment
+  const monthlyPayment =
+    (restAmount * monthlyRate * Math.pow(1 + monthlyRate, monthTotal)) /
+    (Math.pow(1 + monthlyRate, monthTotal) - 1)
+
+  return monthlyPayment
 }

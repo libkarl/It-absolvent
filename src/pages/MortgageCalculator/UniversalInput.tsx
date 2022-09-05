@@ -1,46 +1,39 @@
 import * as React from 'react'
+import { GiMoneyStack } from 'react-icons/gi'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-
-const marks = [
-  {
-    value: 1_000_000,
-    label: 'Kč',
-  },
-  {
-    value: 1_500_00,
-    label: 'Kč',
-  },
-  {
-    value: 5_000_000,
-    label: 'Kč',
-  },
-  {
-    value: 8_000_000,
-    label: 'Kč',
-  },
-]
+import Stack from '@mui/material/Stack'
 
 function valuetext(value: number) {
-  return `${value}°C`
+  return `${value}Kč`
 }
 
-function valueLabelFormat(value: number) {
-  return marks.findIndex(mark => mark.value === value) + 1
+type InputProps = {
+  defaultValue: number
+  step: number
+  min: number
+  max: number
+  value: number
+  change: ((event: Event, value: number | number[], activeThumb: number) => void) | undefined
 }
 
-export default function DiscreteSliderValues() {
+export const InputSlider = (props: InputProps) => {
   return (
-    <Box sx={{ width: 300 }}>
-      <Slider
-        aria-label='Restricted values'
-        defaultValue={1_500_00}
-        valueLabelFormat={valueLabelFormat}
-        getAriaValueText={valuetext}
-        step={50_000}
-        valueLabelDisplay='auto'
-        marks={marks}
-      />
+    <Box sx={{ width: 200, size: 'large' }}>
+      <Stack spacing={2} direction='row' sx={{ mb: 1 }} alignItems='center'>
+        <GiMoneyStack size={35} />
+        <Slider
+          aria-label='Currency'
+          defaultValue={props.defaultValue}
+          getAriaValueText={valuetext}
+          step={props.step}
+          min={props.min}
+          max={props.max}
+          onChange={props.change}
+          value={props.value}
+        />
+        <GiMoneyStack size={40} />
+      </Stack>
     </Box>
   )
 }
