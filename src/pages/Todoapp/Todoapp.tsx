@@ -5,10 +5,11 @@ import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
 import { UniversalButton } from './UniversalButton'
+import { contextBuild } from '../../helpers/contextBuilder'
 import { useLocalStorage } from '../../helpers/functions'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Stack from '@mui/material/Stack'
 import tw from 'tailwind-styled-components'
 
@@ -102,7 +103,7 @@ const initialStateItems = {
   id: v1(),
 }
 
-export const Todo = () => {
+const useTodo = () => {
   const [items, setItems] = useLocalStorage('tasks', [initialStateItems] as Task[])
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
@@ -130,32 +131,52 @@ export const Todo = () => {
     setItems(itemsList)
   }
 
+  return {
+    handleOnDragEnd,
+    setFilter,
+    items,
+    filter,
+    itemToEdit,
+    setItemToEdit,
+    editItem,
+    handleCheck,
+    deleteItem,
+    setInputOpen,
+    addItem,
+    inputOpen,
+  }
+}
+
+export const { ContextProvider: TodoAppContext, Context: TodoContext } = contextBuild(useTodo)
+
+export const TodoUI = () => {
+  const data = useContext(TodoContext)
   return (
-    <DragDropContext onDragEnd={handleOnDragEnd}>
+    <DragDropContext onDragEnd={data.handleOnDragEnd}>
       <Droppable droppableId='characters'>
         {provided => (
           <Div_ToDoApp {...provided.droppableProps} ref={provided.innerRef}>
             <H1_ToDoApp>To-Do App</H1_ToDoApp>
             <Stack direction='row'>
               <Div_FilterContainer>
-                <Button variant='contained' onClick={() => setFilter('done')}>
+                <Button variant='contained' onClick={() => data.setFilter('done')}>
                   Done
                 </Button>
-                <Button variant='contained' onClick={() => setFilter('all')}>
+                <Button variant='contained' onClick={() => data.setFilter('all')}>
                   All
                 </Button>
-                <Button variant='contained' onClick={() => setFilter('active')}>
+                <Button variant='contained' onClick={() => data.setFilter('active')}>
                   Active
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {items
+            {data.items
               .filter(el => {
-                return filter === 'all'
+                return data.filter === 'all'
                   ? el
-                  : filter === 'done' && el.checked
+                  : data.filter === 'done' && el.checked
                   ? el
-                  : filter === 'active' && !el.checked
+                  : data.filter === 'active' && !el.checked
                   ? el
                   : null
               })
@@ -168,11 +189,11 @@ export const Todo = () => {
                       {...provided.dragHandleProps}
                       style={provided.draggableProps.style}
                     >
-                      {id === itemToEdit ? (
+                      {id === data.itemToEdit ? (
                         <InputTask
                           addReminder={(reminder: string) => {
-                            setItemToEdit(null)
-                            editItem(id, reminder)
+                            data.setItemToEdit(null)
+                            data.editItem(id, reminder)
                           }}
                           defaultAction='Edit'
                           initialValue={text}
@@ -183,19 +204,19 @@ export const Todo = () => {
                             <Input_Checkbox
                               type='checkbox'
                               name='checked-demo'
-                              onChange={handleCheck(id, checked)}
+                              onChange={data.handleCheck(id, checked)}
                               checked={checked}
                             />
                           </Label_Checkbox>
                           <Span_TaskLine>{text}</Span_TaskLine>
                           <Span_TaskEdit>
                             <UniversalButton
-                              onClick={() => setItemToEdit(id)}
+                              onClick={() => data.setItemToEdit(id)}
                               icon={AiOutlineEdit}
                               size={40}
                             ></UniversalButton>
                             <UniversalButton
-                              onClick={() => deleteItem(id)}
+                              onClick={() => data.deleteItem(id)}
                               icon={AiOutlineDelete}
                               size={40}
                             ></UniversalButton>
@@ -207,18 +228,18 @@ export const Todo = () => {
                 </Draggable>
               ))}
             {provided.placeholder}
-            {inputOpen ? (
+            {data.inputOpen ? (
               <InputTask
                 addReminder={(reminder: string) => {
-                  setInputOpen(false)
-                  addItem(reminder)
+                  data.setInputOpen(false)
+                  data.addItem(reminder)
                 }}
                 initialValue={''}
                 defaultAction={'Add'}
               />
             ) : (
               <UniversalButton
-                onClick={() => setInputOpen(true)}
+                onClick={() => data.setInputOpen(true)}
                 icon={IoMdAddCircle}
                 size={50}
               ></UniversalButton>
@@ -227,5 +248,13 @@ export const Todo = () => {
         )}
       </Droppable>
     </DragDropContext>
+  )
+}
+
+export const TodoListApplication = () => {
+  return (
+    <TodoAppContext>
+      <TodoUI />
+    </TodoAppContext>
   )
 }
