@@ -1,7 +1,7 @@
 import { Card, createCardsBoard } from '../../helpers/cards'
 import { Helmet } from 'react-helmet'
 import { SingleCard } from './SingleCard'
-import { delayDefinition, shuffleArray } from '../../helpers/functions'
+import { delayDefinition } from '../../helpers/functions'
 import { theme } from '../../helpers/theme'
 import { useState } from 'react'
 import React, { useEffect } from 'react'
@@ -52,8 +52,7 @@ export const MemoryGame = () => {
   const shuffleCards = () => {
     // duplicate card into the shuffledCards array
     const cardBoard = createCardsBoard()
-    const shuffledCards = shuffleArray(cardBoard.map(i => i))
-    setCards(shuffledCards)
+    setCards(cardBoard)
     setTurns(0)
   }
 
@@ -76,8 +75,6 @@ export const MemoryGame = () => {
       }
     }
   }
-
-  // compare two cards
 
   const resetTurn = () => {
     setChoiceOne(null)
