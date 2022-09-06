@@ -16,4 +16,5 @@ export const urls = {
   counter: 'counter',
   mortgageCalculator: 'morgagecalculator',
   mainPage: '/',
+  memorygame: 'memory-game',
 }

@@ -3,6 +3,7 @@ import { Counter } from './pages/Counter/Counter'
 import { HackerWritter } from './pages/HackerWritter/HackerWritter'
 import { JsHistory } from './pages/JSHistory/JsHistory'
 import { Main } from './pages/MainPage/Main'
+import { MemoryGame } from './pages/MemoryGame/MemoryGame'
 import { MortgageCalculator } from './pages/MortgageCalculator/MortgageCalcualtor'
 import { TodoListApplication } from './pages/Todoapp/Todoapp'
 import { urls } from './helpers/urls'
@@ -24,6 +25,7 @@ export const App = () => {
           <Route path={urls.counter} element={<Counter />} />
           <Route path={urls.toDoApp} element={<TodoListApplication />} />
           <Route path={urls.mortgageCalculator} element={<MortgageCalculator />} />
+          <Route path={urls.memorygame} element={<MemoryGame />} />
         </Routes>
       </BrowserRouter>
     </DivCoreApp>
