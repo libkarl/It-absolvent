@@ -46,7 +46,15 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
   return [value, setValue] as const
 }
 
+export const currencyFormat = (value: number) => {
+  return `${value}Kč`
+}
+
 export const shuffleArray = <T>(array: T[]) => {
   const mix = array.sort(() => Math.random() - 0.5)
   return mix
+}
+
+export const nameFilter = (name: string) => {
+  return `http://localhost:1234/?SEARCH=${name}`
 }

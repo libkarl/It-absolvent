@@ -4,7 +4,10 @@ import React from 'react'
 import Tilt from 'react-parallax-tilt'
 import laptop from '../../assets/laptop.jpg'
 import memorygame from '../../assets/memory-game.jpg'
+import mortgage from '../../assets/mortgage.jpg'
+import search from '../../assets/search.jpg'
 import startup from '../../assets/startup.jpg'
+import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 import workspace from '../../assets/workspace.jpg'
 import worktable from '../../assets/worktable.jpg'
@@ -26,15 +29,16 @@ const Div_TaskLibrary = tw.div`
   px-2 
   py-5 
   md:px-6 
-  gap-6 
+  gap-8 
 `
+
 const Article_TaskLibrary = tw.article`
   bg-white 
   overflow-hidden 
   rounded-lg 
   shadow-lg 
-  w-72 
   m-4
+  w-72
 `
 const Img_TaskLibrary = tw.img`
   h-48 
@@ -208,6 +212,35 @@ export const TaskLibrary = () => {
           </Tilt>
         </Link>
 
+        <Link to={urls.mortgageCalculator}>
+          <Tilt>
+            <Article_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={mortgage}></Img_TaskLibrary>
+
+              <Div_Card>
+                <Header_Card>
+                  <H1_Card>
+                    <Div_TaskName>Mortgage Calculator</Div_TaskName>
+                  </H1_Card>
+                </Header_Card>
+
+                <P_CardContent>
+                  Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
+                  en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
+                  en un mundo donde somos la minoria.
+                </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
+                <Div_TaskParts>
+                  <Span_TaskPart>#localstorage</Span_TaskPart>
+                  <Span_TaskPart>#buddy</Span_TaskPart>
+                  <Span_TaskPart>#amigo</Span_TaskPart>
+                  <Span_TaskPart>#family</Span_TaskPart>
+                </Div_TaskParts>
+              </Div_Card>
+            </Article_TaskLibrary>
+          </Tilt>
+        </Link>
+
         <Link to={urls.memorygame}>
           <Tilt>
             <Article_TaskLibrary>
@@ -216,7 +249,36 @@ export const TaskLibrary = () => {
               <Div_Card>
                 <Header_Card>
                   <H1_Card>
-                    <Div_TaskName>Memory Game</Div_TaskName>
+                    <Div_TaskName>MemoryGame</Div_TaskName>
+                  </H1_Card>
+                </Header_Card>
+
+                <P_CardContent>
+                  Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
+                  en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
+                  en un mundo donde somos la minoria.
+                </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
+                <Div_TaskParts>
+                  <Span_TaskPart>#localstorage</Span_TaskPart>
+                  <Span_TaskPart>#buddy</Span_TaskPart>
+                  <Span_TaskPart>#amigo</Span_TaskPart>
+                  <Span_TaskPart>#family</Span_TaskPart>
+                </Div_TaskParts>
+              </Div_Card>
+            </Article_TaskLibrary>
+          </Tilt>
+        </Link>
+
+        <Link to={urls.http}>
+          <Tilt>
+            <Article_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={search}></Img_TaskLibrary>
+
+              <Div_Card>
+                <Header_Card>
+                  <H1_Card>
+                    <Div_TaskName>HTTP request</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
