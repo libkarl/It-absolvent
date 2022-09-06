@@ -14,8 +14,6 @@ export const urls = {
   hackerWritter: 'hackertyper',
   toDoApp: 'todo-app',
   counter: 'counter',
-  mortgageCalculator: 'morgagecalculator',
   mainPage: '/',
   memorygame: 'memory-game',
-  http: 'http-filter',
 }
