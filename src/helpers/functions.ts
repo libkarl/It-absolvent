@@ -54,3 +54,7 @@ export const shuffleArray = <T>(array: T[]) => {
   const mix = array.sort(() => Math.random() - 0.5)
   return mix
 }
+
+export const nameFilter = (name: string) => {
+  return `http://localhost:1234/?SEARCH=${name}`
+}

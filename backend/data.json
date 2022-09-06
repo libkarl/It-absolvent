@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Karel",
+      "city": "Brno",
+      "age": 25
+    },
+    {
+      "id": "2",
+      "name": "Marek",
+      "city": "Praha",
+      "age": 22
+    },
+    {
+      "id": "3",
+      "name": "Daniel",
+      "city": "Olomouc",
+      "age": 34
+    },
+    {
+      "id": "4",
+      "name": "Tom",
+      "city": "Mikulov",
+      "age": 20
+    },
+    {
+      "id": "5",
+      "name": "Anna",
+      "city": "Zlín",
+      "age": 85
+    },
+    {
+      "id": "6",
+      "name": "Katka",
+      "city": "Modřice",
+      "age": 18
+    },
+    {
+      "id": "7",
+      "name": "Bruno",
+      "city": "Jihlava",
+      "age": 32
+    }
+  ]
+}
