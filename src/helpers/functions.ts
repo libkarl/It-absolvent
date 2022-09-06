@@ -47,6 +47,6 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
   return [value, setValue] as const
 }
 
-export const valueText = (value: number) => {
+export const currencyFormat = (value: number) => {
   return `${value}Kč`
 }
