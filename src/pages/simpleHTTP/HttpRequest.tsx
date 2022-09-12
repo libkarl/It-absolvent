@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
-type Users = {
+export type Users = {
   id: string
   name: string
   city: string
@@ -97,9 +97,7 @@ export const HttpRequestPage = () => {
   const [inputValue, setInputValue] = useState('')
   const requestData = async () => {
     try {
-      const response = await fetchRequest.filterUsers(inputValue)
-      const decode = (await response.json()) as Users
-      setResponseData(decode)
+      setResponseData(await fetchRequest.filterUsers(inputValue))
     } catch (err) {
       setError('User is unavailable..')
     }

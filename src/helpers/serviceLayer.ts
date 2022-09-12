@@ -1,3 +1,4 @@
+import { Users } from '../pages/simpleHTTP/HttpRequest'
 import { setQueryByName } from './functions'
 
 export const fetchRequest = {
@@ -5,8 +6,7 @@ export const fetchRequest = {
     const fetchedData = await fetch(setQueryByName(value))
     if (!fetchedData) {
       throw Error('Data fetch error')
-    } else {
-      return fetchedData
     }
+    return (await fetchedData.json()) as Users
   },
 }
