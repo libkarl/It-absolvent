@@ -98,7 +98,8 @@ export const HttpRequestPage = () => {
   const requestData = async () => {
     try {
       const response = await fetchRequest.filterUsers(inputValue)
-      setResponseData(await response.json())
+      const decode = (await response.json()) as Users
+      setResponseData(decode)
     } catch (err) {
       setError('User is unavailable..')
     }
