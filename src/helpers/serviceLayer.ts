@@ -1,5 +1,12 @@
-import { nameFilter } from './functions'
+import { setQueryByName } from './functions'
 
 export const fetchRequest = {
-  filterUsers: (value: string) => fetch(nameFilter(value)),
+  filterUsers: async (value: string) => {
+    const fetchedData = await fetch(setQueryByName(value))
+    if (!fetchedData) {
+      throw Error('Response Error')
+    } else {
+      return fetchedData
+    }
+  },
 }

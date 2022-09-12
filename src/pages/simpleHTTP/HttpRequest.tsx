@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
-type User = {
+type Users = {
   id: string
   name: string
   city: string
@@ -92,14 +92,12 @@ const Input_Data = styled.input`
 `
 
 export const HttpRequestPage = () => {
-  const [responseData, setResponseData] = useState([] as User)
+  const [responseData, setResponseData] = useState([] as Users)
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
-  const requestData = async () => {
+  const RequestData = async () => {
     try {
       const response = await fetchRequest.filterUsers(inputValue)
-      // Fetch request error
-      if (!response.ok) throw new Error('Error fetching request')
       setResponseData(await response.json())
     } catch (err) {
       setError('User is unavailable..')
@@ -115,7 +113,7 @@ export const HttpRequestPage = () => {
           onChange={e => setInputValue(e.currentTarget.value)}
           placeholder='Search by name...'
         />
-        <button onClick={requestData}>
+        <button onClick={RequestData}>
           <GoSearch size={25} />
         </button>
       </Div_RequiredVaulue>

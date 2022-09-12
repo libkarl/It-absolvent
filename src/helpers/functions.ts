@@ -55,6 +55,6 @@ export const shuffleArray = <T>(array: T[]) => {
   return mix
 }
 
-export const nameFilter = (name: string) => {
-  return `http://localhost:1234/?SEARCH=${name}`
+export const setQueryByName = (name: string) => {
+  return `${process.env.REACT_APP_BACKEND_URL}?search=${name}`
 }
