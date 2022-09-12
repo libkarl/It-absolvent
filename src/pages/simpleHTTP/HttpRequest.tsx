@@ -1,12 +1,12 @@
 import { GoSearch } from 'react-icons/go'
-import { nameFilter } from '../../helpers/functions'
+import { fetchRequest } from '../../helpers/serviceLayer'
 import { theme } from '../../helpers/theme'
 import Alert from '@mui/material/Alert'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
-type Users = {
+type User = {
   id: string
   name: string
   city: string
@@ -92,15 +92,15 @@ const Input_Data = styled.input`
 `
 
 export const HttpRequestPage = () => {
-  const [data, setData] = useState([] as Users)
+  const [responseData, setResponseData] = useState([] as User)
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
-  const RequestData = async () => {
+  const requestData = async () => {
     try {
-      const response = await fetch(nameFilter(inputValue))
-      // empty error
-      setError('')
-      setData(await response.json())
+      const response = await fetchRequest.filterUsers(inputValue)
+      // Fetch request error
+      if (!response.ok) throw new Error('Error fetching request')
+      setResponseData(await response.json())
     } catch (err) {
       setError('User is unavailable..')
     }
@@ -115,7 +115,7 @@ export const HttpRequestPage = () => {
           onChange={e => setInputValue(e.currentTarget.value)}
           placeholder='Search by name...'
         />
-        <button onClick={RequestData}>
+        <button onClick={requestData}>
           <GoSearch size={25} />
         </button>
       </Div_RequiredVaulue>
@@ -123,7 +123,7 @@ export const HttpRequestPage = () => {
         <FetchError severity='error'>{error}</FetchError>
       ) : (
         <div>
-          {data.map(el => (
+          {responseData.map(el => (
             <Div_response key={el.id}>
               <li>User name: {el.name}</li>
               <li>User city: {el.city}</li>
