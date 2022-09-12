@@ -95,7 +95,7 @@ export const HttpRequestPage = () => {
   const [responseData, setResponseData] = useState([] as Users)
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
-  const RequestData = async () => {
+  const requestData = async () => {
     try {
       const response = await fetchRequest.filterUsers(inputValue)
       setResponseData(await response.json())
@@ -113,7 +113,7 @@ export const HttpRequestPage = () => {
           onChange={e => setInputValue(e.currentTarget.value)}
           placeholder='Search by name...'
         />
-        <button onClick={RequestData}>
+        <button onClick={requestData}>
           <GoSearch size={25} />
         </button>
       </Div_RequiredVaulue>
