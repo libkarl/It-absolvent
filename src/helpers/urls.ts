@@ -17,5 +17,5 @@ export const urls = {
   mortgageCalculator: 'morgagecalculator',
   mainPage: '/',
   memorygame: 'memory-game',
-  http: 'http-filter',
+  http: 'simple-HttpRequest',
 }
