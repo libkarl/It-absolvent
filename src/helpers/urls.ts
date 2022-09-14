@@ -14,8 +14,10 @@ export const urls = {
   hackerWritter: 'hackertyper',
   toDoApp: 'todo-app',
   counter: 'counter',
-  mortgageCalculator: 'morgagecalculator',
   mainPage: '/',
   memorygame: 'memory-game',
+<<<<<<< HEAD
   http: 'simple-HttpRequest',
+=======
+>>>>>>> a4490617aef1a5143f445646fbd3e87c819f4d94
 }
