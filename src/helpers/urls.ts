@@ -16,8 +16,5 @@ export const urls = {
   counter: 'counter',
   mainPage: '/',
   memorygame: 'memory-game',
-<<<<<<< HEAD
   http: 'simple-HttpRequest',
-=======
->>>>>>> a4490617aef1a5143f445646fbd3e87c819f4d94
 }
