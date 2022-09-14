@@ -5,7 +5,7 @@ export const fetchRequest = {
   filterUsers: async (value: string) => {
     const fetchedData = await fetch(setQueryByName(value))
     if (!fetchedData.ok) {
-      throw Error('Data fetch error')
+      throw new Error('Data fetch error')
     }
     return (await fetchedData.json()) as Users
   },
