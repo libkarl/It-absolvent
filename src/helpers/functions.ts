@@ -50,3 +50,10 @@ export const shuffleArray = <T>(array: T[]) => {
   const mix = array.sort(() => Math.random() - 0.5)
   return mix
 }
+<<<<<<< HEAD
+
+export const setQueryByName = (name: string) => {
+  return `${process.env.REACT_APP_BACKEND_URL}?search=${name}`
+}
+=======
+>>>>>>> a4490617aef1a5143f445646fbd3e87c819f4d94
