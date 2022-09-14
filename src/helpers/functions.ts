@@ -54,3 +54,7 @@ export const shuffleArray = <T>(array: T[]) => {
 export const setQueryByName = (name: string) => {
   return `${process.env.REACT_APP_BACKEND_URL}?search=${name}`
 }
+
+export const currencyFormat = (value: number) => {
+  return `${value}Kč`
+}
