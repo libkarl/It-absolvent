@@ -5,6 +5,7 @@ import Tilt from 'react-parallax-tilt'
 import laptop from '../../assets/laptop.jpg'
 import memorygame from '../../assets/memory-game.jpg'
 import startup from '../../assets/startup.jpg'
+import todoredux from '../../assets/todoRedux.jpg'
 import tw from 'tailwind-styled-components'
 import workspace from '../../assets/workspace.jpg'
 import worktable from '../../assets/worktable.jpg'
@@ -217,6 +218,35 @@ export const TaskLibrary = () => {
                 <Header_Card>
                   <H1_Card>
                     <Div_TaskName>Memory Game</Div_TaskName>
+                  </H1_Card>
+                </Header_Card>
+
+                <P_CardContent>
+                  Hablamos sobre las dificultades en el gremio y discutimos sobre nuestros derechos
+                  en un mundo donde somos la minoria.Hablamos sobre las dificultades en el gremio y
+                  en un mundo donde somos la minoria.
+                </P_CardContent>
+                <H1_TaskTopic>Topic:</H1_TaskTopic>
+                <Div_TaskParts>
+                  <Span_TaskPart>#localstorage</Span_TaskPart>
+                  <Span_TaskPart>#buddy</Span_TaskPart>
+                  <Span_TaskPart>#amigo</Span_TaskPart>
+                  <Span_TaskPart>#family</Span_TaskPart>
+                </Div_TaskParts>
+              </Div_Card>
+            </Article_TaskLibrary>
+          </Tilt>
+        </Link>
+
+        <Link to={urls.toDoAppRedux}>
+          <Tilt>
+            <Article_TaskLibrary>
+              <Img_TaskLibrary alt='Placeholder' src={todoredux}></Img_TaskLibrary>
+
+              <Div_Card>
+                <Header_Card>
+                  <H1_Card>
+                    <Div_TaskName>ToDoApp-Redux</Div_TaskName>
                   </H1_Card>
                 </Header_Card>
 
