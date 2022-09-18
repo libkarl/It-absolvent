@@ -47,28 +47,38 @@ const todoSlice = createSlice({
       }),
     },
     deleteTask: (state, action: PayloadAction<string>) => {
-      const index = state.findIndex(task => task.id === action.payload).toString()
-      state.filter(el => el.id !== index)
+      const index = state.findIndex(task => task.id === action.payload)
+      state.splice(index, 1)
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
     markAsCompleted(state, action: PayloadAction<{ id: string; checked: boolean }>) {
-      state.map(el =>
-        el.id === action.payload.id ? { ...el, checked: !action.payload.checked } : el
-      )
+      state.map(el => {
+        if (el.id === action.payload.id) {
+          el.checked = !action.payload.checked
+        } else {
+          el
+        }
+      })
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
-    reorderTasks: (state, action: PayloadAction<DropResult>) => {
-      if (!action.payload.destination) return
-      const [removed] = state.splice(action.payload.source.index, 1)
-      state.splice(action.payload.destination?.index as number, 0, removed)
+    handleOnDrag: (state, action: PayloadAction<{ result: DropResult }>) => {
+      console.log('reducer')
+      const [reorderedItem] = state.splice(action.payload.result.source.index, 1)
+      state.splice(action.payload.result.destination?.index as number, 0, reorderedItem)
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
     editItem(state, action: PayloadAction<{ id: string; reminder: string }>) {
-      state.map(el => (el.id === action.payload.id ? { ...el, text: action.payload.reminder } : el))
+      state.map(el => {
+        if (el.id === action.payload.id) {
+          el.text = action.payload.reminder
+        } else {
+          el
+        }
+      })
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
   },
 })
 
-export const { newTask, deleteTask, markAsCompleted, reorderTasks, editItem } = todoSlice.actions
+export const { newTask, deleteTask, markAsCompleted, handleOnDrag, editItem } = todoSlice.actions
 export const todoReducer = todoSlice.reducer

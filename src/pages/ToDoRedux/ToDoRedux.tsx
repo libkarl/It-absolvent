@@ -2,12 +2,13 @@ import * as _ from 'lodash'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { AppDispatch, RootState, store } from './store'
-import { DragDropContext, Draggable, Droppable, OnDragEndResponder } from '@hello-pangea/dnd'
+import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { UniversalButton } from './UniversalButton'
-import { deleteTask, editItem, markAsCompleted, newTask, reorderTasks } from './choseFromReduxState'
+import { deleteTask, editItem, handleOnDrag, markAsCompleted, newTask } from './choseFromReduxState'
+import { result } from 'lodash'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
@@ -97,21 +98,19 @@ export type Task = {
   text: string
   id: string
 }
-
-const initialStateItems = {
-  checked: true,
-  text: 'Welcome in my to do App!',
-  id: v1(),
-}
-
 export const TodoUI = () => {
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
   const [filter, setFilter] = useState('all' as FilterValuesType)
   const tasks = useSelector((state: RootState) => state.todo)
   const dispatch = useDispatch<AppDispatch>()
+  const handleOnDragEnd = (result: DropResult) => {
+    console.log('handle')
+    dispatch(handleOnDrag({ result }))
+  }
+
   return (
-    <DragDropContext onDragEnd={dispatch(reorderTasks)}>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId='characters'>
         {provided => (
           <Div_ToDoApp {...provided.droppableProps} ref={provided.innerRef}>
@@ -163,7 +162,7 @@ export const TodoUI = () => {
                             <Input_Checkbox
                               type='checkbox'
                               name='checked-demo'
-                              onChange={dispatch(markAsCompleted({ id, checked }))}
+                              onChange={() => dispatch(markAsCompleted({ id, checked }))}
                               checked={checked}
                             />
                           </Label_Checkbox>

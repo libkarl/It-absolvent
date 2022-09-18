@@ -49,7 +49,7 @@ const Button_Submit = tw.button`
 `
 
 interface InputProps {
-  addReminder?: (rmd: string) => void
+  addReminder: (rmd: string) => void
   initialValue: string
   defaultAction: string
 }
