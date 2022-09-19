@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { StartRounded } from '@mui/icons-material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -13,7 +14,7 @@ interface Column {
   label: string
   minWidth?: number
   align?: 'right'
-  format?: (value: number) => string
+  format?: (value: number | string) => string
 }
 
 const columns: readonly Column[] = [
@@ -24,25 +25,43 @@ const columns: readonly Column[] = [
     label: 'Interest Paid',
     minWidth: 170,
     align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
+    format: (value: number | string) => {
+      if (typeof value === 'number') {
+        return value.toLocaleString('en-US')
+      } else {
+        return value
+      }
+    },
   },
   {
     id: 'principal',
     label: 'Principal Paid',
     minWidth: 170,
     align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
+    format: (value: number | string) => {
+      if (typeof value === 'number') {
+        return value.toLocaleString('en-US')
+      } else {
+        return value
+      }
+    },
   },
   {
     id: 'remain',
     label: 'Remain',
     minWidth: 170,
     align: 'right',
-    format: (value: number) => value.toFixed(2),
+    format: (value: number | string) => {
+      if (typeof value === 'number') {
+        return value.toFixed(2)
+      } else {
+        return value
+      }
+    },
   },
 ]
 
-interface Data {
+type Data = {
   name: string
   amount: number
   interest: number
@@ -50,13 +69,13 @@ interface Data {
   remain: number
 }
 
-export function createData(
+export const createData = (
   name: string,
   amount: number,
   interest: number,
   principal: number,
   remain: number
-): Data {
+): Data => {
   return { name, amount, interest, principal, remain }
 }
 
@@ -67,13 +86,13 @@ export type TableData = {
 export const LoanTable = (props: TableData) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
+  var pageDataOffset = (page: number, rowsPerPage: number) => {
+    const start = page * rowsPerPage
+    const end = page * rowsPerPage + rowsPerPage
+    return { start, end }
   }
-
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value)
+    setRowsPerPage(parseFloat(event.target.value))
     setPage(0)
   }
 
@@ -95,20 +114,22 @@ export const LoanTable = (props: TableData) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
+            {props.rows
+              .slice(pageDataOffset(page, rowsPerPage).start, pageDataOffset(page, rowsPerPage).end)
+              .map(row => {
+                return (
+                  <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
+                    {columns.map(column => {
+                      const value = row[column.id]
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format ? column.format(value) : value}
+                        </TableCell>
+                      )
+                    })}
+                  </TableRow>
+                )
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -118,7 +139,9 @@ export const LoanTable = (props: TableData) => {
         count={props.rows.length}
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
+        onPageChange={(event, page) => {
+          setPage(page)
+        }}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>

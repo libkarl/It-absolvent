@@ -1,11 +1,11 @@
-type CalculationProps = {
+type ProvidedNumberResults = {
   rate: number
   period: number
   price: number
   downPayment: number
 }
 
-export const calculationMortgage = (props: CalculationProps) => {
+export const calculationMortgage = (props: ProvidedNumberResults) => {
   const restAmount = props.price - props.downPayment
   const monthlyRate = props.rate / 100 / 12
   const monthTotal = props.period * 12

@@ -113,8 +113,8 @@ const formatNumbersRange = (item: number) => {
 const Charts = (props: { calculatedMortgage: TableData }) => {
   const chartData = props.calculatedMortgage.rows.map((item, index) => ({
     xAxis: formatMortgageDate(index),
-    'Interest Paid': formatNumbersRange(item.interest),
-    'Principal Paid': formatNumbersRange(item.principal),
+    interestPaid: formatNumbersRange(item.interest),
+    principalPaid: formatNumbersRange(item.principal),
   }))
   return (
     <ResponsiveContainer>
@@ -129,14 +129,14 @@ const Charts = (props: { calculatedMortgage: TableData }) => {
               <Legend />
               <Line
                 type='monotone'
-                dataKey='Interest Paid'
+                dataKey='interestPaid'
                 stroke={theme.colors.cyan}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
               />
               <Line
                 type='monotone'
-                dataKey='Principal Paid'
+                dataKey='principalPaid'
                 stroke={theme.colors.lightRed}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
@@ -152,14 +152,14 @@ const Charts = (props: { calculatedMortgage: TableData }) => {
               <Legend />
               <Line
                 type='monotone'
-                dataKey='Interest Paid'
+                dataKey='interestPaid'
                 stroke={theme.colors.cyan}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
               />
               <Line
                 type='monotone'
-                dataKey='Principal Paid'
+                dataKey='principalPaid'
                 stroke={theme.colors.lightRed}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
@@ -172,49 +172,48 @@ const Charts = (props: { calculatedMortgage: TableData }) => {
   )
 }
 
+const calculateTableData = (
+  price: number,
+  rate: number,
+  period: number,
+  downPayment: number
+): TableData => {
+  const finalData: TableData = {
+    rows: [],
+  }
+  const monthlyPayment = Math.round(calculationMortgage({ rate, period, price, downPayment }))
+  let remain = price
+  const rowsData = Array.from({ length: period * 12 }, (v, i) => i + 1).map(i => {
+    const monthlyInterestPayment = (rate / 100 / 12) * remain
+    const monthlyPrincipalPayment = monthlyPayment - monthlyInterestPayment
+    remain -= monthlyPrincipalPayment
+
+    return {
+      monthlyInterestPayment,
+      monthlyPrincipalPayment,
+      remain,
+    }
+  })
+  for (let i = 0; i < rowsData.length; i++) {
+    finalData.rows.push(
+      createData(
+        formatMortgageDate(i),
+        monthlyPayment,
+        rowsData[i].monthlyInterestPayment,
+        rowsData[i].monthlyPrincipalPayment,
+        rowsData[i].remain
+      )
+    )
+  }
+
+  return finalData
+}
+
 export const MortgageCalculator = () => {
   const [period, setPeriod] = useState(30)
   const [price, setPrice] = useState(5_000_000)
   const [downPayment, setDownPayment] = useState(0)
   const [rate, setRate] = useState(5)
-
-  const CalculateTableData = (arg: {
-    price: number
-    rate: number
-    period: number
-    downPayment: number
-  }): TableData => {
-    const finalData: TableData = {
-      rows: [],
-    }
-    const monthlyPayment = Math.round(calculationMortgage({ rate, period, price, downPayment }))
-    let remain = arg.price
-    const rowsData = Array.from({ length: arg.period * 12 }, (v, i) => i + 1).map(i => {
-      const monthlyInterestPayment = (arg.rate / 100 / 12) * remain
-      const monthlyPrincipalPayment = monthlyPayment - monthlyInterestPayment
-      remain -= monthlyPrincipalPayment
-
-      return {
-        monthlyInterestPayment,
-        monthlyPrincipalPayment,
-        remain,
-      }
-    })
-    for (let i = 0; i < rowsData.length; i++) {
-      finalData.rows.push(
-        createData(
-          formatMortgageDate(i),
-          monthlyPayment,
-          Math.round(rowsData[i].monthlyInterestPayment),
-          Math.round(rowsData[i].monthlyPrincipalPayment),
-          Math.round(rowsData[i].remain)
-        )
-      )
-    }
-
-    return finalData
-  }
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -286,25 +285,9 @@ export const MortgageCalculator = () => {
         </Box>
       </MortgageContainer>
       <Div_TableWraper>
-        <LoanTable
-          rows={
-            CalculateTableData({
-              price,
-              rate,
-              period,
-              downPayment,
-            }).rows
-          }
-        />
+        <LoanTable rows={calculateTableData(price, rate, period, downPayment).rows} />
       </Div_TableWraper>
-      <Charts
-        calculatedMortgage={CalculateTableData({
-          price,
-          rate,
-          period,
-          downPayment,
-        })}
-      />
+      <Charts calculatedMortgage={calculateTableData(price, rate, period, downPayment)} />
     </React.Fragment>
   )
 }
