@@ -61,7 +61,7 @@ const columns: readonly Column[] = [
   },
 ]
 
-type Data = {
+export type RowData = {
   name: string
   amount: number
   interest: number
@@ -69,28 +69,12 @@ type Data = {
   remain: number
 }
 
-export const createData = (
-  name: string,
-  amount: number,
-  interest: number,
-  principal: number,
-  remain: number
-): Data => {
-  return { name, amount, interest, principal, remain }
-}
-
-export type TableData = {
-  rows: Data[]
-}
-
-export const LoanTable = (props: TableData) => {
+export const LoanTable = (props: RowData[]) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
-  var pageDataOffset = (page: number, rowsPerPage: number) => {
-    const start = page * rowsPerPage
-    const end = page * rowsPerPage + rowsPerPage
-    return { start, end }
-  }
+  var pageDataOffsetStart = page * rowsPerPage
+  var pageDataOffsetEnd = page * rowsPerPage + rowsPerPage
+
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseFloat(event.target.value))
     setPage(0)
@@ -114,29 +98,27 @@ export const LoanTable = (props: TableData) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.rows
-              .slice(pageDataOffset(page, rowsPerPage).start, pageDataOffset(page, rowsPerPage).end)
-              .map(row => {
-                return (
-                  <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
-                    {columns.map(column => {
-                      const value = row[column.id]
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format ? column.format(value) : value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
+            {props.slice(pageDataOffsetStart, pageDataOffsetEnd).map(row => {
+              return (
+                <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
+                  {columns.map(column => {
+                    const value = row[column.id]
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format ? column.format(value) : value}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[12, 24, 36]}
         component='div'
-        count={props.rows.length}
+        count={length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={(event, page) => {
