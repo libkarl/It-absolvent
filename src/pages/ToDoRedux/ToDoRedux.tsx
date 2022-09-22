@@ -6,7 +6,7 @@ import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { UniversalButton } from './UniversalButton'
+import { ToDoAppReduxButton } from './ToDoAppReduxButton'
 import { deleteTask, editItem, handleOnDrag, markAsCompleted, newTask } from './choseFromReduxState'
 import { result } from 'lodash'
 import { useState } from 'react'
@@ -93,11 +93,6 @@ const Div_FilterContainer = tw.h1`
 `
 type FilterValuesType = 'all' | 'active' | 'done'
 
-export type Task = {
-  checked: boolean
-  text: string
-  id: string
-}
 export const TodoUI = () => {
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
@@ -105,7 +100,6 @@ export const TodoUI = () => {
   const tasks = useSelector((state: RootState) => state.todo)
   const dispatch = useDispatch<AppDispatch>()
   const handleOnDragEnd = (result: DropResult) => {
-    console.log('handle')
     dispatch(handleOnDrag({ result }))
   }
 
@@ -168,16 +162,16 @@ export const TodoUI = () => {
                           </Label_Checkbox>
                           <Span_TaskLine>{text}</Span_TaskLine>
                           <Span_TaskEdit>
-                            <UniversalButton
+                            <ToDoAppReduxButton
                               onClick={() => setItemToEdit(id)}
                               icon={AiOutlineEdit}
                               size={40}
-                            ></UniversalButton>
-                            <UniversalButton
+                            />
+                            <ToDoAppReduxButton
                               onClick={() => dispatch(deleteTask(id))}
                               icon={AiOutlineDelete}
                               size={40}
-                            ></UniversalButton>
+                            />
                           </Span_TaskEdit>
                         </Div_TodoItem>
                       )}
@@ -196,11 +190,11 @@ export const TodoUI = () => {
                 defaultAction={'Add'}
               />
             ) : (
-              <UniversalButton
+              <ToDoAppReduxButton
                 onClick={() => setInputOpen(true)}
                 icon={IoMdAddCircle}
                 size={50}
-              ></UniversalButton>
+              />
             )}
           </Div_ToDoApp>
         )}

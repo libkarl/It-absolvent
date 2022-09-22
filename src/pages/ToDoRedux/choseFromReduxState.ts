@@ -1,10 +1,10 @@
 import { DropResult } from '@hello-pangea/dnd'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Task } from './ToDoRedux'
 import { v1 } from 'uuid'
 
+type Task = typeof initialStateItems[number]
 const localStorageMemoryKey = 'tasks'
-const initialStateItems: Task[] = [
+const initialStateItems = [
   {
     checked: true,
     text: 'Welcome in my to do App!',
@@ -25,7 +25,7 @@ const saveInsideLocalStorage = (key: string, valueToStore: Task[]) => {
   try {
     window.localStorage.setItem(key, JSON.stringify(valueToStore))
   } catch (error) {
-    console.error
+    console.log(error)
   }
 }
 
@@ -52,17 +52,11 @@ const todoSlice = createSlice({
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
     markAsCompleted(state, action: PayloadAction<{ id: string; checked: boolean }>) {
-      state.map(el => {
-        if (el.id === action.payload.id) {
-          el.checked = !action.payload.checked
-        } else {
-          el
-        }
-      })
+      const index = state.findIndex(task => task.id === action.payload.id)
+      state[index].checked = !action.payload.checked
       saveInsideLocalStorage(localStorageMemoryKey, state)
     },
     handleOnDrag: (state, action: PayloadAction<{ result: DropResult }>) => {
-      console.log('reducer')
       const [reorderedItem] = state.splice(action.payload.result.source.index, 1)
       state.splice(action.payload.result.destination?.index as number, 0, reorderedItem)
       saveInsideLocalStorage(localStorageMemoryKey, state)
@@ -71,8 +65,6 @@ const todoSlice = createSlice({
       state.map(el => {
         if (el.id === action.payload.id) {
           el.text = action.payload.reminder
-        } else {
-          el
         }
       })
       saveInsideLocalStorage(localStorageMemoryKey, state)

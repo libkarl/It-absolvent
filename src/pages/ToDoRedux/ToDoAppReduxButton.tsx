@@ -30,7 +30,7 @@ type ButtonProps = {
   size: number
 }
 
-export const UniversalButton = (props: ButtonProps) => (
+export const ToDoAppReduxButton = (props: ButtonProps) => (
   <Button type='button' onClick={activeDoc(props)}>
     <props.icon size={props.size} />
   </Button>
