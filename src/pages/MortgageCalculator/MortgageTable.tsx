@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-interface Column {
+type Column = {
   id: 'name' | 'amount' | 'interest' | 'principal' | 'remain'
   label: string
   minWidth?: number
@@ -17,7 +17,7 @@ interface Column {
   format?: (value: number | string) => string
 }
 
-const columns: readonly Column[] = [
+const columns: Column[] = [
   { id: 'name', label: 'Month/Year', minWidth: 170 },
   { id: 'amount', label: 'Payment Amount', minWidth: 100 },
   {
@@ -62,14 +62,15 @@ const columns: readonly Column[] = [
 ]
 
 export type RowData = {
-  name: string
-  amount: number
-  interest: number
-  principal: number
-  remain: number
+  row: {
+    name: string
+    amount: number
+    interest: number
+    principal: number
+    remain: number
+  }[]
 }
-
-export const LoanTable = (props: RowData[]) => {
+export const LoanTable = (props: RowData) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
   var pageDataOffsetStart = page * rowsPerPage
@@ -98,7 +99,7 @@ export const LoanTable = (props: RowData[]) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.slice(pageDataOffsetStart, pageDataOffsetEnd).map(row => {
+            {props.row.slice(pageDataOffsetStart, pageDataOffsetEnd).map(row => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
                   {columns.map(column => {

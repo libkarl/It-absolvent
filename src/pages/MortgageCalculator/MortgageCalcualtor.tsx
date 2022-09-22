@@ -110,8 +110,8 @@ const formatNumbersRange = (item: number) => {
   return Number(item.toFixed(2))
 }
 
-const Charts = (calculatedMortgage: ReturnType<typeof calculateTableData>) => {
-  const chartData = calculatedMortgage.map((item: RowData, index: number) => ({
+const Charts = (calculatedMortgage: RowData) => {
+  const chartData = calculatedMortgage.row.map((item, index) => ({
     xAxis: formatMortgageDate(index),
     interestPaid: formatNumbersRange(item.interest),
     principalPaid: formatNumbersRange(item.principal),
@@ -177,8 +177,8 @@ const calculateTableData = (arg: {
   rate: number
   period: number
   downPayment: number
-}): RowData[] => {
-  const finalData: RowData[] = []
+}): RowData => {
+  const finalData: RowData = { row: [] }
   const monthlyPayment = Math.round(calculationMortgage(arg))
   let remain = arg.price
   const rowsData = Array.from({ length: arg.period * 12 }, (v, i) => i + 1).map(i => {
@@ -193,14 +193,14 @@ const calculateTableData = (arg: {
     }
   })
   for (let i = 0; i < rowsData.length; i++) {
-    const formatedRowData: RowData = {
+    const formatedRowData = {
       name: formatMortgageDate(i),
       amount: monthlyPayment,
       interest: rowsData[i].monthlyInterestPayment,
       principal: rowsData[i].monthlyPrincipalPayment,
       remain: rowsData[i].remain,
     }
-    finalData.push(formatedRowData)
+    finalData.row.push(formatedRowData)
   }
 
   return finalData
@@ -284,7 +284,7 @@ export const MortgageCalculator = () => {
       <Div_TableWraper>
         <LoanTable {...calculateTableData({ price, rate, period, downPayment })} />
       </Div_TableWraper>
-      <Charts {...[...calculateTableData({ price, rate, period, downPayment })]} />
+      <Charts {...calculateTableData({ price, rate, period, downPayment })} />
     </React.Fragment>
   )
 }
