@@ -100,7 +100,7 @@ export const TodoUI = () => {
   const tasks = useSelector((state: RootState) => state.todo)
   const dispatch = useDispatch<AppDispatch>()
   const handleOnDragEnd = (result: DropResult) => {
-    dispatch(handleOnDrag({ result }))
+    dispatch(handleOnDrag(result))
   }
 
   return (
@@ -202,7 +202,6 @@ export const TodoUI = () => {
     </DragDropContext>
   )
 }
-
 export const TodoListRedux = () => {
   return (
     <Provider store={store}>

@@ -1,10 +1,14 @@
 import { DropResult } from '@hello-pangea/dnd'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { v1 } from 'uuid'
 
-type Task = typeof initialStateItems[number]
-const localStorageMemoryKey = 'tasks'
-const initialStateItems = [
+export type Task = typeof initialStateItems[number]
+type ActionTypes =
+  | ReturnType<typeof newTask>
+  | ReturnType<typeof deleteTask>
+  | ReturnType<typeof handleOnDrag>
+  | ReturnType<typeof markAsCompleted>
+  | ReturnType<typeof editItem>
+export const initialStateItems = [
   {
     checked: true,
     text: 'Welcome in my to do App!',
@@ -12,65 +16,59 @@ const initialStateItems = [
   },
 ]
 
-const loadFromStorage = (key: string, initialStateItems: Task[]) => {
-  try {
-    const item = window.localStorage.getItem(key)
-    return item ? JSON.parse(item) : initialStateItems
-  } catch (error) {
-    console.log(error)
+export const todoReducer = (state = initialStateItems, action: ActionTypes): Task[] => {
+  switch (action.type) {
+    case 'NEW_TASK':
+      return [...state, { id: v1(), text: action.taskText, checked: false }]
+    case 'DELETE_TASK':
+      return state.filter(task => task.id !== action.id)
+    case 'MARK_AS_COMPLETE':
+      return state.map(task =>
+        task.id === action.id ? { ...task, checked: !action.checked } : task
+      )
+    case 'HANDLE_ON_DRAG_END':
+      const [reorderedItem] = state.splice(action.source, 1)
+      state.splice(action.destination, 0, reorderedItem)
+      return state
+    case 'EDIT_ITEM':
+      return state.map(task => (task.id === action.id ? { ...task, text: action.reminder } : task))
+    default:
+      return state
   }
 }
 
-const saveInsideLocalStorage = (key: string, valueToStore: Task[]) => {
-  try {
-    window.localStorage.setItem(key, JSON.stringify(valueToStore))
-  } catch (error) {
-    console.log(error)
-  }
+export const newTask = (taskText: string) => {
+  return {
+    type: 'NEW_TASK',
+    taskText,
+  } as const
 }
 
-const todoSlice = createSlice({
-  name: 'todo',
-  initialState: loadFromStorage(localStorageMemoryKey, initialStateItems) as Task[],
-  reducers: {
-    newTask: {
-      reducer: (state, action: PayloadAction<Task>) => {
-        state.push(action.payload)
-        saveInsideLocalStorage(localStorageMemoryKey, state)
-      },
-      prepare: (taskName: string) => ({
-        payload: {
-          id: v1(),
-          text: taskName,
-          checked: false,
-        } as Task,
-      }),
-    },
-    deleteTask: (state, action: PayloadAction<string>) => {
-      const index = state.findIndex(task => task.id === action.payload)
-      state.splice(index, 1)
-      saveInsideLocalStorage(localStorageMemoryKey, state)
-    },
-    markAsCompleted(state, action: PayloadAction<{ id: string; checked: boolean }>) {
-      const index = state.findIndex(task => task.id === action.payload.id)
-      state[index].checked = !action.payload.checked
-      saveInsideLocalStorage(localStorageMemoryKey, state)
-    },
-    handleOnDrag: (state, action: PayloadAction<{ result: DropResult }>) => {
-      const [reorderedItem] = state.splice(action.payload.result.source.index, 1)
-      state.splice(action.payload.result.destination?.index as number, 0, reorderedItem)
-      saveInsideLocalStorage(localStorageMemoryKey, state)
-    },
-    editItem(state, action: PayloadAction<{ id: string; reminder: string }>) {
-      state.map(el => {
-        if (el.id === action.payload.id) {
-          el.text = action.payload.reminder
-        }
-      })
-      saveInsideLocalStorage(localStorageMemoryKey, state)
-    },
-  },
-})
+export const deleteTask = (id: string) => {
+  return {
+    type: 'DELETE_TASK',
+    id,
+  } as const
+}
+export const markAsCompleted = (payload: { id: string; checked: boolean }) => {
+  return {
+    type: 'MARK_AS_COMPLETE',
+    id: payload.id,
+    checked: payload.checked,
+  } as const
+}
+export const handleOnDrag = (result: DropResult) => {
+  return {
+    type: 'HANDLE_ON_DRAG_END',
+    destination: result.destination?.index as number,
+    source: result.source.index,
+  } as const
+}
 
-export const { newTask, deleteTask, markAsCompleted, handleOnDrag, editItem } = todoSlice.actions
-export const todoReducer = todoSlice.reducer
+export const editItem = (payload: { id: string; reminder: string }) => {
+  return {
+    type: 'EDIT_ITEM',
+    id: payload.id,
+    reminder: payload.reminder,
+  } as const
+}
