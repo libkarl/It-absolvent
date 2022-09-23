@@ -111,7 +111,7 @@ const formatNumbersRange = (item: number) => {
 }
 
 const Charts = (calculatedMortgage: RowData) => {
-  const chartData = calculatedMortgage.row.map((item, index) => ({
+  const chartData = calculatedMortgage.rows.map((item, index) => ({
     xAxis: formatMortgageDate(index),
     interestPaid: formatNumbersRange(item.interest),
     principalPaid: formatNumbersRange(item.principal),
@@ -172,13 +172,12 @@ const Charts = (calculatedMortgage: RowData) => {
   )
 }
 
-const calculateTableData = (arg: {
+export const calculateTableData = (arg: {
   price: number
   rate: number
   period: number
   downPayment: number
-}): RowData => {
-  const finalData: RowData = { row: [] }
+}) => {
   const monthlyPayment = Math.round(calculationMortgage(arg))
   let remain = arg.price
   const rowsData = Array.from({ length: arg.period * 12 }, (v, i) => i + 1).map(i => {
@@ -192,6 +191,9 @@ const calculateTableData = (arg: {
       remain,
     }
   })
+  const finalData: {
+    rows: { name: string; amount: number; interest: number; principal: number; remain: number }[]
+  } = { rows: [] }
   for (let i = 0; i < rowsData.length; i++) {
     const formatedRowData = {
       name: formatMortgageDate(i),
@@ -200,7 +202,7 @@ const calculateTableData = (arg: {
       principal: rowsData[i].monthlyPrincipalPayment,
       remain: rowsData[i].remain,
     }
-    finalData.row.push(formatedRowData)
+    finalData.rows.push(formatedRowData)
   }
 
   return finalData

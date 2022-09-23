@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StartRounded } from '@mui/icons-material'
+import { calculateTableData } from './MortgageCalcualtor'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -14,9 +14,11 @@ type Column = {
   label: string
   minWidth?: number
   align?: 'right'
-  format?: (value: number | string) => string
+  format?: (value: number) => string
 }
-
+export const formatCurrency = (item: number) => {
+  return String(item.toFixed(2))
+}
 const columns: Column[] = [
   { id: 'name', label: 'Month/Year', minWidth: 170 },
   { id: 'amount', label: 'Payment Amount', minWidth: 100 },
@@ -25,51 +27,25 @@ const columns: Column[] = [
     label: 'Interest Paid',
     minWidth: 170,
     align: 'right',
-    format: (value: number | string) => {
-      if (typeof value === 'number') {
-        return value.toLocaleString('en-US')
-      } else {
-        return value
-      }
-    },
+    format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'principal',
     label: 'Principal Paid',
     minWidth: 170,
     align: 'right',
-    format: (value: number | string) => {
-      if (typeof value === 'number') {
-        return value.toLocaleString('en-US')
-      } else {
-        return value
-      }
-    },
+    format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'remain',
     label: 'Remain',
     minWidth: 170,
     align: 'right',
-    format: (value: number | string) => {
-      if (typeof value === 'number') {
-        return value.toFixed(2)
-      } else {
-        return value
-      }
-    },
+    format: (value: number) => formatCurrency(value),
   },
 ]
 
-export type RowData = {
-  row: {
-    name: string
-    amount: number
-    interest: number
-    principal: number
-    remain: number
-  }[]
-}
+export type RowData = ReturnType<typeof calculateTableData>
 export const LoanTable = (props: RowData) => {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
@@ -99,14 +75,14 @@ export const LoanTable = (props: RowData) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.row.slice(pageDataOffsetStart, pageDataOffsetEnd).map(row => {
+            {props.rows.slice(pageDataOffsetStart, pageDataOffsetEnd).map(row => {
               return (
                 <TableRow hover role='checkbox' tabIndex={-1} key={row.interest}>
                   {columns.map(column => {
                     const value = row[column.id]
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format ? column.format(value) : value}
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
                     )
                   })}
