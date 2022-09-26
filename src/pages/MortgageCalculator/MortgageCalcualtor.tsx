@@ -10,8 +10,6 @@ import {
 } from 'recharts'
 import { Helmet } from 'react-helmet'
 import { InputSlider } from './UniversalInput'
-import { LoanTable } from './MortgageTable'
-import { RowData } from './MortgageTable'
 import { calculationMortgage } from './mortgageCalculation'
 import { theme } from '../../helpers/theme'
 import Box from '@mui/material/Box'
@@ -22,7 +20,7 @@ import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
 const Div_TableWraper = tw.div`
-  w-10/12
+  w-6/12
   mt-20
   mb-20
   mx-auto
@@ -97,9 +95,19 @@ const H2_ManualSettings = styled.h2`
   font-family: 'Roboto';
   text-shadow: 1px 1px 1px ${theme.colors.black}, 0px 0px 1px ${theme.colors.gray};
 `
+
+export type RowData = ReturnType<typeof calculateTableData>
 const Label_Text = tw.label`
     text-xl
 `
+
+const mortgageDataFormat = (item: number) => {
+  return new Intl.NumberFormat('cs-CZ', {
+    style: 'currency',
+    currency: 'CZK',
+  }).format(item)
+}
+
 const formatMortgageDate = (index: number) => {
   const month = index + 1
   const loanYear = Math.floor(month / 12)
@@ -115,6 +123,7 @@ const Charts = (calculatedMortgage: RowData) => {
     xAxis: formatMortgageDate(index),
     interestPaid: formatNumbersRange(item.interest),
     principalPaid: formatNumbersRange(item.principal),
+    remain: formatNumbersRange(item.remain),
   }))
   return (
     <ResponsiveContainer>
@@ -152,15 +161,8 @@ const Charts = (calculatedMortgage: RowData) => {
               <Legend />
               <Line
                 type='monotone'
-                dataKey='interestPaid'
+                dataKey='remain'
                 stroke={theme.colors.cyan}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type='monotone'
-                dataKey='principalPaid'
-                stroke={theme.colors.lightRed}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
               />
@@ -181,18 +183,30 @@ export const calculateTableData = (arg: {
   const monthlyPayment = Math.round(calculationMortgage(arg))
   let remain = arg.price
   const rowsData = Array.from({ length: arg.period * 12 }, (v, i) => i + 1).map(i => {
+    const year = Math.floor((i - 1) / 12) + 1
+    const month = ((i - 1) % 12) + 1
     const monthlyInterestPayment = (arg.rate / 100 / 12) * remain
     const monthlyPrincipalPayment = monthlyPayment - monthlyInterestPayment
     remain -= monthlyPrincipalPayment
 
     return {
+      month,
+      year,
       monthlyInterestPayment,
       monthlyPrincipalPayment,
       remain,
     }
   })
   const finalData: {
-    rows: { name: string; amount: number; interest: number; principal: number; remain: number }[]
+    rows: {
+      name: string
+      amount: number
+      interest: number
+      principal: number
+      remain: number
+      month: number
+      year: number
+    }[]
   } = { rows: [] }
   for (let i = 0; i < rowsData.length; i++) {
     const formatedRowData = {
@@ -201,6 +215,8 @@ export const calculateTableData = (arg: {
       interest: rowsData[i].monthlyInterestPayment,
       principal: rowsData[i].monthlyPrincipalPayment,
       remain: rowsData[i].remain,
+      month: rowsData[i].month,
+      year: rowsData[i].year,
     }
     finalData.rows.push(formatedRowData)
   }
@@ -213,6 +229,7 @@ export const MortgageCalculator = () => {
   const [price, setPrice] = useState(5_000_000)
   const [downPayment, setDownPayment] = useState(0)
   const [rate, setRate] = useState(5)
+  const [visibleYear, setVisibleYear] = useState(1)
   return (
     <React.Fragment>
       <CssBaseline />
@@ -284,9 +301,97 @@ export const MortgageCalculator = () => {
         </Box>
       </MortgageContainer>
       <Div_TableWraper>
-        <LoanTable {...calculateTableData({ price, rate, period, downPayment })} />
+        <Table
+          calculatedMortgage={calculateTableData({ price, rate, period, downPayment })}
+          visibleYear={visibleYear}
+          setVisibleYear={setVisibleYear}
+        />
       </Div_TableWraper>
       <Charts {...calculateTableData({ price, rate, period, downPayment })} />
     </React.Fragment>
   )
 }
+
+const Table = (props: {
+  calculatedMortgage: RowData
+  visibleYear: number
+  setVisibleYear: React.Dispatch<React.SetStateAction<number>>
+}) => {
+  return (
+    <DataTable>
+      <thead>
+        <tr>
+          <Th_Styled>Month/Year</Th_Styled>
+          <Th_Styled>Payment Amount</Th_Styled>
+          <Th_Styled>Interest Paid</Th_Styled>
+          <Th_Styled>Principal Paid</Th_Styled>
+          <Th_Styled>Remain</Th_Styled>
+        </tr>
+      </thead>
+      <tbody>
+        {props.calculatedMortgage.rows.map((item, index) => (
+          <Tr_Tab
+            key={index}
+            visibility={item.month === 1 || props.visibleYear === item.year ? 1 : 0}
+            visibleYear={props.visibleYear}
+            month={item.month}
+            year={item.year}
+            onClick={() => props.setVisibleYear(item.year)}
+          >
+            <Td_Styled>{`${item.month}/${item.year}`}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.amount)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.interest)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.principal)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.remain)}</Td_Styled>
+          </Tr_Tab>
+        ))}
+      </tbody>
+    </DataTable>
+  )
+}
+
+const DataTable = styled.table`
+  justify-content: center;
+  border: solid 1px ${theme.colors.gray};
+  text-align: center;
+  line-height: normal;
+  vertical-align: middle;
+  width: 100%;
+  height: 60vh;
+  overflow: auto;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  border-collapse: collapse;
+`
+const Th_Styled = styled.th`
+  padding: 5px 12.5px;
+  position: sticky;
+  background-color: ${theme.colors.darkgrey};
+  top: 0px;
+  font-weight: normal;
+`
+
+const Td_Styled = styled.td`
+  border-bottom: 1px solid ${theme.colors.gray};
+  padding: 5px;
+`
+
+type TrProps = {
+  visibility: number
+  month: number
+  year: number
+  visibleYear: number
+}
+const Tr_Tab = styled.tr<TrProps>`
+  background-color: ${props =>
+    props.month === 1
+      ? props.visibleYear === props.year
+        ? theme.colors.darkgrey
+        : theme.colors.lightgray
+      : 'transparent'};
+  border: ${props =>
+    props.month !== 1 ? `solid 2px ${theme.background.backgroundColor}` : 'transparent'};
+  cursor: ${props => (props.month === 1 ? 'pointer' : 'default')};
+  display: ${props => (props.visibility === 1 ? '' : 'none')};
+`
