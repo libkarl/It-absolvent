@@ -2,12 +2,14 @@ import { DropResult } from '@hello-pangea/dnd'
 import { v1 } from 'uuid'
 
 export type Task = typeof initialStateItems[number]
+
 type ActionTypes =
   | ReturnType<typeof newTask>
   | ReturnType<typeof deleteTask>
   | ReturnType<typeof handleOnDrag>
   | ReturnType<typeof markAsCompleted>
   | ReturnType<typeof editItem>
+
 export const initialStateItems = [
   {
     checked: true,
@@ -39,36 +41,36 @@ export const todoReducer = (state = initialStateItems, action: ActionTypes): Tas
 
 export const newTask = (taskText: string) => {
   return {
-    type: 'NEW_TASK',
+    type: 'NEW_TASK' as const,
     taskText,
-  } as const
+  }
 }
 
 export const deleteTask = (id: string) => {
   return {
-    type: 'DELETE_TASK',
+    type: 'DELETE_TASK' as const,
     id,
-  } as const
+  }
 }
 export const markAsCompleted = (payload: { id: string; checked: boolean }) => {
   return {
-    type: 'MARK_AS_COMPLETE',
+    type: 'MARK_AS_COMPLETE' as const,
     id: payload.id,
     checked: payload.checked,
-  } as const
+  }
 }
 export const handleOnDrag = (result: DropResult) => {
   return {
-    type: 'HANDLE_ON_DRAG_END',
+    type: 'HANDLE_ON_DRAG_END' as const,
     destination: result.destination?.index as number,
     source: result.source.index,
-  } as const
+  }
 }
 
 export const editItem = (payload: { id: string; reminder: string }) => {
   return {
-    type: 'EDIT_ITEM',
+    type: 'EDIT_ITEM' as const,
     id: payload.id,
     reminder: payload.reminder,
-  } as const
+  }
 }
