@@ -3,7 +3,7 @@ import { createStore } from 'redux'
 import { todoReducer } from './choseFromReduxState'
 export const localStorageMemoryKey = 'tasks'
 
-function saveToLocalStorage(state: RootState) {
+const saveToLocalStorage = (state: RootState) => {
   try {
     const serialisedState = JSON.stringify(state)
     localStorage.setItem('persistantState', serialisedState)
@@ -14,7 +14,7 @@ function saveToLocalStorage(state: RootState) {
 
 // load string from localStarage and convert into an Object
 // invalid output must be undefined
-function loadFromLocalStorage() {
+const loadFromLocalStorage = () => {
   try {
     const serialisedState = localStorage.getItem('persistantState')
     if (serialisedState === null) return undefined

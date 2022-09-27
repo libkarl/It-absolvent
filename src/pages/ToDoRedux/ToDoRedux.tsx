@@ -92,12 +92,13 @@ const Div_FilterContainer = tw.h1`
   mx-auto
 `
 type FilterValuesType = 'all' | 'active' | 'done'
-
+const SelectFromStore = () => {
+  return useSelector((state: RootState) => state.todo)
+}
 export const TodoUI = () => {
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
   const [filter, setFilter] = useState('all' as FilterValuesType)
-  const tasks = useSelector((state: RootState) => state.todo)
   const dispatch = useDispatch<AppDispatch>()
   const handleOnDragEnd = (result: DropResult) => {
     dispatch(handleOnDrag(result))
@@ -122,18 +123,18 @@ export const TodoUI = () => {
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {tasks
-              .filter(el => {
+            {SelectFromStore()
+              .filter(task => {
                 return filter === 'all'
-                  ? el
-                  : filter === 'done' && el.checked
-                  ? el
-                  : filter === 'active' && !el.checked
-                  ? el
+                  ? task
+                  : filter === 'done' && task.checked
+                  ? task
+                  : filter === 'active' && !task.checked
+                  ? task
                   : null
               })
-              .map(({ checked, text, id }, index: number) => (
-                <Draggable key={id} draggableId={id} index={index}>
+              .map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
                   {provided => (
                     <div
                       ref={provided.innerRef}
@@ -141,34 +142,34 @@ export const TodoUI = () => {
                       {...provided.dragHandleProps}
                       style={provided.draggableProps.style}
                     >
-                      {id === itemToEdit ? (
+                      {item.id === itemToEdit ? (
                         <InputTask
-                          addReminder={(reminder: string) => {
+                          addReminder={reminder => {
                             setItemToEdit(null)
-                            dispatch(editItem({ id, reminder }))
+                            dispatch(editItem(item.id, reminder))
                           }}
                           defaultAction='Edit'
-                          initialValue={text}
+                          initialValue={item.text}
                         />
                       ) : (
-                        <Div_TodoItem key={id}>
+                        <Div_TodoItem key={item.id}>
                           <Label_Checkbox>
                             <Input_Checkbox
                               type='checkbox'
                               name='checked-demo'
-                              onChange={() => dispatch(markAsCompleted({ id, checked }))}
-                              checked={checked}
+                              onChange={() => dispatch(markAsCompleted(item.id, item.checked))}
+                              checked={item.checked}
                             />
                           </Label_Checkbox>
-                          <Span_TaskLine>{text}</Span_TaskLine>
+                          <Span_TaskLine>{item.text}</Span_TaskLine>
                           <Span_TaskEdit>
                             <ToDoAppReduxButton
-                              onClick={() => setItemToEdit(id)}
+                              onClick={() => setItemToEdit(item.id)}
                               icon={AiOutlineEdit}
                               size={40}
                             />
                             <ToDoAppReduxButton
-                              onClick={() => dispatch(deleteTask(id))}
+                              onClick={() => dispatch(deleteTask(item.id))}
                               icon={AiOutlineDelete}
                               size={40}
                             />
@@ -182,7 +183,7 @@ export const TodoUI = () => {
             {provided.placeholder}
             {inputOpen ? (
               <InputTask
-                addReminder={(reminder: string) => {
+                addReminder={reminder => {
                   setInputOpen(false)
                   dispatch(newTask(reminder))
                 }}
