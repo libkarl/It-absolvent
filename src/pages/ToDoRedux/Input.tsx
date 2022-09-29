@@ -48,28 +48,26 @@ const Button_Submit = tw.button`
 
 `
 
-interface InputProps {
-  addReminder: (rmd: string) => void
-  initialValue: string
+type InputProps = {
+  addReminder: (rmd: string | undefined) => void
   defaultAction: string
 }
 
 export const InputTask = (props: InputProps) => {
-  const myInput = React.useRef(null as null | HTMLInputElement)
+  const [myInput, setMyInput] = React.useState('')
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (props.addReminder && myInput.current) {
-      props.addReminder(myInput.current?.value)
-    }
+    props.addReminder(myInput as string)
     event.preventDefault()
   }
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => setMyInput(e.currentTarget.value)
   return (
     <Form_Input onSubmit={handleSubmit}>
       <Input_style
-        ref={myInput}
+        value={myInput}
+        onChange={handleChange}
         type='text'
         id='rounded-email'
         placeholder='Your reminder'
-        defaultValue={props.initialValue}
       />
       <Button_Submit type='submit'>{props.defaultAction}</Button_Submit>
     </Form_Input>

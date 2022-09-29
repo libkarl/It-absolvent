@@ -2,14 +2,6 @@ import { DropResult } from '@hello-pangea/dnd'
 import { v1 } from 'uuid'
 
 export type Task = typeof initialStateItems[number]
-
-type ActionTypes =
-  | ReturnType<typeof newTask>
-  | ReturnType<typeof deleteTask>
-  | ReturnType<typeof handleOnDrag>
-  | ReturnType<typeof markAsCompleted>
-  | ReturnType<typeof editItem>
-
 export const initialStateItems = [
   {
     checked: true,
@@ -17,13 +9,17 @@ export const initialStateItems = [
     id: v1(),
   },
 ]
-// pokud do takového typu vložím funkci, která vrací string bude to vracet string jinak vrací never
-type Actions<T> = T extends (...args: any[]) => infer R ? (R extends any ? R : never) : never
-// demonce funkcí
 
-type A2 = Actions<() => ReturnType<typeof editItem>>
+type GetTypeFromActions<T> = T extends (...args: any[]) => infer R
+  ? R extends any
+    ? R
+    : never
+  : never
 
-export const todoReducer = (state = initialStateItems, action: ActionTypes): Task[] => {
+export const todoReducer = (
+  state = initialStateItems,
+  action: GetTypeFromActions<(func: any) => ReturnType<typeof func>>
+): Task[] => {
   switch (action.type) {
     case 'NEW_TASK':
       return [...state, { id: v1(), text: action.taskText, checked: false }]

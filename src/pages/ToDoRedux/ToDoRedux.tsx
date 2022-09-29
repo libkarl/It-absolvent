@@ -146,10 +146,9 @@ export const TodoUI = () => {
                         <InputTask
                           addReminder={reminder => {
                             setItemToEdit(null)
-                            dispatch(editItem(item.id, reminder))
+                            dispatch(editItem(item.id, reminder as string))
                           }}
                           defaultAction='Edit'
-                          initialValue={item.text}
                         />
                       ) : (
                         <Div_TodoItem key={item.id}>
@@ -185,9 +184,8 @@ export const TodoUI = () => {
               <InputTask
                 addReminder={reminder => {
                   setInputOpen(false)
-                  dispatch(newTask(reminder))
+                  dispatch(newTask(reminder as string))
                 }}
-                initialValue={''}
                 defaultAction={'Add'}
               />
             ) : (
