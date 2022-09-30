@@ -118,11 +118,11 @@ const formatNumbersRange = (item: number) => {
   return Number(item.toFixed(2))
 }
 
-const Charts = (calculatedMortgage: RowData) => {
-  const chartData = calculatedMortgage.rows.map((item, index) => ({
+const Charts = (props: { calculatedMortgage: RowData }) => {
+  const chartData = props.calculatedMortgage.map((item, index) => ({
     xAxis: formatMortgageDate(index),
-    interestPaid: formatNumbersRange(item.interest),
-    principalPaid: formatNumbersRange(item.principal),
+    interestPaid: formatNumbersRange(item.monthlyInterestPayment),
+    principalPaid: formatNumbersRange(item.monthlyPrincipalPayment),
     remain: formatNumbersRange(item.remain),
   }))
   return (
@@ -197,29 +197,13 @@ export const calculateTableData = (arg: {
       remain,
     }
   })
-  const finalData: {
-    rows: {
-      name: string
-      amount: number
-      interest: number
-      principal: number
-      remain: number
-      month: number
-      year: number
-    }[]
-  } = { rows: [] }
-  for (let i = 0; i < rowsData.length; i++) {
-    const formatedRowData = {
-      name: formatMortgageDate(i),
+  const finalData = rowsData.map((value, index) => {
+    return {
+      name: formatMortgageDate(index),
       amount: monthlyPayment,
-      interest: rowsData[i].monthlyInterestPayment,
-      principal: rowsData[i].monthlyPrincipalPayment,
-      remain: rowsData[i].remain,
-      month: rowsData[i].month,
-      year: rowsData[i].year,
+      ...value,
     }
-    finalData.rows.push(formatedRowData)
-  }
+  })
 
   return finalData
 }
@@ -307,7 +291,7 @@ export const MortgageCalculator = () => {
           setVisibleYear={setVisibleYear}
         />
       </Div_TableWraper>
-      <Charts {...calculateTableData({ price, rate, period, downPayment })} />
+      <Charts calculatedMortgage={calculateTableData({ price, rate, period, downPayment })} />
     </React.Fragment>
   )
 }
@@ -329,7 +313,7 @@ const Table = (props: {
         </tr>
       </thead>
       <tbody>
-        {props.calculatedMortgage.rows.map((item, index) => (
+        {props.calculatedMortgage.map((item, index) => (
           <Tr_Tab
             key={index}
             visibility={item.month === 1 || props.visibleYear === item.year ? 1 : 0}
@@ -340,8 +324,8 @@ const Table = (props: {
           >
             <Td_Styled>{`${item.month}/${item.year}`}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.amount)}</Td_Styled>
-            <Td_Styled>{mortgageDataFormat(item.interest)}</Td_Styled>
-            <Td_Styled>{mortgageDataFormat(item.principal)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.monthlyInterestPayment)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.monthlyPrincipalPayment)}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.remain)}</Td_Styled>
           </Tr_Tab>
         ))}
