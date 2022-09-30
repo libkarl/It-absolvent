@@ -10,16 +10,14 @@ export const initialStateItems = [
   },
 ]
 
-type GetTypeFromActions<T> = T extends (...args: any[]) => infer R
-  ? R extends any
-    ? R
-    : never
-  : never
+type Actions =
+  | ReturnType<typeof newTask>
+  | ReturnType<typeof deleteTask>
+  | ReturnType<typeof markAsCompleted>
+  | ReturnType<typeof handleOnDrag>
+  | ReturnType<typeof editItem>
 
-export const todoReducer = (
-  state = initialStateItems,
-  action: GetTypeFromActions<(func: any) => ReturnType<typeof func>>
-): Task[] => {
+export const todoReducer = (state = initialStateItems, action: Actions): Task[] => {
   switch (action.type) {
     case 'NEW_TASK':
       return [...state, { id: v1(), text: action.taskText, checked: false }]
