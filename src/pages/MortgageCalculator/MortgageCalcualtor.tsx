@@ -10,11 +10,11 @@ import {
 } from 'recharts'
 import { Helmet } from 'react-helmet'
 import { InputSlider } from './UniversalInput'
+import { calculateTableData } from './mortgageCalculation'
 import { calculationMortgage } from './mortgageCalculation'
 import { theme } from '../../helpers/theme'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import CssBaseline from '@mui/material/CssBaseline'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
@@ -101,29 +101,30 @@ const Label_Text = tw.label`
     text-xl
 `
 
-const mortgageDataFormat = (item: number) => {
+export const mortgageDataFormat = (item: number) => {
   return new Intl.NumberFormat('cs-CZ', {
     style: 'currency',
     currency: 'CZK',
   }).format(item)
 }
 
-const formatMortgageDate = (index: number) => {
+export const chartDataFormat = (item: number): number => {
+  return Number(item.toFixed(2))
+}
+
+export const formatMortgageDate = (index: number) => {
   const month = index + 1
   const loanYear = Math.floor(month / 12)
   const actualMonth = (month % 12) + 1
   return `${actualMonth}/${loanYear}`
 }
-const formatNumbersRange = (item: number) => {
-  return Number(item.toFixed(2))
-}
 
 const Charts = (props: { calculatedMortgage: RowData }) => {
   const chartData = props.calculatedMortgage.map((item, index) => ({
     xAxis: formatMortgageDate(index),
-    interestPaid: formatNumbersRange(item.monthlyInterestPayment),
-    principalPaid: formatNumbersRange(item.monthlyPrincipalPayment),
-    remain: formatNumbersRange(item.remain),
+    interestPaid: chartDataFormat(item.monthlyInterestPayment),
+    principalPaid: chartDataFormat(item.monthlyPrincipalPayment),
+    remain: chartDataFormat(item.remain),
   }))
   return (
     <ResponsiveContainer>
@@ -133,7 +134,7 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
             <LineChart width={690} height={640} data={chartData}>
               <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
               <XAxis dataKey='xAxis' />
-              <YAxis />
+              <YAxis width={80} />
               <Tooltip />
               <Legend />
               <Line
@@ -156,7 +157,7 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
             <LineChart width={690} height={640} data={chartData}>
               <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
               <XAxis dataKey='xAxis' />
-              <YAxis />
+              <YAxis width={80} />
               <Tooltip />
               <Legend />
               <Line
@@ -174,40 +175,6 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
   )
 }
 
-export const calculateTableData = (arg: {
-  price: number
-  rate: number
-  period: number
-  downPayment: number
-}) => {
-  const monthlyPayment = Math.round(calculationMortgage(arg))
-  let remain = arg.price
-  const rowsData = Array.from({ length: arg.period * 12 }, (v, i) => i + 1).map(i => {
-    const year = Math.floor((i - 1) / 12) + 1
-    const month = ((i - 1) % 12) + 1
-    const monthlyInterestPayment = (arg.rate / 100 / 12) * remain
-    const monthlyPrincipalPayment = monthlyPayment - monthlyInterestPayment
-    remain -= monthlyPrincipalPayment
-
-    return {
-      month,
-      year,
-      monthlyInterestPayment,
-      monthlyPrincipalPayment,
-      remain,
-    }
-  })
-  const finalData = rowsData.map((value, index) => {
-    return {
-      name: formatMortgageDate(index),
-      amount: monthlyPayment,
-      ...value,
-    }
-  })
-
-  return finalData
-}
-
 export const MortgageCalculator = () => {
   const [period, setPeriod] = useState(30)
   const [price, setPrice] = useState(5_000_000)
@@ -216,13 +183,12 @@ export const MortgageCalculator = () => {
   const [visibleYear, setVisibleYear] = useState(1)
   return (
     <React.Fragment>
-      <CssBaseline />
+      <Helmet>
+        <title>Mortgage Calculator</title>
+      </Helmet>
       <MortgageContainer maxWidth='sm'>
         <Box>
           <div>
-            <Helmet>
-              <title>TS/React_Mortgage Calculator</title>
-            </Helmet>
             <H2_CalculatorHeader>React - Mortgage calculator</H2_CalculatorHeader>
             <form>
               <Label_Text>Enter a loan amount:</Label_Text>
