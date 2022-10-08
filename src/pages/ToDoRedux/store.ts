@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { createStore } from 'redux'
 import { todoReducer } from './choseFromReduxState'
+import { useSelector } from 'react-redux'
 export const localStorageMemoryKey = 'tasks'
 
 const saveToLocalStorage = (state: RootState) => {
@@ -32,3 +33,7 @@ store.subscribe(() => saveToLocalStorage(store.getState()))
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
+export const selectFromStore = () => {
+  return useSelector((state: RootState) => state.todo)
+}

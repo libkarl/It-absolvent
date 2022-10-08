@@ -5,10 +5,11 @@ import { AppDispatch, RootState, store } from './store'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
-import { Provider, useDispatch, useSelector } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { ToDoAppReduxButton } from './ToDoAppReduxButton'
 import { deleteTask, editItem, handleOnDrag, markAsCompleted, newTask } from './choseFromReduxState'
 import { result } from 'lodash'
+import { selectFromStore } from './store'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
@@ -92,9 +93,7 @@ const Div_FilterContainer = tw.h1`
   mx-auto
 `
 type FilterValuesType = 'all' | 'active' | 'done'
-const SelectFromStore = () => {
-  return useSelector((state: RootState) => state.todo)
-}
+
 export const TodoUI = () => {
   const [inputOpen, setInputOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null as string | null)
@@ -123,7 +122,7 @@ export const TodoUI = () => {
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {SelectFromStore()
+            {selectFromStore()
               .filter(task => {
                 return filter === 'all'
                   ? task
