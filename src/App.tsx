@@ -4,6 +4,7 @@ import { HackerWritter } from './pages/HackerWritter/HackerWritter'
 import { JsHistory } from './pages/JSHistory/JsHistory'
 import { Main } from './pages/MainPage/Main'
 import { MemoryGame } from './pages/MemoryGame/MemoryGame'
+import { MortgageCalculator } from './pages/MortgageCalculator/MortgageCalcualtor'
 import { TodoListApplication } from './pages/Todoapp/Todoapp'
 import { TodoListRedux } from './pages/ToDoRedux/ToDoRedux'
 import { urls } from './helpers/urls'
@@ -26,6 +27,7 @@ export const App = () => {
           <Route path={urls.toDoApp} element={<TodoListApplication />} />
           <Route path={urls.memorygame} element={<MemoryGame />} />
           <Route path={urls.toDoAppRedux} element={<TodoListRedux />} />
+          <Route path={urls.mortgageCalculator} element={<MortgageCalculator />} />
         </Routes>
       </BrowserRouter>
     </DivCoreApp>

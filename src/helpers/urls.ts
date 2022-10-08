@@ -18,4 +18,5 @@ export const urls = {
   memorygame: 'memory-game',
   http: 'simple-HttpRequest',
   toDoAppRedux: 'todo-app-redux',
+  mortgageCalculator: 'morgagecalculator',
 }
