@@ -75,13 +75,13 @@ export const GlobalStyle = createGlobalStyle`
         background-image: url(${bgimage}); 
     }
 
-    @media screen and ( max-width:1024px) {
+    ${theme.breakpoints.md} {
         section {
         margin-top: 6rem;
         }
     }
 
-    @media screen and ( max-width:600px) {
+    ${theme.breakpoints.sm} {
 
         section > h2 {
             margin-bottom: 2rem;

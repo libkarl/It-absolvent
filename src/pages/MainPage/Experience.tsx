@@ -9,10 +9,10 @@ const Div_ExperienceContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     grid-template-columns: 1fr;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     gap: 1rem;
   }
 `
@@ -27,12 +27,12 @@ const Div_Experience = styled.div`
     border-color: ${theme.colors.colorprimaryvariant};
     cursor: default;
   }
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     width: 80%;
     padding: 2rem;
     margin: 0 auto;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     width: 100%;
     padding: 2rem 1rem;
   }
@@ -47,7 +47,7 @@ const Div_ExperienceContent = styled.div`
   grid-template-columns: 1fr 1fr;
   row-gap: 2rem;
   gap: 1rem;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     padding: 1rem;
   }
 `

@@ -17,11 +17,11 @@ const Div_PortfolioContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     grid-template-columns: 1fr 1fr;
     gap: 1.2rem;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
@@ -82,7 +82,7 @@ export const Portfolio = () => {
           </Div_PortfolioItemImg>
           <H3_PortfolioItem>JS History Website</H3_PortfolioItem>
           <Div_PortfolioItemCTA>
-            <A_BasicBtn href='https://github.com/libkarl' target='_blank' rel='noreferrer'>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.jsHistoryPage}>Live Demo</Link_DemoApp>
@@ -95,7 +95,7 @@ export const Portfolio = () => {
           </Div_PortfolioItemImg>
           <H3_PortfolioItem>Hacker Writter App</H3_PortfolioItem>
           <Div_PortfolioItemCTA>
-            <A_BasicBtn href='https://github.com/libkarl' target='_blank' rel='noreferrer'>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.hackerWritter}>Live Demo</Link_DemoApp>
@@ -108,7 +108,7 @@ export const Portfolio = () => {
           </Div_PortfolioItemImg>
           <H3_PortfolioItem>Basic Counter App</H3_PortfolioItem>
           <Div_PortfolioItemCTA>
-            <A_BasicBtn href='https://github.com/libkarl' target='_blank' rel='noreferrer'>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.counter}>Live Demo</Link_DemoApp>
@@ -121,7 +121,7 @@ export const Portfolio = () => {
           </Div_PortfolioItemImg>
           <H3_PortfolioItem>To Do App with React Context</H3_PortfolioItem>
           <Div_PortfolioItemCTA>
-            <A_BasicBtn href='https://github.com/libkarl' target='_blank' rel='noreferrer'>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.toDoApp}>Live Demo</Link_DemoApp>
@@ -134,7 +134,7 @@ export const Portfolio = () => {
           </Div_PortfolioItemImg>
           <H3_PortfolioItem>Memory Game App</H3_PortfolioItem>
           <Div_PortfolioItemCTA>
-            <A_BasicBtn href='https://github.com/libkarl' target='_blank' rel='noreferrer'>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.memorygame}>Live Demo</Link_DemoApp>

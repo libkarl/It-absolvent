@@ -3,6 +3,7 @@ import { FaUniversity } from 'react-icons/fa'
 import { FiAward } from 'react-icons/fi'
 import { VscFolder } from 'react-icons/vsc'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import ME from '../../assets/me-about.jpg'
 import React from 'react'
 import styled from 'styled-components'
@@ -13,7 +14,7 @@ const Div_AboutContainer = styled.div`
   display: grid;
   grid-template-columns: 35% 50%;
   gap: 15%;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     grid-template-columns: 1fr;
     gap: 0;
   }
@@ -26,11 +27,11 @@ const Div_AboutMe = styled.div`
   background: linear-gradient(45deg, transparent, ${theme.colors.colorprimary}, transparent);
   display: grid;
   place-items: center;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     width: 50%;
     margin: 2rem auto 4rem;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     width: 65%;
     margin: 0 auto 3rem;
   }
@@ -49,7 +50,7 @@ const Div_AboutContent = styled.div`
   @media screen and (max-width: 1024px) {
     margin: 1rem 0 1.5rem;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     text-align: center;
 `
 
@@ -57,7 +58,7 @@ const P_AboutContent = styled.p`
   margin: 2rem 0 2.6rem;
   color: ${theme.colors.white};
   opacity: 0.6;
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     margin: 1.5rem 0;
   }
 `
@@ -65,7 +66,7 @@ const Div_AboutCards = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
@@ -142,7 +143,7 @@ export const About = () => {
             PostgresSQL and MongoDB.
           </P_AboutContent>
 
-          <A_PrimaryBtn href='#contact'>Let&apos;s Talk</A_PrimaryBtn>
+          <A_PrimaryBtn href={urls.portfolioNav.contact}>Let&apos;s Talk</A_PrimaryBtn>
         </Div_AboutContent>
       </Div_AboutContainer>
     </section>

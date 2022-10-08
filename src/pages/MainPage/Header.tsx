@@ -2,6 +2,7 @@ import { AiFillFacebook } from 'react-icons/ai'
 import { BsGithub } from 'react-icons/bs'
 import { BsLinkedin } from 'react-icons/bs'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import ME from '../../assets/me.png'
 import React from 'react'
 import styled from 'styled-components'
@@ -20,7 +21,7 @@ const Div_HeaderSocials = styled.div`
     height: 3rem;
     background: ${theme.colors.colorprimary};
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     display: none;
   }
 `
@@ -36,10 +37,10 @@ const Header_Portfolioheader = styled.header`
   height: 80vh;
   padding-top: 7rem;
   overflow: hidden;
-  @media screen and (max-width: 1024px) {
+  ${theme.breakpoints.md} {
     height: 68vh;
   }
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     header {
       height: 100vh;
     }
@@ -74,7 +75,7 @@ const A_Scrolldown = styled.a`
   font-weight: 300;
   font-size: 0.9rem;
   color: ${theme.colors.colorprimary};
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     display: none;
   }
 `
@@ -116,16 +117,16 @@ export const Header = () => {
           >
             Download CV
           </A_BasicBtn>
-          <A_PrimaryBtn href='#contact'>Contact me</A_PrimaryBtn>
+          <A_PrimaryBtn href={urls.portfolioNav.contact}>Contact me</A_PrimaryBtn>
         </Div_CTA>
         <Div_HeaderSocials>
-          <a href='https://www.facebook.com/karel.kopriva.56' target='blank'>
+          <a href={urls.portfolioSocials.facebook} target='blank'>
             <AiFillFacebook size={20}></AiFillFacebook>
           </a>
-          <a href='http://linkedin.com/' target='blank'>
+          <a href={urls.portfolioSocials.linked} target='blank'>
             <BsLinkedin></BsLinkedin>
           </a>
-          <a href='https://github.com/libkarl/' target='blank'>
+          <a href={urls.portfolioSocials.githubProfile} target='blank'>
             <BsGithub></BsGithub>
           </a>
         </Div_HeaderSocials>
@@ -133,7 +134,7 @@ export const Header = () => {
           <img src={ME} alt='developer' />
         </Div_Me>
 
-        <A_Scrolldown href='#contact'>Scroll Down</A_Scrolldown>
+        <A_Scrolldown href={urls.portfolioNav.contact}>Scroll Down</A_Scrolldown>
       </Div_ContainerHeaderContainer>
     </Header_Portfolioheader>
   )

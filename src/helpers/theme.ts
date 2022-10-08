@@ -28,4 +28,8 @@ export const theme = {
     containerMD: 86,
     containerMS: 90,
   },
+  breakpoints: {
+    sm: `@media (max-width: 600px)`,
+    md: `@media (max-width: 1024px)`,
+  },
 }

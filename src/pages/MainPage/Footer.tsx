@@ -2,6 +2,7 @@ import { AiFillInstagram } from 'react-icons/ai'
 import { BsTwitter } from 'react-icons/bs'
 import { FaFacebookF } from 'react-icons/fa'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -27,7 +28,7 @@ const UL_PortfolioFooterPermalinks = styled.ul`
   justify-content: center;
   gap: 2rem;
   margin: 0 auto 3rem;
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     flex-direction: column;
     gap: 1.5rem;
   }
@@ -50,7 +51,7 @@ const A_PortfolioFooterSocials = styled.a`
   border-radius: 0.7rem;
   display: flex;
   border: 1px solid transparent;
-  @media screen and (max-width: 600px) {
+  ${theme.breakpoints.sm} {
     margin-bottom: 2.6rem;
   }
 `
@@ -62,32 +63,44 @@ const Div_PortfolioFooterCopyright = styled.div`
 export const Footer = () => {
   return (
     <Footer_PortfolioFooter id='footer'>
-      <A_PortfolioFooterLogo href='#'>DEV Portfolio</A_PortfolioFooterLogo>
+      <A_PortfolioFooterLogo href={urls.portfolioNav.home}>DEV Portfolio</A_PortfolioFooterLogo>
       <UL_PortfolioFooterPermalinks>
         <li>
-          <a href='#'>Home</a>
+          <a href={urls.portfolioNav.home}>Home</a>
         </li>
         <li>
-          <a href='#about'>About</a>
+          <a href={urls.portfolioNav.about}>About</a>
         </li>
         <li>
-          <a href='#experience'>Experience</a>
+          <a href={urls.portfolioNav.experience}>Experience</a>
         </li>
         <li>
-          <a href='#portfolio'>Portfolio</a>
+          <a href={urls.portfolioNav.portfolio}>Portfolio</a>
         </li>
         <li>
-          <a href='#contact'>Contact</a>
+          <a href={urls.portfolioNav.contact}>Contact</a>
         </li>
       </UL_PortfolioFooterPermalinks>
       <Div_PortfolioFooterSocials>
-        <A_PortfolioFooterSocials href='https://facebook.com' target='_blank' rel='noreferrer'>
+        <A_PortfolioFooterSocials
+          href={urls.portfolioSocials.facebook}
+          target='_blank'
+          rel='noreferrer'
+        >
           <FaFacebookF />
         </A_PortfolioFooterSocials>
-        <A_PortfolioFooterSocials href='https://instagram.com' target='_blank' rel='noreferrer'>
+        <A_PortfolioFooterSocials
+          href={urls.portfolioSocials.instagram}
+          target='_blank'
+          rel='noreferrer'
+        >
           <AiFillInstagram />
         </A_PortfolioFooterSocials>
-        <A_PortfolioFooterSocials href='https://twitter.com' target='_blank' rel='noreferrer'>
+        <A_PortfolioFooterSocials
+          href={urls.portfolioSocials.twitter}
+          target='_blank'
+          rel='noreferrer'
+        >
           <BsTwitter />
         </A_PortfolioFooterSocials>
       </Div_PortfolioFooterSocials>

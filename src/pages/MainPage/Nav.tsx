@@ -4,6 +4,7 @@ import { BiBookBookmark } from 'react-icons/bi'
 import { FaGithub } from 'react-icons/fa'
 import { TiContacts } from 'react-icons/ti'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import { useState } from 'react'
 import React from 'react'
 import styled from 'styled-components'
@@ -40,19 +41,19 @@ const A_Navbar = styled.a`
 export const Nav = () => {
   return (
     <Nav_PortfolioContainer>
-      <A_Navbar href='#'>
+      <A_Navbar href={urls.portfolioNav.home}>
         <AiOutlineHome />
       </A_Navbar>
-      <A_Navbar href='#about'>
+      <A_Navbar href={urls.portfolioNav.about}>
         <AiOutlineUser />
       </A_Navbar>
-      <A_Navbar href='#experience'>
+      <A_Navbar href={urls.portfolioNav.experience}>
         <BiBookBookmark />
       </A_Navbar>
-      <A_Navbar href='#portfolio'>
+      <A_Navbar href={urls.portfolioNav.portfolio}>
         <FaGithub />
       </A_Navbar>
-      <A_Navbar href='#footer'>
+      <A_Navbar href={urls.portfolioNav.footer}>
         <TiContacts />
       </A_Navbar>
     </Nav_PortfolioContainer>
