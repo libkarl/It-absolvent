@@ -35,4 +35,6 @@ export const urls = {
     portfolio: '#portfolio',
     contact: '#contact',
   },
+  toDoAppRedux: 'todo-app-redux',
+  mortgageCalculator: 'morgagecalculator',
 }

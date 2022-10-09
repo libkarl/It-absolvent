@@ -8,6 +8,10 @@ export const theme = {
     black: '#000000',
     colorprimary: '#4db5ff',
     colorprimaryvariant: '#4db5ff', // opacity opacity: 0.4;
+    gray: '#525354',
+    lightgray: '#DBDCDC',
+    lightblue: '#075CCA',
+    darkgrey: '#9A9C9F',
   },
 
   background: {

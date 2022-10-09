@@ -6,6 +6,8 @@ import { urls } from '../../helpers/urls'
 import React from 'react'
 import laptop from '../../assets/laptop.jpg'
 import memorygame from '../../assets/memory-game.jpg'
+import mortgagepic from '../../assets/mortgage.jpg'
+import reduxpic from '../../assets/todoRedux.jpg'
 import startup from '../../assets/startup.jpg'
 import styled from 'styled-components'
 import workspace from '../../assets/workspace.jpg'
@@ -138,6 +140,32 @@ export const Portfolio = () => {
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.memorygame}>Live Demo</Link_DemoApp>
+          </Div_PortfolioItemCTA>
+        </Article_PortfolioItem>
+
+        <Article_PortfolioItem>
+          <Div_PortfolioItemImg>
+            <img src={reduxpic} alt='' />
+          </Div_PortfolioItemImg>
+          <H3_PortfolioItem>To-Do ReduxApp</H3_PortfolioItem>
+          <Div_PortfolioItemCTA>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
+              Github
+            </A_BasicBtn>
+            <Link_DemoApp to={urls.toDoAppRedux}>Live Demo</Link_DemoApp>
+          </Div_PortfolioItemCTA>
+        </Article_PortfolioItem>
+
+        <Article_PortfolioItem>
+          <Div_PortfolioItemImg>
+            <img src={mortgagepic} alt='' />
+          </Div_PortfolioItemImg>
+          <H3_PortfolioItem>Mortgage Calculator App</H3_PortfolioItem>
+          <Div_PortfolioItemCTA>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
+              Github
+            </A_BasicBtn>
+            <Link_DemoApp to={urls.mortgageCalculator}>Live Demo</Link_DemoApp>
           </Div_PortfolioItemCTA>
         </Article_PortfolioItem>
       </Div_PortfolioContainer>
