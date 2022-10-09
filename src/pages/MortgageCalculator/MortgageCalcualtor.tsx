@@ -122,12 +122,12 @@ export const formatMortgageDate = (index: number) => {
 const Charts = (props: { calculatedMortgage: RowData }) => {
   const chartData = props.calculatedMortgage.map((item, index) => ({
     xAxis: formatMortgageDate(index + 1),
-    interestPaid: chartDataFormat(item.monthlyInterestPayment),
+    monthlyInterestPayment: chartDataFormat(item.monthlyInterestPayment),
     principalPaid: chartDataFormat(item.monthlyPrincipalPayment),
     remain: chartDataFormat(item.remain),
-    inflationInterestPaid: chartDataFormat(item.inflationInterestPaid),
-    inflationPrincipalPaid: chartDataFormat(item.inflationPrincipalPaid),
-    inflationRemain: chartDataFormat(item.inflationRemain),
+    inflationInterestPaid: chartDataFormat(item.inflation.inflationInterestPaid),
+    inflationPrincipalPaid: chartDataFormat(item.inflation.inflationPrincipalPaid),
+    inflationRemain: chartDataFormat(item.inflation.inflationRemain),
   }))
   return (
     <ResponsiveContainer>
@@ -142,7 +142,7 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
               <Legend />
               <Line
                 type='monotone'
-                dataKey='interestPaid'
+                dataKey='monthlyInterestPayment'
                 stroke={theme.colors.cyan}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
@@ -279,7 +279,7 @@ export const MortgageCalculator = () => {
             </form>
             <Div_RequiredVaulue>
               <H2_CalculatorHeader>
-                Your final monthly payment in CZK is{' '}
+                Your final Monthly Interest Payment in CZK is{' '}
                 <span>{Math.round(calculationMortgage({ rate, period, price, downPayment }))}</span>{' '}
                 for <span>{period}</span> years.
               </H2_CalculatorHeader>
@@ -335,9 +335,9 @@ const Table = (props: {
             <Td_Styled>{mortgageDataFormat(item.monthlyInterestPayment)}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.monthlyPrincipalPayment)}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.remain)}</Td_Styled>
-            <Td_Styled>{mortgageDataFormat(item.inflationInterestPaid)}</Td_Styled>
-            <Td_Styled>{mortgageDataFormat(item.inflationPrincipalPaid)}</Td_Styled>
-            <Td_Styled>{mortgageDataFormat(item.inflationRemain)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflation.inflationInterestPaid)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflation.inflationPrincipalPaid)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflation.inflationRemain)}</Td_Styled>
           </Tr_Tab>
         ))}
       </tbody>

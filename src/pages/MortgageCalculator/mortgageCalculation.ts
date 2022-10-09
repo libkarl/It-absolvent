@@ -18,6 +18,7 @@ export const calculationMortgage = (arg: ProvidedNumberResults) => {
   return monthlyPayment
 }
 
+// Source: https://www.financevpraxi.cz/finance-vyber-financniho-produktu
 const monthInflation = (year: number) => {
   return Math.pow(1 + -year / 100, 1 / 12) - 1
 }
@@ -50,9 +51,11 @@ export const calculateTableData = (arg: {
       monthlyInterestPayment,
       monthlyPrincipalPayment,
       remain,
-      inflationInterestPaid,
-      inflationPrincipalPaid,
-      inflationRemain,
+      inflation: {
+        inflationInterestPaid,
+        inflationPrincipalPaid,
+        inflationRemain,
+      },
     }
   })
   const finalData = rowsData.map((value, index) => {
