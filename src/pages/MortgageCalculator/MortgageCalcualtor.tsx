@@ -121,10 +121,13 @@ export const formatMortgageDate = (index: number) => {
 
 const Charts = (props: { calculatedMortgage: RowData }) => {
   const chartData = props.calculatedMortgage.map((item, index) => ({
-    xAxis: formatMortgageDate(index),
+    xAxis: formatMortgageDate(index + 1),
     interestPaid: chartDataFormat(item.monthlyInterestPayment),
     principalPaid: chartDataFormat(item.monthlyPrincipalPayment),
     remain: chartDataFormat(item.remain),
+    inflationInterestPaid: chartDataFormat(item.inflationInterestPaid),
+    inflationPrincipalPaid: chartDataFormat(item.inflationPrincipalPaid),
+    inflationRemain: chartDataFormat(item.inflationRemain),
   }))
   return (
     <ResponsiveContainer>
@@ -151,6 +154,20 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
               />
+              <Line
+                type='monotone'
+                dataKey='inflationInterestPaid'
+                stroke={theme.colors.lightRed}
+                strokeWidth={1}
+                activeDot={{ r: 8 }}
+              />
+              <Line
+                type='monotone'
+                dataKey=' inflationPrincipalPaid'
+                stroke={theme.colors.lightRed}
+                strokeWidth={1}
+                activeDot={{ r: 8 }}
+              />
             </LineChart>
           </Div_ChartItem>
           <Div_ChartItem>
@@ -163,6 +180,13 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
               <Line
                 type='monotone'
                 dataKey='remain'
+                stroke={theme.colors.cyan}
+                strokeWidth={1}
+                activeDot={{ r: 8 }}
+              />
+              <Line
+                type='monotone'
+                dataKey='inflationRemain'
                 stroke={theme.colors.cyan}
                 strokeWidth={1}
                 activeDot={{ r: 8 }}
@@ -180,6 +204,7 @@ export const MortgageCalculator = () => {
   const [price, setPrice] = useState(5_000_000)
   const [downPayment, setDownPayment] = useState(0)
   const [rate, setRate] = useState(5)
+  const [inflation, setInflation] = useState(3.5)
   const [visibleYear, setVisibleYear] = useState(1)
   return (
     <React.Fragment>
@@ -227,7 +252,7 @@ export const MortgageCalculator = () => {
                   onChange={(_, v) => setPeriod(Number(v))}
                 />
               </Div_RequiredVaulue>
-              <Label_Text>Select a percentage rate:</Label_Text>
+              <Label_Text>Select rate [%] :</Label_Text>
               <Div_RequiredVaulue>
                 <H2_ManualSettings>{rate}</H2_ManualSettings>
                 <InputSlider
@@ -237,6 +262,18 @@ export const MortgageCalculator = () => {
                   max={20}
                   value={rate}
                   onChange={(_, v) => setRate(Number(v))}
+                />
+              </Div_RequiredVaulue>
+              <Label_Text>Select inflation rate [%] : </Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{inflation}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={1.5}
+                  step={0.1}
+                  min={1}
+                  max={20}
+                  value={rate}
+                  onChange={(_, v) => setInflation(Number(v))}
                 />
               </Div_RequiredVaulue>
             </form>
@@ -252,12 +289,14 @@ export const MortgageCalculator = () => {
       </MortgageContainer>
       <Div_TableWraper>
         <Table
-          calculatedMortgage={calculateTableData({ price, rate, period, downPayment })}
+          calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
           visibleYear={visibleYear}
           setVisibleYear={setVisibleYear}
         />
       </Div_TableWraper>
-      <Charts calculatedMortgage={calculateTableData({ price, rate, period, downPayment })} />
+      <Charts
+        calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
+      />
     </React.Fragment>
   )
 }
@@ -276,6 +315,9 @@ const Table = (props: {
           <Th_Styled>Interest Paid</Th_Styled>
           <Th_Styled>Principal Paid</Th_Styled>
           <Th_Styled>Remain</Th_Styled>
+          <Th_Styled>Inf. Interest Paid</Th_Styled>
+          <Th_Styled>Inf. Principal Paid</Th_Styled>
+          <Th_Styled>Inf. Remain</Th_Styled>
         </tr>
       </thead>
       <tbody>
@@ -293,6 +335,9 @@ const Table = (props: {
             <Td_Styled>{mortgageDataFormat(item.monthlyInterestPayment)}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.monthlyPrincipalPayment)}</Td_Styled>
             <Td_Styled>{mortgageDataFormat(item.remain)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflationInterestPaid)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflationPrincipalPaid)}</Td_Styled>
+            <Td_Styled>{mortgageDataFormat(item.inflationRemain)}</Td_Styled>
           </Tr_Tab>
         ))}
       </tbody>
