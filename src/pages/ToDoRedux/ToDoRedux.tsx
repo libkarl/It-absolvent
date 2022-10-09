@@ -92,6 +92,7 @@ const Div_FilterContainer = tw.h1`
   mx-auto
 `
 type FilterValuesType = 'all' | 'active' | 'done'
+const stateToSelect = (state: RootState) => state.todo
 
 export const TodoUI = () => {
   const [inputOpen, setInputOpen] = useState(false)
@@ -101,7 +102,7 @@ export const TodoUI = () => {
   const handleOnDragEnd = (result: DropResult) => {
     dispatch(handleOnDrag(result))
   }
-  const selectFromStore = useSelector((state: RootState) => state.todo)
+  const selectFromStore = useSelector(stateToSelect)
 
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
