@@ -5,11 +5,10 @@ import { AppDispatch, RootState, store } from './store'
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd'
 import { InputTask } from './Input'
 import { IoMdAddCircle } from 'react-icons/io'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 import { ToDoAppReduxButton } from './ToDoAppReduxButton'
 import { deleteTask, editItem, handleOnDrag, markAsCompleted, newTask } from './choseFromReduxState'
 import { result } from 'lodash'
-import { selectFromStore } from './store'
 import { useState } from 'react'
 import { v1 } from 'uuid'
 import Button from '@mui/material/Button'
@@ -102,7 +101,9 @@ export const TodoUI = () => {
   const handleOnDragEnd = (result: DropResult) => {
     dispatch(handleOnDrag(result))
   }
-
+  const selectFromStore = () => {
+    return useSelector((state: RootState) => state.todo)
+  }
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId='characters'>
