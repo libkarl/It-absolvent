@@ -101,9 +101,8 @@ export const TodoUI = () => {
   const handleOnDragEnd = (result: DropResult) => {
     dispatch(handleOnDrag(result))
   }
-  const selectFromStore = () => {
-    return useSelector((state: RootState) => state.todo)
-  }
+  const selectFromStore = useSelector((state: RootState) => state.todo)
+
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <Droppable droppableId='characters'>
@@ -123,7 +122,7 @@ export const TodoUI = () => {
                 </Button>
               </Div_FilterContainer>
             </Stack>
-            {selectFromStore()
+            {selectFromStore
               .filter(task => {
                 return filter === 'all'
                   ? task
