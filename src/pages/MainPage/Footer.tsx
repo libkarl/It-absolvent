@@ -62,7 +62,7 @@ const Div_PortfolioFooterCopyright = styled.div`
 
 export const Footer = () => {
   return (
-    <Footer_PortfolioFooter id='footer'>
+    <Footer_PortfolioFooter id={urls.portfolioNav.footer}>
       <A_PortfolioFooterLogo href={urls.portfolioNav.home}>DEV Portfolio</A_PortfolioFooterLogo>
       <UL_PortfolioFooterPermalinks>
         <li>
