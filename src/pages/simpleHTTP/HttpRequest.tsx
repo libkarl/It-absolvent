@@ -99,6 +99,7 @@ export const HttpRequestPage = () => {
     try {
       setResponseData(await fetchRequest.filterUsers(inputValue))
     } catch (err) {
+      console.log('fetching error')
       setError('User is unavailable..')
     }
   }

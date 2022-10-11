@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { theme } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import React from 'react'
+import httppic from '../../assets/article.jpg'
 import laptop from '../../assets/laptop.jpg'
 import memorygame from '../../assets/memory-game.jpg'
 import mortgagepic from '../../assets/mortgage.jpg'
@@ -166,6 +167,19 @@ export const Portfolio = () => {
               Github
             </A_BasicBtn>
             <Link_DemoApp to={urls.mortgageCalculator}>Live Demo</Link_DemoApp>
+          </Div_PortfolioItemCTA>
+        </Article_PortfolioItem>
+
+        <Article_PortfolioItem>
+          <Div_PortfolioItemImg>
+            <img src={httppic} alt='' />
+          </Div_PortfolioItemImg>
+          <H3_PortfolioItem>Server Article App</H3_PortfolioItem>
+          <Div_PortfolioItemCTA>
+            <A_BasicBtn href={urls.portfolioProjects.project1} target='_blank' rel='noreferrer'>
+              Github
+            </A_BasicBtn>
+            <Link_DemoApp to={urls.http}>Live Demo</Link_DemoApp>
           </Div_PortfolioItemCTA>
         </Article_PortfolioItem>
       </Div_PortfolioContainer>

@@ -30,10 +30,12 @@ app.get('/', (req, res, next) => {
     const dataFromJSON = readDataFromJSON('data')
     res.send(
       dataFromJSON.users.filter(d =>
+        console.log(d.name)
         parseRequestContent(d.name).includes(parseRequestContent(req.query.search!.toString()))
       )
     )
   } catch (error) {
+    console.log("catch error")
     next(error)
   }
 })
