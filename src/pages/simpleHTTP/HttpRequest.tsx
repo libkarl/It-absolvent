@@ -1,17 +1,20 @@
 import { GoSearch } from 'react-icons/go'
 import { fetchRequest } from '../../helpers/serviceLayer'
+import { response } from 'express'
 import { theme } from '../../helpers/theme'
 import Alert from '@mui/material/Alert'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
-export type Users = {
+export interface Article {
   id: string
-  name: string
-  city: string
-  age: number
-}[]
+  title: string
+  text: string
+  slug: string
+  category: string
+  picture: string
+}
 
 const Div_httpContainer = tw.div`
     flex 
@@ -92,12 +95,13 @@ const Input_Data = styled.input`
 `
 
 export const HttpRequestPage = () => {
-  const [responseData, setResponseData] = useState([] as Users)
+  const [responseData, setResponseData] = useState([] as Article[])
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
   const requestData = async () => {
     try {
-      setResponseData(await fetchRequest.filterUsers(inputValue))
+      let article = await fetchRequest.blog.getArticleBySlug(inputValue)
+      setResponseData([...responseData, article])
     } catch (err) {
       console.log('fetching error')
       setError('User is unavailable..')
@@ -111,7 +115,7 @@ export const HttpRequestPage = () => {
           type='search'
           value={inputValue}
           onChange={e => setInputValue(e.currentTarget.value)}
-          placeholder='Search by name...'
+          placeholder='Search by slug...'
         />
         <button onClick={requestData}>
           <GoSearch size={25} />
@@ -123,9 +127,11 @@ export const HttpRequestPage = () => {
         <div>
           {responseData.map(el => (
             <Div_response key={el.id}>
-              <li>User name: {el.name}</li>
-              <li>User city: {el.city}</li>
-              <li>User age: {el.age}</li>
+              <li>User name: {el.title}</li>
+              <li>User text: {el.text}</li>
+              <li>User slug: {el.slug}</li>
+              <li>User category: {el.category}</li>
+              <li>User picture: {el.picture}</li>
             </Div_response>
           ))}
         </div>
