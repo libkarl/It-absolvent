@@ -17,6 +17,24 @@ export const urls = {
   mainPage: '/',
   memorygame: 'memory-game',
   http: 'simple-HttpRequest',
+  portfolioProjects: {
+    project1: 'www.github.com',
+  },
+  portfolioSocials: {
+    facebook: 'https://www.facebook.com/karel.kopriva.56/',
+    linked: 'www.linked.com',
+    twitter: 'www.twiter.com',
+    instagram: 'www.instagram.com',
+    githubProfile: 'https://github.com/libkarl',
+  },
+  portfolioNav: {
+    home: '#',
+    about: 'about',
+    experience: 'experience',
+    footer: 'footer',
+    portfolio: 'portfolio',
+    contact: 'contact',
+  },
   toDoAppRedux: 'todo-app-redux',
   mortgageCalculator: 'morgagecalculator',
 }
