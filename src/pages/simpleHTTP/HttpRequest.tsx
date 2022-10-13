@@ -1,4 +1,6 @@
 import { GoSearch } from 'react-icons/go'
+import { SelectCategory } from './NewArticle'
+import { SelectChangeEvent } from '@mui/material/Select'
 import { fetchRequest } from '../../helpers/serviceLayer'
 import { response } from 'express'
 import { theme } from '../../helpers/theme'
@@ -98,6 +100,12 @@ export const HttpRequestPage = () => {
   const [responseData, setResponseData] = useState([] as Article[])
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
+  const [text, setText] = useState('')
+  const [category, setCategory] = useState('')
+
+  const handleCategory = (event: SelectChangeEvent) => {
+    setCategory(event.target.value as string)
+  }
   const requestData = async () => {
     try {
       let article = await fetchRequest.blog.getArticleBySlug(inputValue)
@@ -107,9 +115,31 @@ export const HttpRequestPage = () => {
       setError('User is unavailable..')
     }
   }
+
+  const createNewArticle = () => {
+    try {
+      let title = 'test title'
+      fetchRequest.blog.addNewPost({ title, text, category })
+    } catch (err) {
+      console.log('fetching error')
+      setError('User is unavailable..')
+    }
+  }
   return (
     <Div_httpContainer>
       <H2_CalculatorHeader>Set user name to fetch data.</H2_CalculatorHeader>
+      <Div_RequiredVaulue>
+        <Input_Data
+          type='search'
+          value={inputValue}
+          onChange={i => setText(i.currentTarget.value)}
+          placeholder='Insert article content..'
+        />
+        <SelectCategory selectedCategory={category} handleCategory={handleCategory} />
+        <button onClick={createNewArticle}>
+          <GoSearch size={25} />
+        </button>
+      </Div_RequiredVaulue>
       <Div_RequiredVaulue>
         <Input_Data
           type='search'
