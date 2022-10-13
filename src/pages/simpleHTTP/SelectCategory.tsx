@@ -32,5 +32,3 @@ export const SelectCategory = (props: CategoryArgs) => {
     </Box>
   )
 }
-
-const AddNewArticle = () => {}

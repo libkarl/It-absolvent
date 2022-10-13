@@ -25,7 +25,16 @@ export const fetchRequest = {
       var resp = await response.json()
       return resp as Article
     },
-    deletePost: async (slug: string) => {
+    updateArticleBySlug: async (post: { slugToUpdate: string; updateText: string }) => {
+      const response = await fetch(`${getServerUrl}articles/${post.slugToUpdate}`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(post),
+      })
+      if (!response.ok) throw new Error('Server side error')
+      return (await response.json()) as Article
+    },
+    deleteArticleBySlug: async (slug: string) => {
       const response = await fetch(`${getServerUrl}articles/${slug}`, {
         method: 'DELETE',
         headers: {

@@ -1,6 +1,8 @@
+import { ActionDrawer } from './NewArticleDrawer'
+import { BlogList } from './BlogArticles'
+import { FiSend } from 'react-icons/fi'
 import { GoSearch } from 'react-icons/go'
-import { SelectCategory } from './NewArticle'
-import { SelectChangeEvent } from '@mui/material/Select'
+import { SelectCategory } from './SelectCategory'
 import { fetchRequest } from '../../helpers/serviceLayer'
 import { response } from 'express'
 import { theme } from '../../helpers/theme'
@@ -9,7 +11,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
-export interface Article {
+export type Article = {
   id: string
   title: string
   text: string
@@ -22,18 +24,25 @@ const Div_httpContainer = tw.div`
     flex 
     flex-col 
     gap-y-2 
-    w-full 
-    sm:w-2/3 
-    md:w-1/2 
-    max-w-sm 
+    w-10/12 
     rounded-2xl 
     p-2 
     shadow-2xl 
     bg-gray-200 
     text-left 
     characters 
-    mx-auto 
-    mt-96
+    mx-auto
+    mt-16
+    mb-16 
+    
+`
+
+const Div_FromContainer = tw.div`
+  sm:w-2/3 
+  md:w-1/2 
+  max-w-sm
+  mx-auto 
+  mb-12
 `
 
 const Div_RequiredVaulue = tw.div`
@@ -100,26 +109,45 @@ export const HttpRequestPage = () => {
   const [responseData, setResponseData] = useState([] as Article[])
   const [error, setError] = useState('')
   const [inputValue, setInputValue] = useState('')
-  const [text, setText] = useState('')
-  const [category, setCategory] = useState('')
+  const [slugToDelete, setSlugToDelete] = useState('')
+  const [updateText, setUpdateText] = useState('')
+  const [slugToUpdate, setSlugToUpdate] = useState('')
 
-  const handleCategory = (event: SelectChangeEvent) => {
-    setCategory(event.target.value as string)
-  }
-  const requestData = async () => {
+  const findArticleBySlug = async () => {
     try {
-      let article = await fetchRequest.blog.getArticleBySlug(inputValue)
-      setResponseData([...responseData, article])
+      let articles = await fetchRequest.blog.getArticleBySlug(inputValue)
+      let arr: Article[] = []
+      arr.push(articles)
+      setResponseData(arr)
+    } catch (err) {
+      console.log('fetching error')
+      setError('Article does not exist..')
+    }
+  }
+
+  const findAllArticles = async () => {
+    try {
+      let articles = await fetchRequest.blog.getAllArticles()
+      setResponseData(articles)
+    } catch (err) {
+      console.log('fetching error')
+      setError('User is unavailable..')
+    }
+  }
+  const deleteArticleBySlug = async () => {
+    try {
+      await fetchRequest.blog.deleteArticleBySlug(inputValue)
+      setResponseData([])
     } catch (err) {
       console.log('fetching error')
       setError('User is unavailable..')
     }
   }
 
-  const createNewArticle = () => {
+  const updateArticleBySlug = () => {
     try {
       let title = 'test title'
-      fetchRequest.blog.addNewPost({ title, text, category })
+      fetchRequest.blog.updateArticleBySlug({ slugToUpdate, updateText })
     } catch (err) {
       console.log('fetching error')
       setError('User is unavailable..')
@@ -127,45 +155,66 @@ export const HttpRequestPage = () => {
   }
   return (
     <Div_httpContainer>
-      <H2_CalculatorHeader>Set user name to fetch data.</H2_CalculatorHeader>
-      <Div_RequiredVaulue>
-        <Input_Data
-          type='search'
-          value={inputValue}
-          onChange={i => setText(i.currentTarget.value)}
-          placeholder='Insert article content..'
-        />
-        <SelectCategory selectedCategory={category} handleCategory={handleCategory} />
-        <button onClick={createNewArticle}>
-          <GoSearch size={25} />
-        </button>
-      </Div_RequiredVaulue>
-      <Div_RequiredVaulue>
-        <Input_Data
-          type='search'
-          value={inputValue}
-          onChange={e => setInputValue(e.currentTarget.value)}
-          placeholder='Search by slug...'
-        />
-        <button onClick={requestData}>
-          <GoSearch size={25} />
-        </button>
-      </Div_RequiredVaulue>
-      {error ? (
-        <FetchError severity='error'>{error}</FetchError>
-      ) : (
-        <div>
-          {responseData.map(el => (
-            <Div_response key={el.id}>
-              <li>User name: {el.title}</li>
-              <li>User text: {el.text}</li>
-              <li>User slug: {el.slug}</li>
-              <li>User category: {el.category}</li>
-              <li>User picture: {el.picture}</li>
-            </Div_response>
-          ))}
-        </div>
-      )}
+      <ActionDrawer error={setError} />
+      <Div_FromContainer>
+        <H2_CalculatorHeader>Set user name to fetch data.</H2_CalculatorHeader>
+        <Div_RequiredVaulue>
+          <h2>Find All articles</h2>
+          <button onClick={findAllArticles}>
+            <GoSearch size={25} />
+          </button>
+        </Div_RequiredVaulue>
+        <h2>Find Article by Slug</h2>
+        <Div_RequiredVaulue>
+          <Input_Data
+            type='search'
+            value={inputValue}
+            onChange={e => setInputValue(e.currentTarget.value)}
+            placeholder='Search by slug...'
+          />
+          <button onClick={findArticleBySlug}>
+            <GoSearch size={25} />
+          </button>
+        </Div_RequiredVaulue>
+        <h2>Update Article by Slug</h2>
+        <Div_RequiredVaulue>
+          <Input_Data
+            type='search'
+            value={updateText}
+            onChange={e => setUpdateText(e.currentTarget.value)}
+            placeholder='Insert text to update...'
+          />
+          <Input_Data
+            type='search'
+            value={slugToUpdate}
+            onChange={e => setSlugToUpdate(e.currentTarget.value)}
+            placeholder='Slug to Update...'
+          />
+          <button onClick={updateArticleBySlug}>
+            <FiSend size={25} />
+          </button>
+        </Div_RequiredVaulue>
+        <h2>Delete article by Slug</h2>
+        <Div_RequiredVaulue>
+          <Input_Data
+            type='search'
+            value={slugToDelete}
+            onChange={e => setSlugToDelete(e.currentTarget.value)}
+            placeholder='Search by slug...'
+          />
+          <button onClick={deleteArticleBySlug}>
+            <GoSearch size={25} />
+          </button>
+        </Div_RequiredVaulue>
+        {error ? (
+          <FetchError severity='error'>{error}</FetchError>
+        ) : error === '' ? (
+          <></>
+        ) : (
+          <FetchError severity='success'>Operation was successfull</FetchError>
+        )}
+      </Div_FromContainer>
+      <BlogList articles={responseData} />
     </Div_httpContainer>
   )
 }
