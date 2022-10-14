@@ -1,17 +1,8 @@
-import { Article } from './HttpRequest'
-import { Link } from 'react-router-dom'
+import { Article } from './BlogApp'
 import { theme } from '../../helpers/theme'
-import { urls } from '../../helpers/urls'
 import React from 'react'
-import httppic from '../../assets/article.jpg'
-import laptop from '../../assets/laptop.jpg'
-import memorygame from '../../assets/memory-game.jpg'
-import mortgagepic from '../../assets/mortgage.jpg'
-import reduxpic from '../../assets/todoRedux.jpg'
-import startup from '../../assets/startup.jpg'
 import styled from 'styled-components'
-import workspace from '../../assets/workspace.jpg'
-import worktable from '../../assets/worktable.jpg'
+import tw from 'tailwind-styled-components'
 
 const Div_PortfolioContainer = styled.div`
   width: ${theme.sizes.containerLG}%;
@@ -19,6 +10,7 @@ const Div_PortfolioContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+  margin-bottom: 4rem;
   ${theme.breakpoints.md} {
     grid-template-columns: 1fr 1fr;
     gap: 1.2rem;
@@ -29,13 +21,13 @@ const Div_PortfolioContainer = styled.div`
   }
 `
 const Article_PortfolioItem = styled.article`
-  background: ${theme.colors.gray};
+  background: ${theme.background.lightblue};
   padding: 1.3rem;
   border-radius: 2rem;
   border: 1px solid transparent;
   transition: all 400ms ease;
   &:hover {
-    border-color: ${theme.colors.colorprimaryvariant};
+    border-color: ${theme.colors.lightBlack};
     background: transparent;
   }
 `
@@ -49,11 +41,12 @@ const H3_PortfolioItem = styled.h3`
   margin: 1.2 0;
 `
 
-const Link_DemoApp = styled.div`
-  width: max-content;
-  display: inline-block;
-  padding: 0.75rem 1.2rem;
-  border-radius: 0.4rem;
+const H2_StyledTitle = tw.div`
+  text-lg
+  text-center
+  italic
+  underline
+  p-4
 `
 export const BlogList = (props: { articles: Article[] }) => {
   return (
@@ -62,6 +55,7 @@ export const BlogList = (props: { articles: Article[] }) => {
         {props.articles.map(el => {
           return (
             <Article_PortfolioItem key={el.id}>
+              <H2_StyledTitle>{el.title}</H2_StyledTitle>
               <Div_PortfolioItemImg>
                 <img src={el.picture} alt='' />
               </Div_PortfolioItemImg>
