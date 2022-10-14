@@ -118,18 +118,35 @@ export const ActionDrawer = () => {
             maxWidth: '500px',
           }}
         >
-          <ListItem sx={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+          <ListItem
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: ' 1fr', sm: 'repeat(3, 1fr)' },
+              gap: '2.5rem',
+              textAlign: 'center',
+              marginBottom: { xs: '-5rem', sm: '0rem' },
+            }}
+          >
             <div>Update article with slug:</div>
             <TextField
               size='small'
               type='search'
               value={articleContext.slugToUpdate}
               onChange={e => articleContext.setSlugToUpdate(e.currentTarget.value)}
-              placeholder='Slug to Update...'
+              placeholder='Slug...'
             />
-            <span role='img' aria-label='book'>
+            <ListItem
+              sx={{
+                visibility: {
+                  xs: 'hidden',
+                  sm: 'visible',
+                },
+              }}
+              role='img'
+              aria-label='book'
+            >
               📖
-            </span>
+            </ListItem>
           </ListItem>
           <ListItem
             sx={{

@@ -4,10 +4,12 @@ import { GoSearch } from 'react-icons/go'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { SelectChangeEvent } from '@mui/material/Select'
 import { TextField } from '@mui/joy'
+import { ThemeProvider } from '@mui/private-theming'
 import { blue } from '@mui/material/colors'
 import { contextBuild } from '../../helpers/contextBuilder'
 import { delayDefinition } from '../../helpers/functions'
 import { fetchRequest } from '../../helpers/serviceLayer'
+import { muiTheme } from '../../helpers/theme'
 import { useContext } from 'react'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
@@ -188,35 +190,37 @@ const ArticleUI = () => {
   const providedContext = useContext(TodoContext)
   return (
     <Div_httpContainer>
-      <Div_FromContainer>
-        <H2_CalculatorHeader>Article Blog</H2_CalculatorHeader>
-        <Div_RequiredVaulue>
-          <TextField
-            id='outlined-basic'
-            variant='outlined'
-            value={providedContext.inputValue}
-            placeholder='Search by slug...'
-            onChange={e => providedContext.setInputValue(e.currentTarget.value)}
-            sx={{ '& > :not(style)': { m: 1, width: '20ch' } }}
-          />
-          <button onClick={providedContext.findArticleBySlug}>
-            <GoSearch size={20} color={'#1565c0'} />
-          </button>
-          <Button sx={{ width: '2rm' }} onClick={providedContext.deleteArticleBySlug}>
-            <RiDeleteBin6Line size={23} />
-          </Button>
-        </Div_RequiredVaulue>
-        <Div_RequiredVaulue>
-          <ActionDrawer />
-        </Div_RequiredVaulue>
-        {providedContext.error === 'error' ? (
-          <FetchError severity='error'>{'User does not exist'}</FetchError>
-        ) : null}
-        {providedContext.error === 'success' ? (
-          <FetchError severity='success'>{'Operation was successfull..'}</FetchError>
-        ) : null}
-      </Div_FromContainer>
-      <BlogList articles={providedContext.responseData} />
+      <ThemeProvider theme={muiTheme}>
+        <Div_FromContainer>
+          <H2_CalculatorHeader>Article Blog</H2_CalculatorHeader>
+          <Div_RequiredVaulue>
+            <TextField
+              id='outlined-basic'
+              variant='outlined'
+              value={providedContext.inputValue}
+              placeholder='Search by slug...'
+              onChange={e => providedContext.setInputValue(e.currentTarget.value)}
+              sx={{ '& > :not(style)': { m: 1, width: '20ch' } }}
+            />
+            <button onClick={providedContext.findArticleBySlug}>
+              <GoSearch size={20} color={'#1565c0'} />
+            </button>
+            <Button sx={{ width: '2rm' }} onClick={providedContext.deleteArticleBySlug}>
+              <RiDeleteBin6Line size={23} />
+            </Button>
+          </Div_RequiredVaulue>
+          <Div_RequiredVaulue>
+            <ActionDrawer />
+          </Div_RequiredVaulue>
+          {providedContext.error === 'error' ? (
+            <FetchError severity='error'>{'User does not exist'}</FetchError>
+          ) : null}
+          {providedContext.error === 'success' ? (
+            <FetchError severity='success'>{'Operation was successfull..'}</FetchError>
+          ) : null}
+        </Div_FromContainer>
+        <BlogList articles={providedContext.responseData} />
+      </ThemeProvider>
     </Div_httpContainer>
   )
 }
