@@ -4,7 +4,7 @@ import { FiAward } from 'react-icons/fi'
 import { VscFolder } from 'react-icons/vsc'
 import { theme } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
-import ME from '../../assets/me-about.jpg'
+import Me from '../../assets/me-about.jpg'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -100,13 +100,13 @@ const Small_AboutCard = styled.small`
 `
 export const About = () => {
   return (
-    <section id='about'>
+    <section id={urls.portfolioNav.about}>
       <h5>Get to Know</h5>
       <h2>About Me</h2>
       <Div_AboutContainer>
         <Div_AboutMe>
           <Div_AboutMeImage>
-            <img src={ME} alt='About Image' />
+            <img src={Me} alt='About Image' />
           </Div_AboutMeImage>
         </Div_AboutMe>
 

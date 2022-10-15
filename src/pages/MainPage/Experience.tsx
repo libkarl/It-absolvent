@@ -1,5 +1,6 @@
 import { HiBadgeCheck } from 'react-icons/hi'
 import { theme } from '../../helpers/theme'
+import { urls } from '../../helpers/urls'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -40,7 +41,7 @@ const Div_Experience = styled.div`
 const H3_Experience = styled.h3`
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--color-primary);
+  color: ${theme.colors.colorprimary};
 `
 const Div_ExperienceContent = styled.div`
   display: grid;
@@ -62,7 +63,7 @@ const Div_ExperienceDetailsIcon = styled.div`
 `
 export const Experience = () => {
   return (
-    <section id='experience'>
+    <section id={urls.portfolioNav.experience}>
       <h5>What Skills I Have</h5>
       <h2>My Experience</h2>
 

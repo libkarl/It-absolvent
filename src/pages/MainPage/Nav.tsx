@@ -44,16 +44,16 @@ export const Nav = () => {
       <A_Navbar href={urls.portfolioNav.home}>
         <AiOutlineHome />
       </A_Navbar>
-      <A_Navbar href={urls.portfolioNav.about}>
+      <A_Navbar href={'#' + urls.portfolioNav.about}>
         <AiOutlineUser />
       </A_Navbar>
-      <A_Navbar href={urls.portfolioNav.experience}>
+      <A_Navbar href={'#' + urls.portfolioNav.experience}>
         <BiBookBookmark />
       </A_Navbar>
-      <A_Navbar href={urls.portfolioNav.portfolio}>
+      <A_Navbar href={'#' + urls.portfolioNav.portfolio}>
         <FaGithub />
       </A_Navbar>
-      <A_Navbar href={urls.portfolioNav.footer}>
+      <A_Navbar href={'#' + urls.portfolioNav.footer}>
         <TiContacts />
       </A_Navbar>
     </Nav_PortfolioContainer>

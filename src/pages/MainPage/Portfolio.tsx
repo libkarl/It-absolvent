@@ -74,7 +74,7 @@ const Link_DemoApp = styled(Link)`
 
 export const Portfolio = () => {
   return (
-    <section id='portfolio'>
+    <section id={urls.portfolioNav.portfolio}>
       <h5>My Recent Work</h5>
       <h2>Portfolio</h2>
 
