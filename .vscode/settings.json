@@ -4,7 +4,7 @@
   "editor.cursorStyle": "block",
   "editor.fontFamily": "Hasklig, Consolas, 'Courier New', monospace",
   "editor.fontLigatures": true,
-  "editor.fontSize": 15,
+  "editor.fontSize": 24,
   "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true
