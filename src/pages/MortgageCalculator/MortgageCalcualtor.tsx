@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { InputSlider } from './UniversalInput'
 import { calculateBuildingPrice, calculateTableData } from './mortgageCalculation'
 import { calculationMortgage } from './mortgageCalculation'
@@ -247,100 +247,108 @@ export const MortgageCalculator = () => {
   const [inflation, setInflation] = useState(3.5)
   const [visibleYear, setVisibleYear] = useState(1)
   return (
-    <React.Fragment>
-      <Helmet>
-        <title>Mortgage Calculator</title>
-      </Helmet>
-      <MortgageContainer maxWidth='sm'>
-        <div>
-          <H2_CalculatorHeader>React - Mortgage calculator</H2_CalculatorHeader>
-          <form>
-            <Label_Text>Enter a loan amount:</Label_Text>
+    <HelmetProvider>
+      <React.Fragment>
+        <Helmet>
+          <title>Mortgage Calculator</title>
+        </Helmet>
+        <MortgageContainer maxWidth='sm'>
+          <div>
+            <H2_CalculatorHeader>React - Mortgage calculator</H2_CalculatorHeader>
+            <form>
+              <Label_Text>Enter a loan amount:</Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{price}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={1_500_000}
+                  step={50_000}
+                  min={1_000_000}
+                  max={10_000_000}
+                  value={price}
+                  onChange={(_, v) => setPrice(Number(v))}
+                />
+              </Div_RequiredVaulue>
+              <Label_Text>Enter a first payment amount:</Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{downPayment < price ? downPayment : price}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={500_000}
+                  step={50_000}
+                  min={0}
+                  max={price}
+                  value={downPayment < price ? downPayment : price}
+                  onChange={(_, v) => setDownPayment(Number(v))}
+                />
+              </Div_RequiredVaulue>
+              <Label_Text>Select a loan term:</Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{period}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={1.5}
+                  step={1}
+                  min={5}
+                  max={40}
+                  value={period}
+                  onChange={(_, v) => setPeriod(Number(v))}
+                />
+              </Div_RequiredVaulue>
+              <Label_Text>Select rate [%] :</Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{rate}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={1.5}
+                  step={0.1}
+                  min={1}
+                  max={20}
+                  value={rate}
+                  onChange={(_, v) => setRate(Number(v))}
+                />
+              </Div_RequiredVaulue>
+              <Label_Text>Select inflation rate [%] : </Label_Text>
+              <Div_RequiredVaulue>
+                <H2_ManualSettings>{inflation}</H2_ManualSettings>
+                <InputSlider
+                  defaultValue={1.5}
+                  step={0.1}
+                  min={1}
+                  max={20}
+                  value={rate}
+                  onChange={(_, v) => setInflation(Number(v))}
+                />
+              </Div_RequiredVaulue>
+            </form>
             <Div_RequiredVaulue>
-              <H2_ManualSettings>{price}</H2_ManualSettings>
-              <InputSlider
-                defaultValue={1_500_000}
-                step={50_000}
-                min={1_000_000}
-                max={10_000_000}
-                value={price}
-                onChange={(_, v) => setPrice(Number(v))}
-              />
+              <H2_CalculatorHeader>
+                Your final Monthly Interest Payment in CZK is{' '}
+                <span>{Math.round(calculationMortgage({ rate, period, price, downPayment }))}</span>{' '}
+                for <span>{period}</span> years.
+              </H2_CalculatorHeader>
             </Div_RequiredVaulue>
-            <Label_Text>Enter a first payment amount:</Label_Text>
-            <Div_RequiredVaulue>
-              <H2_ManualSettings>{downPayment < price ? downPayment : price}</H2_ManualSettings>
-              <InputSlider
-                defaultValue={500_000}
-                step={50_000}
-                min={0}
-                max={price}
-                value={downPayment < price ? downPayment : price}
-                onChange={(_, v) => setDownPayment(Number(v))}
-              />
-            </Div_RequiredVaulue>
-            <Label_Text>Select a loan term:</Label_Text>
-            <Div_RequiredVaulue>
-              <H2_ManualSettings>{period}</H2_ManualSettings>
-              <InputSlider
-                defaultValue={1.5}
-                step={1}
-                min={5}
-                max={40}
-                value={period}
-                onChange={(_, v) => setPeriod(Number(v))}
-              />
-            </Div_RequiredVaulue>
-            <Label_Text>Select rate [%] :</Label_Text>
-            <Div_RequiredVaulue>
-              <H2_ManualSettings>{rate}</H2_ManualSettings>
-              <InputSlider
-                defaultValue={1.5}
-                step={0.1}
-                min={1}
-                max={20}
-                value={rate}
-                onChange={(_, v) => setRate(Number(v))}
-              />
-            </Div_RequiredVaulue>
-            <Label_Text>Select inflation rate [%] : </Label_Text>
-            <Div_RequiredVaulue>
-              <H2_ManualSettings>{inflation}</H2_ManualSettings>
-              <InputSlider
-                defaultValue={1.5}
-                step={0.1}
-                min={1}
-                max={20}
-                value={rate}
-                onChange={(_, v) => setInflation(Number(v))}
-              />
-            </Div_RequiredVaulue>
-          </form>
-          <Div_RequiredVaulue>
-            <H2_CalculatorHeader>
-              Your final Monthly Interest Payment in CZK is{' '}
-              <span>{Math.round(calculationMortgage({ rate, period, price, downPayment }))}</span>{' '}
-              for <span>{period}</span> years.
-            </H2_CalculatorHeader>
-          </Div_RequiredVaulue>
-        </div>
-      </MortgageContainer>
-      <Div_Visualization>
-        <Div_TableWraper>
-          <Table
+          </div>
+        </MortgageContainer>
+        <Div_Visualization>
+          <Div_TableWraper>
+            <Table
+              calculatedMortgage={calculateTableData({
+                price,
+                rate,
+                period,
+                downPayment,
+                inflation,
+              })}
+              visibleYear={visibleYear}
+              setVisibleYear={setVisibleYear}
+            />
+          </Div_TableWraper>
+          <Charts
             calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
-            visibleYear={visibleYear}
-            setVisibleYear={setVisibleYear}
           />
-        </Div_TableWraper>
-        <Charts
-          calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
-        />
-        <PropertyValueChart
-          calculatedValue={calculateBuildingPrice({ price, inflation, period })}
-        />
-      </Div_Visualization>
-    </React.Fragment>
+          <PropertyValueChart
+            calculatedValue={calculateBuildingPrice({ price, inflation, period })}
+          />
+        </Div_Visualization>
+      </React.Fragment>
+    </HelmetProvider>
   )
 }
 
