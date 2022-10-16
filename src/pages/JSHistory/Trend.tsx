@@ -8,6 +8,8 @@ const Div_Trend = tw.div`
   my-24 
   px-6 
   mx-auto
+  p-10
+  sm: -mb-32
 `
 const Section_Trend = tw.section`
   mb-32 
