@@ -1,14 +1,67 @@
+import * as React from 'react'
+import { GrMenu } from 'react-icons/gr'
+import { List, ListItem } from '@mui/material'
 import { urls } from '../../helpers/urls'
+import Button from '@mui/material/Button'
 import JSLogoHistory from '../../assets/jSLogo.png'
-import React from 'react'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
 import tw from 'tailwind-styled-components'
+
+const PopUpMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  return (
+    <div>
+      <Button
+        id='basic-button'
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <GrMenu size={25} />
+      </Button>
+      <Menu
+        id='basic-menu'
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          <A_header href={'#' + urls.jsHistoryHome}>Home</A_header>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <A_header href={'#' + urls.jsHistoryTimeline}>Timeline</A_header>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <A_header href={'#' + urls.jsHistoryPossibilities}>Possibilities</A_header>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <A_header href={'#' + urls.jsHistoryTrend}>Trend</A_header>
+        </MenuItem>
+      </Menu>
+    </div>
+  )
+}
 
 const Div_Header = tw.div`
   absolute 
   z-50
   w-full
   left-0 
-  top-0 
+  top-0
+   
 `
 
 const DivHeader = tw.div`
@@ -42,6 +95,8 @@ const Nav = tw.nav`
   top-full
   mt-5
   ml-96
+  hidden
+  lg: visible
 `
 
 const Button_header = tw.button`
@@ -49,9 +104,9 @@ const Button_header = tw.button`
   absolute
   right-4
   top-1/2
+  mr-10
   -translate-y-1/2
   lg:hidden
-  focus:ring-2
   ring-primary
   px-3
   py-[6px]
@@ -66,19 +121,17 @@ const A_image = tw.a`
 `
 
 const Ul_header = tw.ul`
-  ml-40
   gap-2
   block 
   lg:flex
 `
 
-const Span_header = tw.span`
+const Div_header = tw.div`
   relative 
   w-[30px] 
   h-[2px] 
   my-[6px] 
   block 
-  bg-body-color
 `
 const Div_header_container = tw.div`
   container
@@ -117,7 +170,10 @@ const Div_child_container = tw.div`
   justify-between
   relative mt-10
 `
-
+const Div_PopUpMenuPosition = tw.div`
+  lg:hidden
+  mr-20
+`
 export const Nav_bar = () => {
   return (
     <div>
@@ -138,11 +194,6 @@ export const Nav_bar = () => {
             </Div_logo>
             <Div_navbar>
               <DivHeader>
-                <Button_header>
-                  <Span_header />
-                  <Span_header />
-                  <Span_header />
-                </Button_header>
                 <Nav>
                   <Ul_header>
                     <li>
@@ -161,6 +212,9 @@ export const Nav_bar = () => {
                 </Nav>
               </DivHeader>
             </Div_navbar>
+            <Div_PopUpMenuPosition>
+              <PopUpMenu />
+            </Div_PopUpMenuPosition>
           </Div_child_container>
         </Div_header_container>
       </Div_Header>

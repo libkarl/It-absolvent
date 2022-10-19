@@ -15,6 +15,7 @@ const Div_Home = tw.div`
   bg-white 
   mt-36 
   mx-auto
+  p-12
 `
 const Div_HomeContainer = tw.div`
   container
