@@ -22,6 +22,7 @@ const Div_CoreFooter = tw.div`
 const Div_Footer_Container = tw.div`
   container
   mx-auto
+  sm: -mb-64
 `
 const Div_Flex = tw.div`
   flex 
@@ -88,6 +89,7 @@ const Div_FolowSize = tw.div`
   w-full
   mb-10
   ml-96
+  sm:hidden
 `
 const P_FolowContent = tw.div`
   text-base
@@ -103,6 +105,7 @@ const DIV_SocilFlex = tw.div`
   flex
   items-center
   mb-6
+  sm: hidden
 `
 const SPAN_Folow = tw.span`
   flex
@@ -133,27 +136,6 @@ export const Footer = () => {
               </P_FooterContact>
             </Div_LogoSize>
           </Div_JSLogo>
-
-          <Div_Folow>
-            <Div_FolowSize>
-              <H4_Folow>Follow Us On</H4_Folow>
-              <DIV_SocilFlex>
-                <A_FooterSocialMedia href={facebookURL} target='_blank' rel='noreferrer'>
-                  <FaFacebookF />
-                </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={twitter} target='_blank' rel='noreferrer'>
-                  <FaLinkedin />
-                </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={youtube} target='_blank' rel='noreferrer'>
-                  <BsTwitter />
-                </A_FooterSocialMedia>
-                <A_FooterSocialMedia href={linked} target='_blank' rel='noreferrer'>
-                  <AiFillYoutube />
-                </A_FooterSocialMedia>
-              </DIV_SocilFlex>
-              <P_FolowContent>&copy; 2022 WebDevEducation</P_FolowContent>
-            </Div_FolowSize>
-          </Div_Folow>
         </Div_Flex>
       </Div_Footer_Container>
       <div>

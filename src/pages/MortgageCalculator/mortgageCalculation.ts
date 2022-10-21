@@ -68,3 +68,15 @@ export const calculateTableData = (arg: {
 
   return finalData
 }
+
+export const calculateBuildingPrice = (arg: {
+  price: number
+  inflation: number
+  period: number
+}) => {
+  const buildingPrice = Array.from({ length: arg.period }, (v, i) => i + 1).map(i => {
+    const countedInflation = (arg.price / 100) * arg.inflation
+    return (arg.price += countedInflation)
+  })
+  return buildingPrice
+}

@@ -8,9 +8,9 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { InputSlider } from './UniversalInput'
-import { calculateTableData } from './mortgageCalculation'
+import { calculateBuildingPrice, calculateTableData } from './mortgageCalculation'
 import { calculationMortgage } from './mortgageCalculation'
 import { theme } from '../../helpers/theme'
 import Box from '@mui/material/Box'
@@ -20,14 +20,14 @@ import styled from 'styled-components'
 import tw from 'tailwind-styled-components'
 
 const Div_TableWraper = tw.div`
-  w-6/12
+  w-full
   mt-20
   mb-20
   mx-auto
+  p-6
 `
 
 const Div_ChartsWraper = tw.div`
-  w-10/12
   mt-10
   mb-40
   mx-auto
@@ -40,8 +40,12 @@ const Div_ChartItem = styled.div`
 
 const Div_ResponsiveChartsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 2fr));
+  grid-template-columns: "1fr"
   grid-gap: 1rem;
+  @media screen and ${theme.breakpoints.sm} {
+    'repeat(3, 1fr)'
+  }
+
 `
 
 const MortgageContainer = tw(Container)`
@@ -53,13 +57,12 @@ const MortgageContainer = tw(Container)`
     md:w-1/2 
     max-w-sm 
     rounded-2xl 
-    p-2 
     shadow-2xl 
     bg-gray-200 
     text-left 
     characters 
     mx-auto 
-    mt-96
+    mt-42
 `
 const Div_RequiredVaulue = tw.div`
   border 
@@ -119,6 +122,38 @@ export const formatMortgageDate = (index: number) => {
   return `${actualMonth}/${loanYear}`
 }
 
+const PropertyValueChart = (props: {
+  calculatedValue: ReturnType<typeof calculateBuildingPrice>
+}) => {
+  const propertyData = props.calculatedValue.map((item, index) => ({
+    xAxis: formatMortgageDate(index + 1),
+    apprecationperyaer: chartDataFormat(item),
+  }))
+  return (
+    <Div_ChartsWraper>
+      <ResponsiveContainer width='90%' height='50%'>
+        <Div_ResponsiveChartsGrid>
+          <Div_ChartItem>
+            <LineChart width={450} height={320} data={propertyData}>
+              <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
+              <XAxis dataKey='xAxis' />
+              <YAxis width={90} />
+              <Tooltip />
+              <Legend />
+              <Line
+                type='monotone'
+                dataKey='apprecationperyaer'
+                stroke={theme.colors.cyan}
+                activeDot={{ r: 8 }}
+              />
+            </LineChart>
+          </Div_ChartItem>
+        </Div_ResponsiveChartsGrid>
+      </ResponsiveContainer>
+    </Div_ChartsWraper>
+  )
+}
+
 const Charts = (props: { calculatedMortgage: RowData }) => {
   const chartData = props.calculatedMortgage.map((item, index) => ({
     xAxis: formatMortgageDate(index + 1),
@@ -130,71 +165,76 @@ const Charts = (props: { calculatedMortgage: RowData }) => {
     inflationRemain: chartDataFormat(item.inflation.inflationRemain),
   }))
   return (
-    <ResponsiveContainer>
-      <Div_ChartsWraper>
-        <Div_ResponsiveChartsGrid>
-          <Div_ChartItem>
-            <LineChart width={690} height={640} data={chartData}>
-              <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
-              <XAxis dataKey='xAxis' />
-              <YAxis width={80} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type='monotone'
-                dataKey='monthlyInterestPayment'
-                stroke={theme.colors.cyan}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type='monotone'
-                dataKey='principalPaid'
-                stroke={theme.colors.lightRed}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type='monotone'
-                dataKey='inflationInterestPaid'
-                stroke={theme.colors.lightRed}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type='monotone'
-                dataKey=' inflationPrincipalPaid'
-                stroke={theme.colors.lightRed}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-            </LineChart>
-          </Div_ChartItem>
-          <Div_ChartItem>
-            <LineChart width={690} height={640} data={chartData}>
-              <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
-              <XAxis dataKey='xAxis' />
-              <YAxis width={80} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type='monotone'
-                dataKey='remain'
-                stroke={theme.colors.cyan}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-              <Line
-                type='monotone'
-                dataKey='inflationRemain'
-                stroke={theme.colors.cyan}
-                strokeWidth={1}
-                activeDot={{ r: 8 }}
-              />
-            </LineChart>
-          </Div_ChartItem>
-        </Div_ResponsiveChartsGrid>
-      </Div_ChartsWraper>
+    <ResponsiveContainer width='90%' height='50%'>
+      <Div_ResponsiveChartsGrid>
+        <Div_ChartItem>
+          <LineChart
+            width={450}
+            height={320}
+            data={chartData}
+            margin={{
+              bottom: 40,
+            }}
+          >
+            <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
+            <XAxis dataKey='xAxis' />
+            <YAxis width={75} />
+            <Tooltip />
+            <Legend />
+            <Line
+              type='monotone'
+              dataKey='monthlyInterestPayment'
+              stroke={theme.colors.cyan}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type='monotone'
+              dataKey='principalPaid'
+              stroke={theme.colors.lightRed}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type='monotone'
+              dataKey='inflationInterestPaid'
+              stroke={theme.colors.lightRed}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type='monotone'
+              dataKey=' inflationPrincipalPaid'
+              stroke={theme.colors.lightRed}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </Div_ChartItem>
+        <Div_ChartItem>
+          <LineChart width={450} height={320} data={chartData}>
+            <CartesianGrid stroke='#eee' strokeDasharray='3 3' />
+            <XAxis dataKey='xAxis' />
+            <YAxis width={75} />
+            <Tooltip />
+            <Legend />
+            <Line
+              type='monotone'
+              dataKey='remain'
+              stroke={theme.colors.cyan}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+            <Line
+              type='monotone'
+              dataKey='inflationRemain'
+              stroke={theme.colors.cyan}
+              strokeWidth={1}
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </Div_ChartItem>
+      </Div_ResponsiveChartsGrid>
     </ResponsiveContainer>
   )
 }
@@ -207,12 +247,12 @@ export const MortgageCalculator = () => {
   const [inflation, setInflation] = useState(3.5)
   const [visibleYear, setVisibleYear] = useState(1)
   return (
-    <React.Fragment>
-      <Helmet>
-        <title>Mortgage Calculator</title>
-      </Helmet>
-      <MortgageContainer maxWidth='sm'>
-        <Box>
+    <HelmetProvider>
+      <React.Fragment>
+        <Helmet>
+          <title>Mortgage Calculator</title>
+        </Helmet>
+        <MortgageContainer maxWidth='sm'>
           <div>
             <H2_CalculatorHeader>React - Mortgage calculator</H2_CalculatorHeader>
             <form>
@@ -285,19 +325,30 @@ export const MortgageCalculator = () => {
               </H2_CalculatorHeader>
             </Div_RequiredVaulue>
           </div>
-        </Box>
-      </MortgageContainer>
-      <Div_TableWraper>
-        <Table
-          calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
-          visibleYear={visibleYear}
-          setVisibleYear={setVisibleYear}
-        />
-      </Div_TableWraper>
-      <Charts
-        calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
-      />
-    </React.Fragment>
+        </MortgageContainer>
+        <Div_Visualization>
+          <Div_TableWraper>
+            <Table
+              calculatedMortgage={calculateTableData({
+                price,
+                rate,
+                period,
+                downPayment,
+                inflation,
+              })}
+              visibleYear={visibleYear}
+              setVisibleYear={setVisibleYear}
+            />
+          </Div_TableWraper>
+          <Charts
+            calculatedMortgage={calculateTableData({ price, rate, period, downPayment, inflation })}
+          />
+          <PropertyValueChart
+            calculatedValue={calculateBuildingPrice({ price, inflation, period })}
+          />
+        </Div_Visualization>
+      </React.Fragment>
+    </HelmetProvider>
   )
 }
 
@@ -345,17 +396,23 @@ const Table = (props: {
   )
 }
 
+const Div_Visualization = styled.div`
+  box-sizing: border-box;
+  margin: auto;
+  max-width: 800px;
+  font-size: inherit;
+  font-family: inherit;
+  text-align: left;
+`
 const DataTable = styled.table`
-  justify-content: center;
   border: solid 1px ${theme.colors.gray};
   text-align: center;
-  line-height: normal;
-  vertical-align: middle;
   width: 100%;
   height: 60vh;
   overflow: auto;
-  margin-right: auto;
-  margin-left: auto;
+
+  display: block;
+  margin: 0.5rem auto;
   position: relative;
   border-collapse: collapse;
 `

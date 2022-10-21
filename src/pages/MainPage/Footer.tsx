@@ -60,6 +60,12 @@ const Div_PortfolioFooterCopyright = styled.div`
   color: ${theme.background.colorbg};
 `
 
+const Div_ContactEmail = styled.div`
+  font-size: 20px;
+  font-style: italic;
+  color: ${theme.colors.white};
+`
+
 export const Footer = () => {
   return (
     <Footer_PortfolioFooter id={urls.portfolioNav.footer}>
@@ -104,6 +110,7 @@ export const Footer = () => {
           <BsTwitter />
         </A_PortfolioFooterSocials>
       </Div_PortfolioFooterSocials>
+      <Div_ContactEmail>Email: karel.hb@email.cz</Div_ContactEmail>
       <Div_PortfolioFooterCopyright>
         <small>&copy; DEV Portfolio. All rights reserved.</small>
       </Div_PortfolioFooterCopyright>

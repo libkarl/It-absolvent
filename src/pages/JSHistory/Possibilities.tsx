@@ -16,6 +16,7 @@ const Div_Possibilities = tw.div`
   py-12 
   bg-white 
   mt-10
+  p-12
 `
 
 const Div_IconPossibilities = tw.div`
