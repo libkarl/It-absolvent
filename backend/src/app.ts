@@ -30,21 +30,34 @@ type Article = {
   picture: string
 }
 
-const readDataFromJSON = () => {
-  const dataString = fs.readFileSync(`${__dirname}/../${'data'}.json`, 'utf-8')
-  return JSON.parse(dataString).articles as Article[]
+const loadJSON = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(`${__dirname}/../${'data'}.json`, 'utf8', (err, content) => {
+      if (err) {
+        reject(err)
+      } else {
+        try {
+          resolve(JSON.parse(content).articles)
+        } catch (err) {
+          reject(err)
+        }
+      }
+    })
+  }) as Promise<Article[]>
 }
 
-const saveDataInJSON = (articles: Article[]) => {
-  fs.writeFileSync(`${__dirname}/../data.json`, JSON.stringify({ articles }), 'utf-8')
+const saveJSON = (articles: Article[]) => {
+  fs.writeFile(`${__dirname}/../data.json`, JSON.stringify({ articles }), err => {
+    if (err) throw err
+  })
 }
 
 // this will return all articles
-app.get('/articles', (req, res) => {
-  res.send(readDataFromJSON())
+app.get('/articles', async (req, res) => {
+  res.send(await loadJSON())
 })
 
-app.post('/articles', (req, res) => {
+app.post('/articles', async (req, res) => {
   const newPost: Article = {
     title: req.body.title,
     id: v1(),
@@ -53,27 +66,27 @@ app.post('/articles', (req, res) => {
     category: req.body.category,
     picture: availablePics[req.body.category],
   }
-  const posts = readDataFromJSON()
+  const posts: Article[] = await loadJSON()
   posts.push(newPost)
-  saveDataInJSON(posts)
+  saveJSON(posts)
   res.send(newPost)
 })
 
-app.get('/articles/:slug', (req, res) => {
-  const posts = readDataFromJSON()
-  const listedArticle: Article = posts.find((post: Article) => post.slug === req.params.slug)
+app.get('/articles/:slug', async (req, res) => {
+  const posts = await loadJSON()
+  const listedArticle = posts.find(post => post.slug === req.params.slug)
   res.send(listedArticle)
 })
 
-app.delete('/articles/:slug', (req, res) => {
-  const articleFromJSON = readDataFromJSON()
+app.delete('/articles/:slug', async (req, res) => {
+  const articleFromJSON = await loadJSON()
   const newArticlesState = articleFromJSON.filter(post => post.slug !== req.params.slug)
-  saveDataInJSON(newArticlesState)
+  saveJSON(newArticlesState)
   res.send(newArticlesState)
 })
 
-app.post('/articles/:slug', (req, res) => {
-  const articleFromJSON = readDataFromJSON()
+app.post('/articles/:slug', async (req, res) => {
+  const articleFromJSON = await loadJSON()
   const newArticlesState = articleFromJSON.map((post: Article) =>
     post.slug === req.body.slugToUpdate
       ? {
@@ -86,7 +99,7 @@ app.post('/articles/:slug', (req, res) => {
         }
       : post
   )
-  saveDataInJSON(newArticlesState)
+  saveJSON(newArticlesState)
   res.send(newArticlesState)
 })
 
