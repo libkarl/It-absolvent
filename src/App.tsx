@@ -10,9 +10,9 @@ import { TodoListApplication } from './pages/Todoapp/Todoapp'
 import { TodoListRedux } from './pages/ToDoRedux/ToDoRedux'
 import { urls } from './helpers/urls'
 import React from 'react'
-import tw from 'tailwind-styled-components'
+import styled from 'styled-components'
 
-const DivCoreApp = tw.div`
+const DivCoreApp = styled.div`
   text-align: center;
 `
 

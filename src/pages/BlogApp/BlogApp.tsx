@@ -26,45 +26,44 @@ export type Article = {
   picture: string
 }
 
-const Div_httpContainer = tw.div`
-    border
-    flex 
-    flex-col 
-    gap-y-2 
-    w-10/12
-    border-slate-600 
-    rounded-2xl 
-    p-2 
-    shadow-md 
-    text-left 
-    characters 
-    mx-auto
-    mt-28
-    mb-16 
-    
+const Div_HttpContainer = styled.div`
+  margin: auto;
+  display: flex;
+  padding: 0.5rem;
+  margin-bottom: 4rem;
+  margin-top: 7rem;
+  text-align: left;
+  flex-direction: column;
+  width: 83.333333%;
+  border-radius: 1rem;
+  row-gap: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+`
+const Div_FromContainer = styled.div`
+  padding: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  max-width: 24rem;
+  border-radius: 1rem;
+  border-width: 1px;
+  margin: auto;
+
+  @media (min-width: 640px) {
+    width: 66.666667%;
+  }
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 `
 
-const Div_FromContainer = tw.div`
-  mt-8
-  p-6
-  border-slate-900
-  rounded-2xl
-  border  
-  sm:w-2/3 
-  md:w-1/2 
-  max-w-sm
-  mx-auto 
-  mb-12
-`
-
-const Div_RequiredVaulue = tw.div` 
-  rounded flex 
-  flex-row 
-  items-center 
-  p-2
-  justify-between 
-  select-none
-  mx-auto
+const Div_RequiredVaulue = styled.div`
+  display: flex;
+  padding: 0.5rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.25rem;
+  user-select: none;
 `
 
 const H2_CalculatorHeader = tw.h2`
@@ -104,17 +103,17 @@ const useArticleServer = () => {
   const updateArticleBySlug = () => {
     try {
       fetchRequest.blog.updateArticleBySlug({ slugToUpdate, updateText, category, title })
-      console.log(category)
     } catch (err) {
       setError('User is unavailable..')
+      throw new Error('User is unavailable..')
     }
   }
   const createNewArticle = () => {
     try {
       fetchRequest.blog.addNewPost({ title, text, category })
-      console.log('hit add article')
     } catch (err) {
       setError('User is unavailable..')
+      throw new Error('Can not create new article..')
     }
   }
 
@@ -124,15 +123,13 @@ const useArticleServer = () => {
       setResponseData(articles)
     } catch (err) {
       setError('User is unavailable..')
+      throw new Error('Can not find articles..')
     }
   }
 
   const findArticleBySlug = async () => {
     try {
-      let articles = await fetchRequest.blog.getArticleBySlug(inputValue)
-      let arr: Article[] = []
-      arr.push(articles)
-      setResponseData(arr)
+      setResponseData([await fetchRequest.blog.getArticleBySlug(inputValue)])
       setError('success')
       await delayDefinition(1500)
       setError('')
@@ -150,6 +147,7 @@ const useArticleServer = () => {
       setResponseData([])
     } catch (err) {
       setError('User is unavailable..')
+      throw new Error('Can not delete article..')
     }
   }
 
@@ -189,7 +187,7 @@ export const { ContextProvider: TodoAppContext, Context: TodoContext } =
 const ArticleUI = () => {
   const providedContext = useContext(TodoContext)
   return (
-    <Div_httpContainer>
+    <Div_HttpContainer>
       <ThemeProvider theme={muiTheme}>
         <Div_FromContainer>
           <H2_CalculatorHeader>Article Blog</H2_CalculatorHeader>
@@ -221,7 +219,7 @@ const ArticleUI = () => {
         </Div_FromContainer>
         <BlogList articles={providedContext.responseData} />
       </ThemeProvider>
-    </Div_httpContainer>
+    </Div_HttpContainer>
   )
 }
 

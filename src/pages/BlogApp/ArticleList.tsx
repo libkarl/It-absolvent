@@ -10,6 +10,7 @@ const Div_PortfolioContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+  margin-top: 2rem;
   margin-bottom: 4rem;
   ${theme.breakpoints.md} {
     grid-template-columns: 1fr 1fr;
