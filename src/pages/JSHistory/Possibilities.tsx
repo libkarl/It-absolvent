@@ -206,7 +206,7 @@ export const Possibilities = () => {
               </dt>
               <DD_PossibilitiesItem>
                 In addition, there are frameworks for developing A.I.-powered chatbots in
-                JavaScript, like Botkit and Chatfuel. Using these tools, developers can build
+                JavaScript, like Botkit and Chatfuel. Using these tools, developers can build
                 chatbots that act as personal assistants.
               </DD_PossibilitiesItem>
             </Div_PossibilitiesItem>
@@ -224,7 +224,7 @@ export const Possibilities = () => {
               </dt>
               <DD_PossibilitiesItem>
                 One of the uses for JavaScript is data visualization, or creating visual
-                representations of data using code. For example, many people use D3.js to create
+                representations of data using code.For example, many people use D3.js to create
                 interactive graphs, charts, and maps that update in real-time based on revised data
                 sets.
               </DD_PossibilitiesItem>
@@ -242,8 +242,8 @@ export const Possibilities = () => {
                 <P_PossibilitiesItem>Embedded Device Development and IoT</P_PossibilitiesItem>
               </dt>
               <DD_PossibilitiesItem>
-                JavaScript is also gaining popularity for embedded device development. This means
-                that you can create apps for very small devices using JavaScript because it’s
+                JavaScript is also gaining popularity for embedded device development.This means
+                that you can create apps for very small devices using JavaScript because it is
                 lightweight and easy to use.
               </DD_PossibilitiesItem>
             </Div_PossibilitiesItem>

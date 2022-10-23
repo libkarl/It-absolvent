@@ -23,7 +23,7 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      console.log(error)
+      throw new Error('Get item error')
     }
   })
 
@@ -33,7 +33,7 @@ export function useLocalStorage<T>(key: string, initialValue?: T) {
         const valueToStore = val instanceof Function ? val(value) : val
         window.localStorage.setItem(key, JSON.stringify(valueToStore))
       } catch (error) {
-        console.log(error)
+        throw new Error('Set item error')
       }
     },
     [value, key]
