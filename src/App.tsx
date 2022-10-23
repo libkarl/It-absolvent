@@ -1,6 +1,5 @@
 import { ArticleServerApplication } from './pages/BlogApp/BlogApp'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Counter } from './pages/Counter/Counter'
 import { HackerWritter } from './pages/HackerWritter/HackerWritter'
 import { JsHistory } from './pages/JSHistory/JsHistory'
 import { Main } from './pages/MainPage/Main'
@@ -24,7 +23,6 @@ export const App = () => {
           <Route path={urls.mainPage} element={<Main />} />
           <Route path={urls.jsHistoryPage} element={<JsHistory />} />
           <Route path={urls.hackerWritter} element={<HackerWritter />} />
-          <Route path={urls.counter} element={<Counter />} />
           <Route path={urls.toDoApp} element={<TodoListApplication />} />
           <Route path={urls.memorygame} element={<MemoryGame />} />
           <Route path={urls.toDoAppRedux} element={<TodoListRedux />} />
