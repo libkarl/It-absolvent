@@ -3,11 +3,7 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,9 +16,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "instantiationDepthLimit": 100,
+    "instantiationCountLimit": 10000000
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
